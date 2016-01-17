@@ -44,25 +44,15 @@
        <a href="#" data-role="button"  data-icon="home" data-theme="b" class="ui-btn-icon-left">主页</a>
 	</div>
   <div data-role="content" class="ui-content" role="main">		
-    	<ul data-role="listview" class="ui-listview" >
-            <li >			
-				<img src="file:///E:/cooperation-master/src/main/webapp/img/headpic/7.jpg" style="padding-left: 4%;padding-top: 10px;">
-				<div style="margin-left: 4%;">
-				<h3>Kung Fu Panda</h3>
-				<p>账号: PG</p>
-				<p>推荐人: 95 min.</p>
-		</div>	
-			</li>
-           <li> <a href="#page2"  style="text-align: center;" >首页</a></li>
-		    <li> <a href="#page2"  style="text-align: center;"  >注册新用户</a></li>
-             <li> <a href="#page2" style="text-align: center;" >激活码管理</a></li>
-            <li> <a href="#page2" style="text-align: center;" >团队管理</a></li>
-             <li><a href="memberCenter.html#page4" style="text-align: center;" >账号管理</a></li>
-			 <li> <a href="memberCenter.html#page2" style="text-align: center;" >我的钱包</a></li>
-             <li ><a href="memberCenter.html#page4" style="text-align: center;" >退出登录</a></li>
-		</ul>		
+      <form action="#" method="post" id="regForm">
+    	<div data-role="fieldcontain">
+					<label for="activecode">激活码: </label><input type="text" placeholder="20位字母数字组合"name="activecode" id="activecode"  data-clear-btn="true">                  
+                </div>	
+                <a href="#loginPage" id="regButton" data-role="button"
+					data-theme="e">激活</a> 
+              </form>  
 	</div>
-<div data-role="footer"  data-theme="f"   data-position="inline">
+<div data-role="footer"  data-theme="f"   style="margin-top: 50px;">
     <h1>平安互助-合作共赢</h1>
   </div>
 </div>
