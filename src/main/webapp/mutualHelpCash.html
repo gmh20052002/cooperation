@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///E:/cooperation-master/src/main/webapp/memberCenter.html -->
+<html class="ui-mobile"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--<base href="file:///E:/cooperation-master/src/main/webapp/memberCenter.html">--><base href=".">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>平安互助-合作共赢</title>
+<style>
+.ui-bar-f {
+    color: white;
+     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#81a8ce),color-stop(1,#5e87b0));
+    border: 1px solid #456f9a;
+    background: #5e87b0;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 -1px 1px #254f7a;
+
+}
+ 
+.ui-body-f {
+    color: white;
+    background-color: #5e87b0;
+}
+
+
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="user-scalable=no, width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="./css/frame/jquery.mobile-1.3.2.css">
+<link rel="stylesheet" href="./css/global.css">
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery-1.8.2.min.js"></script>
+
+
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery.mobile-1.3.2.js"></script>
+</head> 
+<body class="ui-mobile-viewport ui-overlay-a">
+
+<div data-role="page" id="page">
+	<div data-role="header" data-theme="f" >
+       <a href="#" data-role="button"  data-icon="back" data-theme="b">后退</a>
+		<h1 >互助提现</h1>
+       <a href="#" data-role="button"  data-icon="home" data-theme="b" class="ui-btn-icon-left">主页</a>
+	</div>
+  <div data-role="content" class="ui-content" role="main">		
+      <form action="#" method="post" id="regForm">
+    	<div data-role="fieldcontain">
+					<label for="balance">我的本金: </label><input type="text" disabled="disabled" placeholder="" name="balance" value="440"  id="balance" >                  
+                </div>	
+                <div data-role="fieldcontain">
+					<label for="money">分红余额: </label><input type="text" disabled="disabled" name="money" value="346"  id="money" >                  
+                </div>	
+                <div class="ui-field-contain">
+                 <fieldset data-role="controlgroup" data-type="horizontal">
+      <legend>提现类别：</legend>
+        <label for="male">分红</label>
+        <input type="radio" name="gender" id="male" value="male" checked>
+        <label for="female">本金</label>
+        <input type="radio" name="gender" id="female" value="female"> 
+      </fieldset>
+      </div>
+                	<div data-role="fieldcontain">
+					<label for="money2">提现余额: </label><input  type="text" placeholder="只能接受100的倍数" name="money2" value=""  id="money2"  data-clear-btn="true">                  
+                </div>	
+
+       <div data-role="fieldcontain">
+        <fieldset data-role="controlgroup">
+          <legend>提现方式：</legend>
+            <label for="red">银行支付</label>
+            <input type="checkbox" name="favcolor" id="red" value="red">
+            <label for="green">支付宝支付</label>
+            <input type="checkbox" name="favcolor" id="green" value="green">
+            <label for="blue">微信支付</label>
+            <input type="checkbox" name="favcolor" id="blue" value="blue">  
+        </fieldset>
+      </div>
+                <a href="#loginPage" id="regButton" data-role="button"
+					data-theme="e">激活</a> 
+                       <input type="submit"  value="取消">
+              </form>  
+	</div>
+<div data-role="footer"  data-theme="f"   style="margin-top: 50px;">
+    <h1>平安互助-合作共赢</h1>
+  </div>
+</div>
+
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div></body></html>
