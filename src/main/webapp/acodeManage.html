@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///E:/cooperation-master/src/main/webapp/memberCenter.html -->
+<html class="ui-mobile"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--<base href="file:///E:/cooperation-master/src/main/webapp/memberCenter.html">--><base href=".">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>平安互助-合作共赢</title>
+<style>
+.ui-bar-f {
+    color: white;
+     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#81a8ce),color-stop(1,#5e87b0));
+    border: 1px solid #456f9a;
+    background: #5e87b0;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 -1px 1px #254f7a;
+
+}
+.ui-body-f {
+    color: white;
+    background-color: #5e87b0;
+}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="user-scalable=no, width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="./css/frame/jquery.mobile-1.3.2.css">
+<link rel="stylesheet" href="./css/global.css">
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery-1.8.2.min.js"></script>
+
+
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery.mobile-1.3.2.js"></script>
+</head> 
+<body class="ui-mobile-viewport ui-overlay-a">
+
+<div data-role="page" id="page">
+	<div data-role="header" data-theme="f" >
+       <a href="#" data-role="button"  data-icon="back" data-theme="b">后退</a>
+		<h1 >动态奖钱包</h1>
+       <a href="#" data-role="button"  data-icon="home" data-theme="b" class="ui-btn-icon-left">主页</a>
+	</div>
+  <div data-role="content" class="ui-content" role="main">	
+
+        <label for="search">查询：</label>
+        <input type="search" name="search" id="search" placeholder="请输入要查询的内容...">
+
+     
+   <table data-role="table" id="table-custom-2" data-mode="columntoggle" class=" table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="调整显示条目" data-column-popup-theme="d">
+         <thead>
+           <tr class="ui-bar-d">
+             <th data-priority="2">日期</th>
+             <th data-priority="5"style=" width: 20%;">说明</th>
+             <th data-priority="3">原余额</th>
+             <th data-priority="1"><abbr title="Rotten Tomato Rating">收支</abbr></th>
+             <th >新余额</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <th>1</th>
+             <td><a href="http://en.wikipedia.org/wiki/Citizen_Kane" data-rel="external">Citizen Kane</a></td>
+             <td>1941</td>
+             <td>100%</td>
+             <td>74</td>
+           </tr>
+           <tr>
+             <th>2</th>
+             <td><a href="http://en.wikipedia.org/wiki/Casablanca_(film)" data-rel="external">Casablanca</a></td>
+             <td>1942</td>
+             <td>97%</td>
+             <td>64</td>
+           </tr>
+           <tr>
+             <th>3</th>
+             <td><a href="http://en.wikipedia.org/wiki/The_Godfather" data-rel="external">The Godfather</a></td>
+             <td>1972</td>
+             <td>97%</td>
+             <td>87</td>
+           </tr>
+           <tr>
+             <th>4</th>
+             <td><a href="http://en.wikipedia.org/wiki/Gone_with_the_Wind_(film)" data-rel="external">Gone with the Wind</a></td>
+             <td>1939</td>
+             <td>96%</td>
+             <td>87</td>
+           </tr>
+           <tr>
+             <th>5</th>
+             <td><a href="http://en.wikipedia.org/wiki/Lawrence_of_Arabia_(film)" data-rel="external">Lawrence of Arabia</a></td>
+             <td>1962</td>
+             <td>94%</td>
+             <td>87</td>
+           </tr>
+           <tr>
+             <th>6</th>
+             <td><a href="http://en.wikipedia.org/wiki/Dr._Strangelove" data-rel="external">Dr. Strangelove Or How I Learned to Stop Worrying and Love the Bomb</a></td>
+             <td>1964</td>
+             <td>92%</td>
+             <td>74</td>
+           </tr>
+           <tr>
+             <th>7</th>
+             <td><a href="http://en.wikipedia.org/wiki/The_Graduate" data-rel="external">The Graduate</a></td>
+             <td>1967</td>
+             <td>91%</td>
+             <td>122</td>
+           </tr>
+           <tr>
+             <th>8</th>
+             <td><a href="http://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film)" data-rel="external">The Wizard of Oz</a></td>
+             <td>1939</td>
+             <td>90%</td>
+             <td>72</td>
+           </tr>
+           <tr>
+             <th>9</th>
+             <td><a href="http://en.wikipedia.org/wiki/Singin%27_in_the_Rain" data-rel="external">Singin' in the Rain</a></td>
+             <td>1952</td>
+             <td>89%</td>
+             <td>85</td>
+           </tr>
+           <tr>
+             <th>10</th>
+             <td class="title"><a href="http://en.wikipedia.org/wiki/Inception" data-rel="external">Inception</a></td>
+             <td>2010</td>
+             <td>84%</td>
+             <td>78</td>
+           </tr>
+         </tbody>
+       </table>
+   
+        <select name="day" id="day" data-native-menu="false">
+         <option value="mon">每页10行</option>
+         <option value="tue">每页15行</option>
+         <option value="wed">每页20行</option>
+         <option value="thu">每页30行</option>
+         <option value="fri">每页50行</option> 
+        </select>
+    
+   
+     
+	</div>
+<div data-role="footer"  data-theme="f"   style="margin-top: 50px;">
+    <h1>平安互助-合作共赢</h1>
+  </div>
+</div>
+
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div></body></html>
