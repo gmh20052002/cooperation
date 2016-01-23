@@ -1,3 +1,4 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!-- saved from url=(0063)file:///E:/cooperation-master/src/main/webapp/memberCenter.html -->
 <html class="ui-mobile"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--<base href="file:///E:/cooperation-master/src/main/webapp/memberCenter.html">--><base href=".">
@@ -20,7 +21,9 @@
     color: white;
     background-color: #5e87b0;
 }
-
+.ui-icon-user {
+	background-image: url("img/user-black.png");
+}
 
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -45,12 +48,13 @@
 	</div>
   <div data-role="content" class="ui-content" role="main">		
       <form action="#" method="post" id="regForm">
-    	<div data-role="fieldcontain">
-					<label for="balance">我的本金: </label><input type="text" disabled="disabled" placeholder="" name="balance" value="440"  id="balance" >                  
-                </div>	
-                <div data-role="fieldcontain">
-					<label for="money">分红余额: </label><input type="text" disabled="disabled" name="money" value="346"  id="money" >                  
-                </div>	
+    
+					<label for="balance">我的本金: </label>
+                    <input type="text" disabled="disabled" placeholder="" name="balance" value="440"  id="balance" >                  
+          
+					<label for="money">分红余额: </label>
+                    <input type="text" disabled="disabled" name="money" value="346"  id="money" >                  
+               
                 <div class="ui-field-contain">
                  <fieldset data-role="controlgroup" data-type="horizontal">
       <legend>提现类别：</legend>
@@ -61,7 +65,9 @@
       </fieldset>
       </div> 
                 	<div data-role="fieldcontain">
-					<label for="money2">提现余额: </label><input  type="text" placeholder="只能接受100的倍数" name="money2" value=""  id="money2"  data-clear-btn="true">                  
+					<!-- <label for="money2">提现余额: </label><input  type="text" placeholder="只能接受100的倍数" name="money2" value=""  id="money2"  data-clear-btn="true">    -->      
+                          <label for="slider-fill">提现余额: </label>
+<input type="range" name="slider-fill" id="slider-fill" value="100" min="100" max="2000" step="100" data-highlight="true">      
                 </div>	
 
        <div data-role="fieldcontain">
@@ -80,8 +86,19 @@
                        <input type="submit"  value="取消">
               </form>  
 	</div>
-<div data-role="footer"  data-theme="f"   style="margin-top: 50px;">
-    <h1>平安互助-合作共赢</h1>
+<div data-role="footer" data-theme="f" >
+ <div data-role="navbar">
+ <ul >
+        <li>
+      
+    
+   <a href="#" data-role="button"  data-icon="home" data-theme="b"  class="ui-btn-active" data-iconpos="top">主页</a></li>
+ <li> <a href="#" data-role="button"  data-icon="star" data-theme="b"data-iconpos="top">团队</a></li>
+  <li><a href="#" data-role="button"  data-icon="grid" data-theme="b"data-iconpos="top">钱包</a></li>
+  <li><a href="#" data-role="button"  data-icon="gear" data-theme="b"data-iconpos="top">设置</a></li>
+  
+    </ul>
+     </div>
   </div>
 </div>
 
