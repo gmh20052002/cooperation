@@ -32,7 +32,7 @@
 	content="user-scalable=no, width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="./css/frame/jquery.mobile-1.3.2.css">
 <script type="text/javascript" charset="utf-8"
-	src="./js/frame/jquery-1.9.1.min.js"></script>
+	src="./js/frame/jquery-2.0.2.min.js"></script>
 
 
 
@@ -41,35 +41,33 @@
 </head> 
 <body class="ui-mobile-viewport ui-overlay-a">
 
-<div data-role="page" id="page" data-title="平安互助">
+<div data-role="page" id="updateNaviPage" data-dom-cache="true" data-title="平安互助">
 	<div data-role="header" data-theme="f" >
-		<h1 >会员中心</h1>
+		<h1 >我的钱包</h1>
 	</div>
   <div data-role="content" class="ui-content" role="main">		
     	<ul data-role="listview" class="ui-listview" >
-            <li >			
-				<img src="img/headpic/7.jpg" style="padding-left: 4%;padding-top: 10px;">
-				<div style="margin-left: 4%;">
-				<h3>Kung Fu Panda</h3>
-				<p>账号: PG</p>
-				<p>推荐人: 95 min.</p>
-		</div>	
-			</li>
-		    <li> <a href="index.html#regPage">注册新用户</a></li>
-             <li> <a href="#page2"  >激活码管理</a></li>
-            <li> <a href="#page2"  >团队管理</a></li>
-             <li><a href="memberCenter.html#page4"  >账号管理</a></li>
-			 <li> <a href="memberCenter.html#page2"  >我的钱包</a></li>
-             <li ><a href="memberCenter.html#page4">退出登录</a></li>
+        
+           <li> <a href="wallet.html"  rel="external" >互助奖钱包</a></li>
+		    <li> <a href="mutualWallet.html" rel="external">互助奖钱包明细</a></li>
+             <li> <a href="mutualHelpCash.html"  rel="external" >互助提现</a></li>
+             <li> <a href="dywallet.html"  rel="external" >动态奖钱包</a></li>
+            <li> <a href="dynamicWallet.html"   rel="external">动态奖钱包明细</a></li>
+             <li> <a href="withdrawCash.html"  rel="external" >动态提现</a></li>
+            
+          
 		</ul>		
 	</div>
 <div data-role="footer"  data-theme="f"  data-position="fixed">
     <div data-role="navbar">
  <ul >
-        <li><a href="memCenter.html" data-role="button" rel="external"  data-icon="home" data-theme="b"  class="ui-btn-active" data-iconpos="top">主页</a></li>
-        <li> <a href="myTeam.html" data-role="button" rel="external"  data-icon="star" data-theme="b"data-iconpos="top">团队</a></li>
-        <li><a href="myWallet.html" data-role="button"  rel="external" data-icon="grid" data-theme="b"data-iconpos="top">钱包</a></li>
-        <li><a href="updateNavi.html" data-role="button" rel="external" data-icon="gear" data-theme="b"data-iconpos="top">设置</a></li>
+        <li>
+      
+    
+   <a href="memCenter.html" data-role="button"  rel="external" data-icon="home" data-theme="b"   data-iconpos="top">主页</a></li>
+ <li> <a href="myTeam.html" data-role="button" rel="external"  data-icon="star" data-theme="b"data-iconpos="top">团队</a></li>
+  <li><a href="myWallet.html" data-role="button"rel="external"   data-icon="grid" data-theme="b" class="ui-btn-active" data-iconpos="top">钱包</a></li>
+    <li><a href="updateNavi.html" data-role="button" rel="external" data-icon="gear" data-theme="b"data-iconpos="top">设置</a></li>
   
     </ul>
      </div>
