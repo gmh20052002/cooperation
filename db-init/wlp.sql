@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : MYSQL
-Source Server Version : 50527
+Source Server         : wzz
+Source Server Version : 50624
 Source Host           : localhost:3306
 Source Database       : wlp
 
 Target Server Type    : MYSQL
-Target Server Version : 50527
+Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-01-12 21:44:47
+Date: 2016-02-02 23:48:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,8 +23,10 @@ CREATE TABLE `wlp_activecode` (
   `ID` varchar(64) NOT NULL,
   `EMAIL` varchar(255) NOT NULL COMMENT '用户',
   `CODE` varchar(255) NOT NULL COMMENT '激活码',
-  `STATUS` varchar(10) DEFAULT NULL COMMENT '状态',
-  `CREATE_TIME` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '生成时间',
+  `STATUS` varchar(10) DEFAULT NULL COMMENT '状态：0--未使用，1--已使用',
+  `CREATE_TIME` timestamp NULL DEFAULT NULL COMMENT '生成时间',
+  `SHARE_EMAIL` varchar(255) DEFAULT NULL,
+  `SHARE_TIME` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -75,4 +77,19 @@ CREATE TABLE `wlp_user` (
 
 -- ----------------------------
 -- Records of wlp_user
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for wlp_wallet
+-- ----------------------------
+DROP TABLE IF EXISTS `wlp_wallet`;
+CREATE TABLE `wlp_wallet` (
+  `ID` varchar(64) NOT NULL,
+  `EMAIL` varchar(255) NOT NULL COMMENT '钱包帐号',
+  `BALANCE` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '余额',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of wlp_wallet
 -- ----------------------------
