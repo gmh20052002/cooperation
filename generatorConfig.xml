@@ -33,17 +33,29 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="WLP_USER" domainObjectName="WlpUser"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-		</table>
-<!-- 
-		<table tableName="WLP_ACTIVECODE" domainObjectName="wlpActivecode"
+		<!-- <table tableName="WLP_USER" domainObjectName="WlpUser"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 		</table> -->
+
+		<table tableName="WLP_ACTIVECODE" domainObjectName="WlpActivecode"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+
+		<table tableName="WLP_PAIR_LOG" domainObjectName="WlpPairLog"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+
+		<table tableName="WLP_WALLET" domainObjectName=""WlpWallet""
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
 			
 	</context>
 </generatorConfiguration>
