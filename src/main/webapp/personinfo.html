@@ -1,9 +1,10 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!-- saved from url=(0063)file:///E:/cooperation-master/src/main/webapp/memberCenter.html -->
 <html class="ui-mobile"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--<base href="file:///E:/cooperation-master/src/main/webapp/memberCenter.html">--><base href=".">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>平安互助-合作共赢</title>
+<title>平安互助</title>
 <style>
 .ui-bar-f {
     color: white;
@@ -37,32 +38,28 @@
 </head> 
 <body class="ui-mobile-viewport ui-overlay-a">
 
-<div data-role="page" id="page">
+<div data-role="page" id="page" data-title="平安互助">
 	<div data-role="header" data-theme="f" >
-       <a href="#" data-role="button"  data-icon="back" data-theme="b">后退</a>
-		<h1 >账号管理</h1>
-       <a href="#" data-role="button"  data-icon="home" data-theme="b" class="ui-btn-icon-left">主页</a>
+        <a href="updateNavi.html" data-role="button" data-icon="arrow-l" data-rel="back" data-iconpos="notext">Delete</a>
+		<h1  style="font-size: 13px;">账号管理</h1>
+       <a href="memCenter.html" data-role="button" data-icon="home"   data-iconpos="notext">Delete</a>
 	</div>
   <div data-role="content" class="ui-content" role="main">		
       <form action="#" method="post" id="regForm">
-    	      <div data-role="fieldcontain">
+    	 
 					<label for="balance">昵称： </label><input type="text" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
-                </div>	
-                	<div data-role="fieldcontain">
+              
 					<label for="money">手机号码: </label><input type="tel" placeholder="" name="money" value=""  id="money"  data-clear-btn="true">                  
-                </div>	
-                <div data-role="fieldcontain" >
-					 <label for="email2">登录邮箱:</label>
-                     <input type="text" name="email2" disabled="disabled" id="email2" value="xx@xx.xx" placeholder="邮箱" /> 
-                     	</div>
-               <div data-role="fieldcontain">
+            
+					 <label for="email2">登录邮箱:<span>8643533453@qq.com</span></label>
+               
+                     
 					<label for="balance">微信号： </label><input type="text" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
-                </div>	
-                  <div data-role="fieldcontain">
+           
 					<label for="balance">支付宝： </label><input type="text" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
-                </div>	
+             
                 
-                <div data-role="fieldcontain">
+           
     <label for="select-native-1">银行名称:</label>
     <select name="select-native-1" id="select-native-1">
         <option value="1">中国建设银行</option>
@@ -70,19 +67,18 @@
         <option value="3">中国工商银行</option>
         <option value="4">中国银行</option>
     </select>
-</div>
-                  <div data-role="fieldcontain">
+
+                
 					<label for="balance">银行账户名： </label><input type="text" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
-                </div>	
-                  <div data-role="fieldcontain">
-					<label for="balance">银行账号： </label><input type="text" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
-                </div>
+             
+					<label for="balance">银行账号： </label><input  type="number" name="number" pattern="[0-9]*" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
+               
                 <a href="#loginPage" id="regButton" data-role="button"
 					data-theme="e">完成</a> 
-                       <input type="reset"  value="取消">
+                       <input type="reset"  value="重置">
               </form>  
 	</div>
-<div data-role="footer"  data-theme="f"   style="margin-top: 50px;">
+<div data-role="footer"  data-theme="f" data-position="fixed">
     <h1>平安互助-合作共赢</h1>
   </div>
 </div>
