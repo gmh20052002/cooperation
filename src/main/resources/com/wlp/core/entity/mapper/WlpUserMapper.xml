@@ -169,6 +169,7 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpUser" >
     update wlp_user
     set USER_NAME = #{userName,jdbcType=VARCHAR},
@@ -185,4 +186,54 @@
       STATUS = #{status,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="com.wlp.api.entity.WlpUser">
+		select
+		<include refid="Base_Column_List" />
+		from wlp_user
+		<where>
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.userName != null" >
+		        	USER_NAME = #{condition.userName,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.mobilePhone != null" >
+		        	MOBILE_PHONE = #{condition.mobilePhone,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.email != null" >
+		        	EMAIL = #{condition.email,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.loginPassword != null" >
+		        	LOGIN_PASSWORD = #{condition.loginPassword,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.transPassword != null" >
+		        	TRANS_PASSWORD = #{condition.transPassword,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.recEmail != null" >
+		        	REC_EMAIL = #{condition.recEmail,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.remark != null" >
+		        	REMARK like '%${condition.remark}%'
+		      	</if>
+		      	<if test="condition.alipay != null" >
+		        	ALIPAY = #{condition.alipay,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.bankName != null" >
+		        	BANK_NAME = #{condition.bankName,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.bankUsername != null" >
+		        	BANK_USERNAME = #{condition.bankUsername,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.bankAcct != null" >
+		        	BANK_ACCT = #{condition.bankAcct,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.status != null" >
+		        	STATUS = #{condition.status,jdbcType=VARCHAR}
+		      	</if>
+			</if>
+		</where>
+	</select>
 </mapper>

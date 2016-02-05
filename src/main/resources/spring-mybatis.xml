@@ -68,5 +68,5 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean name="wlpService" class="com.wlp.core.impl.WlpServiceImpl" />
+	<bean name="wlpUserService" class="com.wlp.core.impl.WlpUserServiceImpl" />
 </beans>

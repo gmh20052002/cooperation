@@ -8,27 +8,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wlp.api.entity.WlpUser;
-import com.wlp.api.service.WlpService;
+import com.wlp.api.service.WlpUserService;
 
 @Controller()
 public class UserController {
 
 	@Autowired
-	WlpService wlpService;
+	WlpUserService wlpUserService;
 
-	public WlpService getWlpService() {
-		return wlpService;
+	public WlpUserService getWlpUserService() {
+		return wlpUserService;
 	}
 
-	public void setWlpService(WlpService wlpService) {
-		this.wlpService = wlpService;
+	public void setWlpUserService(WlpUserService wlpUserService) {
+		this.wlpUserService = wlpUserService;
 	}
-	
+
 	@RequestMapping(value = "/wlp/login", method = RequestMethod.GET)
 	public @ResponseBody WlpUser login(@RequestParam(required = true)  String userName,
 			@RequestParam(required = true) String password) {
 		try {
-			return wlpService.commonLogin(userName, password);
+			return wlpUserService.commonLogin(userName, password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,7 +38,27 @@ public class UserController {
 	@RequestMapping(value = "/wlp/regUser", method = RequestMethod.POST)
 	public @ResponseBody WlpUser addUser(WlpUser user) {
 		try {
-			return wlpService.regUser(user);
+			return wlpUserService.regUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@RequestMapping(value = "/wlp/updateUser", method = RequestMethod.PUT)
+	public @ResponseBody WlpUser updateUser(WlpUser user) {
+		try {
+			return wlpUserService.regUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@RequestMapping(value = "/wlp/deleteUser", method = RequestMethod.DELETE)
+	public @ResponseBody WlpUser deleteUser(String email) {
+		try {
+			return wlpUserService.deleteUser(email);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,7 +69,7 @@ public class UserController {
 	public @ResponseBody WlpUser transLogin(@RequestParam(required = true)  String userName,
 			@RequestParam(required = true) String transPassword) {
 		try {
-			return wlpService.transLogin(userName, transPassword);
+			return wlpUserService.transLogin(userName, transPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
