@@ -6,7 +6,13 @@ $(document).ready(function() {
 			url : "/wlp/login",
 			data :{userName:$("#email").val(),password:$("#password").val()},
 			success : function(data) {
-				goTo('content.html');
+				console.log(data)
+				if(data&&data.userName){
+			location.href='memCenter.html';
+				}
+				else{
+					alert(1)
+				}
 			},
 			 dataType: 'json'
 		});
