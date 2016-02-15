@@ -85,4 +85,10 @@ public class WlpUserServiceImpl implements WlpUserService {
 		return null;
 	}
 
+	@Override
+	public WlpUser activeUser(String email, String activeCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

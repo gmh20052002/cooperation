@@ -12,4 +12,5 @@ public interface WlpUserService {
 	public WlpUser deleteUser(String email);
 	public List<WlpUser> getMyTeamUsers(String email);
 	public WlpUser getUserByEmail(String email);
+	public WlpUser activeUser(String email, String activeCode);
 }
