@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-02-15 19:28:31
+Date: 2016-02-16 22:40:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -66,6 +66,7 @@ CREATE TABLE `wlp_user` (
   `TRANS_PASSWORD` varchar(50) NOT NULL COMMENT '交易密码',
   `REC_EMAIL` varchar(255) DEFAULT NULL COMMENT '推荐人邮箱',
   `REMARK` varchar(500) DEFAULT NULL COMMENT '备注',
+  `WECHAT` varchar(255) DEFAULT NULL COMMENT '微信号',
   `ALIPAY` varchar(255) DEFAULT NULL COMMENT '支付宝账号',
   `BANK_NAME` varchar(255) DEFAULT NULL COMMENT '银行名称',
   `BANK_USERNAME` varchar(255) DEFAULT NULL COMMENT '银行账户名称',
