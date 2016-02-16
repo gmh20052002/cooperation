@@ -114,4 +114,27 @@
       SHARE_TIME = #{shareTime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="com.wlp.api.entity.WlpActivecode">
+		select
+		<include refid="Base_Column_List" />
+		from wlp_activecode
+		<where>
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+		      	<if test="condition.code != null" >
+		        	CODE = #{condition.code,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.email != null" >
+		        	EMAIL = #{condition.email,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.shareEmail != null" >
+		        	SHARE_EMAIL = #{condition.shareEmail,jdbcType=VARCHAR}
+		      	</if>
+			</if>
+		</where>
+	</select>
 </mapper>
