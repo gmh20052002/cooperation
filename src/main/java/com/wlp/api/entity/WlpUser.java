@@ -16,7 +16,9 @@ public class WlpUser {
     private String recEmail;
 
     private String remark;
-
+    
+    private String wechat;
+    
     private String alipay;
 
     private String bankName;
@@ -130,4 +132,12 @@ public class WlpUser {
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
     }
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
 }
