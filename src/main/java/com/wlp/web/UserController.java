@@ -1,5 +1,7 @@
 package com.wlp.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,14 +30,14 @@ public class UserController {
 	public @ResponseBody WlpUser login(@RequestParam(required = true)  String userName,
 			@RequestParam(required = true) String password) {
 		try {
-			return wlpUserService.commonLogin(userName, password);
+ 			return wlpUserService.commonLogin(userName, password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	@RequestMapping(value = "/wlp/regUser", method = RequestMethod.POST)
+	@RequestMapping(value = "/wlp/addUser", method = RequestMethod.POST)
 	public @ResponseBody WlpUser addUser(WlpUser user) {
 		try {
 			return wlpUserService.regUser(user);
@@ -43,6 +45,33 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	@RequestMapping(value = "/wlp/regUser", method = RequestMethod.POST)
+	public @ResponseBody Boolean regUser(
+			@RequestParam(required = true)  String username,
+			@RequestParam(required = true) String telphone,
+			@RequestParam(required = true)  String email,
+			@RequestParam(required = true) String password,
+			@RequestParam(required = true)  String paypassword,
+			@RequestParam(required = true) String introemail					
+			) {
+		Boolean flag=false;
+		try {
+			
+			WlpUser user=new WlpUser();
+			user.setUserName(username);
+			user.setMobilePhone(telphone);
+			user.setEmail(email);
+			user.setLoginPassword(password);
+			user.setTransPassword(paypassword);
+			user.setRecEmail(introemail);
+			  if(wlpUserService.regUser(user)!=null){
+				  flag=true;
+			  }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
 	}
 
 	@RequestMapping(value = "/wlp/updateUser", method = RequestMethod.PUT)
