@@ -85,6 +85,15 @@ $(document).ready(function() {
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
 				}
+			 
+			 if(password3.length<6||password3.length>20){				 
+				    $("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，登陆密码6-20位字母数字组合!</font>");
+			        $("#password3").focus();
+			        $('#regtext').html('注册');
+			        $('#regButton').buttonMarkup({ theme: "e" });
+					return false;
+			 }
 			 var password4 =$("#password4").val(); 
 			 if(!password4){
 					$("#showRegMes").show();
@@ -110,7 +119,15 @@ $(document).ready(function() {
 			        $('#regtext').html('注册');
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
-				}			
+				}	
+			 if(password5.length<6||password5.length>20){				 
+				    $("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，交易密码6-20位字母数字组合!</font>");
+			        $("#password5").focus();
+			        $('#regtext').html('注册');
+			        $('#regButton').buttonMarkup({ theme: "e" });
+					return false;
+			 }
 			 var password6 =$("#password6").val(); 
 			 if(!password6){
 					$("#showRegMes").show();
