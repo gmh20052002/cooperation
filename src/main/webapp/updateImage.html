@@ -1,0 +1,163 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///E:/cooperation-master/src/main/webapp/memberCenter.html -->
+<html class="ui-mobile"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--<base href="file:///E:/cooperation-master/src/main/webapp/memberCenter.html">--><base href=".">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>平安互助</title>
+<style>
+.ui-bar-f {
+    color: white;
+     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#81a8ce),color-stop(1,#5e87b0));
+    border: 1px solid #456f9a;
+    background: #5e87b0;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 -1px 1px #254f7a;
+
+}
+
+.ui-body-f {
+    color: white;
+    background-color: #5e87b0; 
+}
+
+
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="user-scalable=no, width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="./css/frame/jquery.mobile-1.3.2.css">
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/iscroll.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="./js/global.js"></script>
+<link rel="stylesheet" href="./css/global.css">
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery-1.8.2.min.js"></script>
+
+
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery.mobile-1.3.2.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+	
+	});
+		
+		</script>
+</head> 
+<body class="ui-mobile-viewport ui-overlay-a">
+
+ 	<div data-role="page" id="chooPage" data-dom-cache="true" data-title="平安互助">
+	
+		<div data-role="header" data-theme="b" >
+			<span class="ui-btn-left"> <a href="updateNavi.html"
+				data-role="button" data-inline="true" data-icon="back" rel="external"
+				class="ui-btn-left">返回</a>
+			</span>
+			<h1>选择头像</h1>
+		</div>
+		<div data-role="content">				
+		 <a href="#" data-role="button" onclick="goTo('#imgPage')">选择头像</a> 
+					<div id="headimg" class="seleced-user-head-img"></div> 
+		</div>
+
+<div data-role="footer"  data-theme="f"   data-position="fixed">
+    <h1>平安互助-合作共赢</h1>
+  </div>
+</div>
+
+
+ 	<div data-role="page" id="imgPage" data-dom-cache="true" data-title="平安互助">
+		<script type="text/javascript">
+			var myScroll;
+			function loaded4() {
+				if (myScroll != null) {
+					myScroll.destroy();
+				}
+				myScroll = new iScroll("wrapperHead", {
+					checkDOMChange : false
+				});
+			}
+			function selectImg(img) {
+				$("#headimg").html(
+						"<img src=\"img/headpic/" + img
+								+ ".jpg\"  onerror=\"errpic(this)\"/>")
+			//	goTo("#chooPage");
+								$.ajax({
+									
+									type : 'POST',
+									url : '/wlp/updateUserImage',
+									data : {
+										imageId : img},
+									dataType : 'json',
+									success : function(data, type, request) {
+										location.href="memCenter.html"
+									},
+									error : function(xmlhttprequest, errorinfo) {
+										location.href="memCenter.html"
+									}
+								});
+		
+			}
+			$("#imgPage")
+					.live(
+							'pageinit',
+							function() {
+								var content = ""
+								for (var i = 1; i < 11; i++) {
+									content = content + "<li>";
+									content = content
+											+ "<a href=\"#\"><img src=\"img/headpic/"
+											+ i
+											+ ".jpg\" onerror=\"errpic(this)\" onclick=\"selectImg("
+											+ i + ")\"/></a>";
+									content = content + "</li>";
+								}
+								$("#headpicul").append(content);
+
+								//bind swipe event
+								$('#imgPage').bind("swiperight", function() {
+									$.mobile.changePage('#regPage', {
+										transition : "slide",
+										reverse : true
+									});
+								});
+							});
+			$("#imgPage").live("pagebeforeshow", function() {
+				setTimeout(loaded4, 200);
+			});
+
+			$("#imgPage").live('pageshow', function() {
+
+			});
+		</script>
+		<div data-role="header" data-theme="b" >
+			<span class="ui-btn-left"> <a href="updateNavi.html"
+				data-role="button" data-inline="true" data-icon="back" rel="external"
+				class="ui-btn-left">返回</a>
+			</span>
+			<h1>选择头像</h1>
+		</div>
+		<div data-role="content">				
+			<div id="wrapperHead" class="wrapper" >
+				<div id="scrollerHead" class="scroller">
+					<ul id="headpicul" class="gallery">
+						
+							<li>
+								<a href="#"><img src="img/headpic/1.jpg" onerror="errpic(this)" onclick="selectImg(1)"/></a>
+							</li>
+							<li>
+								<img src="img/headpic/2.jpg" onerror="errpic(this)" />
+							</li> 
+					</ul>
+				</div>
+			</div>
+		</div>
+
+<div data-role="footer"  data-theme="f"   data-position="fixed">
+    <h1>平安互助-合作共赢</h1>
+  </div>
+</div>
+
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div></body></html>

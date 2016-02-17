@@ -129,7 +129,26 @@ public class UserController {
 		}
 		return flag;
 	}
-
+	@RequestMapping(value = "/wlp/updateUserImage", method = RequestMethod.POST)
+	public @ResponseBody Boolean updateUserImage(@RequestParam(required = true) String imageId) {
+		Boolean flag = false;
+		HttpSession session = request.getSession();
+		String cname = (String) session.getAttribute(USER_NAME);
+		if (cname == null) {
+			return false;
+		}
+		try {
+			WlpUser user = wlpUserService.getUserByEmail(cname);
+			if (user != null ) {
+				user.setRemark(imageId);
+				wlpUserService.updateUser(user);
+				flag = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
 	@RequestMapping(value = "/wlp/updateUserPayPsd", method = RequestMethod.POST)
 	public @ResponseBody Boolean updateUserPayPsd(@RequestParam(required = true) String oldpsd,
 			@RequestParam(required = true) String newpsd) {
