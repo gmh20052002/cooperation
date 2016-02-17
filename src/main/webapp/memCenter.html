@@ -34,10 +34,41 @@
 <script type="text/javascript" charset="utf-8"
 	src="./js/frame/jquery-1.9.1.min.js"></script>
 
-
-
 <script type="text/javascript" charset="utf-8"
 	src="./js/frame/jquery.mobile-1.3.2.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$.ajax({
+			type : "GET",
+			url : "/wlp/getUserInfo",
+			success : function(data) {
+				  console.log(data)
+				if(data){				     
+					  $('#introman').html(data.recEmail);
+				       $('#email').html(data.email);
+				       $('#username').html(data.userName);
+				}else{
+					 location.href="index.html#loginPage"; 
+				}
+			}
+		});
+		$("#loginout").click(function() {
+			$.ajax({
+				type : 'GET',
+				url : '/wlp/loginout',
+				dataType : 'json',
+				success : function(data, type, request) {
+		             location.href="index.html#loginPage";   		            
+				},
+				error : function(xmlhttprequest, errorinfo) {
+					  location.href="index.html#loginPage";   	
+				}
+			});
+		});
+	});
+		
+		</script>
+	
 </head> 
 <body class="ui-mobile-viewport ui-overlay-a">
 
@@ -50,17 +81,17 @@
             <li >			
 				<img src="img/headpic/7.jpg" style="padding-left: 4%;padding-top: 10px;">
 				<div style="margin-left: 4%;">
-				<h3>Kung Fu Panda</h3>
-				<p>账号: PG</p>
-				<p>推荐人: 95 min.</p>
+				<h3><span id="username"></span></h3>
+				<p>账号:  <span id="email"></span></p>
+				<p>推荐人: <span id="introman"></span></p>
 		</div>	
 			</li>
-		    <li> <a href="index.html#regPage">注册新用户 </a></li>
-             <li> <a href="#page2"  >激活码管理</a></li>
-            <li> <a href="#page2"  >团队管理</a></li>
-             <li><a href="memberCenter.html#page4"  >账号管理</a></li>
-			 <li> <a href="memberCenter.html#page2"  >我的钱包</a></li>
-             <li ><a href="index.html#loginPage" rel="external">退出登录</a></li>
+		    <li> <a href="index.html#regPage" rel="external">注册新用户 </a></li>
+             <li> <a href="acodeManage.html" rel="external" >激活码管理</a></li>
+            <li> <a href="teamManage.html" rel="external" >团队管理</a></li>
+             <li><a href="updateNavi.html"  rel="external">帐号管理</a></li>
+			 <li> <a href="myWallet.html" rel="external" >我的钱包</a></li>
+             <li ><a  id="loginout"  rel="external">退出登录</a></li>
 		</ul>		
 	</div>
 <div data-role="footer"  data-theme="f"  data-position="fixed">

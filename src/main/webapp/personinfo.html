@@ -35,6 +35,93 @@
 
 <script type="text/javascript" charset="utf-8"
 	src="./js/frame/jquery.mobile-1.3.2.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$.ajax({
+			type : "GET",
+			url : "/wlp/getUserInfo",
+			success : function(data) {
+				  console.log(data)
+				if(data){				     
+					  $('#phone').val(data.mobilePhone);
+				       $('#email').html(data.email);
+				       $('#wechat').val(data.wechat);
+				       $('#username').val(data.userName);
+				       $('#alipay').val(data.alipay);
+				       $('#bankname').val(data.bankName);
+				       $("#select-native-1 option[value='"+data.bankName+"']").prop("selected",true);
+				       $('#select-native-1').selectmenu('refresh');
+				       $('#bankusername').val(data.bankUsername);
+				       $('#bankacct').val(data.bankAcct);
+				}else{
+					 location.href="index.html#loginPage"; 
+				}
+			}
+		});
+		
+		$("#saveinfo").click(function() {
+			  var uname =$("#username").val(); 
+				if(!uname){
+					$("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，昵称不能为空!</font>");
+			        $("#username").focus();
+					return false;
+				}
+				 var telphone =$("#phone").val(); 
+				 if(!telphone){
+						$("#showRegMes").show();
+				        $("#showRegMes").html("<font color=red>注册失败，手机号码不能为空!</font>");
+				        $("#phone").focus();
+						return false;
+					}
+				 var wechat =$("#wechat").val(); 
+				 if(!wechat){
+						$("#showRegMes").show();
+				        $("#showRegMes").html("<font color=red>注册失败，微信号不能为空!</font>");
+				        $("#wechat").focus();
+						return false;
+					}
+				 var alipay =$("#alipay").val(); 
+				 if(!alipay){
+						$("#showRegMes").show();
+				        $("#showRegMes").html("<font color=red>注册失败，支付宝不能为空!</font>");
+				        $("#alipay").focus();
+						return false;
+					}
+				 var bankusername =$("#bankusername").val(); 
+				 if(!bankusername){
+						$("#showRegMes").show();
+				        $("#showRegMes").html("<font color=red>注册失败，银行账户名不能为空!</font>");
+				        $("#bankusername").focus();
+						return false;
+					}
+				 var bankacct =$("#bankacct").val(); 
+				 if(!bankacct){
+						$("#showRegMes").show();
+				        $("#showRegMes").html("<font color=red>注册失败，银行账号不能为空!</font>");
+				        $("#bankacct").focus();
+						return false;
+					}
+			$.ajax({				
+				type : 'POST',
+				url : '/wlp/updateUserInfo',
+				data : {
+					username : $("#username").val(),telphone : $("#phone").val(),wechat : $("#wechat").val(),
+					alipay : $("#alipay").val(),bankname : $("#select-native-1").val(),bankusername : $("#bankusername").val(),bankacct : $("#bankacct").val()
+					},
+					
+				dataType : 'json',
+				success : function(data, type, request) {
+					 location.href="memCenter.html"; 
+				},
+				error : function(xmlhttprequest, errorinfo) {
+					
+				}
+			});
+		});
+	});
+		
+		</script>
 </head> 
 <body class="ui-mobile-viewport ui-overlay-a">
 
@@ -46,17 +133,18 @@
 	</div>
   <div data-role="content" class="ui-content" role="main">		
       <form action="#" method="post" id="regForm">
-    	 
-					<label for="balance">昵称： </label><input type="text" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
+    	 	 <label for="email2"><span  style="font-size: 16px;">用户账号:&nbsp;</span><span id="email"  style="font-size: 16px;"></span></label>
+    	 	 <br/>
+					<label for="username">昵称： </label><input type="text" placeholder="" name="username" value=""  id="username" data-clear-btn="true">                  
               
-					<label for="money">手机号码: </label><input type="tel" placeholder="" name="money" value=""  id="money"  data-clear-btn="true">                  
+					<label for="phone">手机号码: </label><input type="tel" placeholder="" name="phone" value="" class="required" pattern="[0-9]*" id="phone"  data-clear-btn="true">                  
             
-					 <label for="email2">登录邮箱:<span>8643533453@qq.com</span></label>
-               
+				
+                       
                      
-					<label for="balance">微信号： </label><input type="text" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
+					<label for="wechat">微信号： </label><input type="text" placeholder="" name="wechat" value=""  id="wechat" data-clear-btn="true">                  
            
-					<label for="balance">支付宝： </label><input type="text" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
+					<label for="alipay">支付宝： </label><input type="text" placeholder="" name="alipay" value=""  id="alipay" data-clear-btn="true">                  
              
                 
            
@@ -66,16 +154,20 @@
         <option value="2">中国农业银行</option>
         <option value="3">中国工商银行</option>
         <option value="4">中国银行</option>
+         <option value="5">交通银行</option>
+          <option value="6">招商银行</option>
     </select>
 
                 
-					<label for="balance">银行账户名： </label><input type="text" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
+					<label for="bankusername">银行账户名： </label><input type="text" placeholder="" name="bankusername"   id="bankusername" data-clear-btn="true">                  
              
-					<label for="balance">银行账号： </label><input  type="number" name="number" pattern="[0-9]*" placeholder="" name="balance" value=""  id="balance" data-clear-btn="true">                  
-               
-                <a href="#loginPage" id="regButton" data-role="button"
+					<label for="bankacct">银行账号： </label><input  type="text" name="bankacct" pattern="[0-9]*" placeholder=""    id="bankacct" data-clear-btn="true">                  
+                  <div data-role="main"  style=" text-align: center;">
+                <a  id="saveinfo" data-role="button"
 					data-theme="e">完成</a> 
                        <input type="reset"  value="重置">
+                            <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
+                </div>
               </form>  
 	</div>
 <div data-role="footer"  data-theme="f" data-position="fixed">

@@ -103,6 +103,14 @@ $(document).ready(function() {
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
 				}
+			 if(password4.length<6||password4.length>20){				 
+				    $("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，登陆密码6-20位字母数字组合!</font>");
+			        $("#password4").focus();
+			        $('#regtext').html('注册');
+			        $('#regButton').buttonMarkup({ theme: "e" });
+					return false;
+			 }
 			 if(password4!=password3){
 					$("#showRegMes").show();
 			        $("#showRegMes").html("<font color=red>注册失败， 确认登陆密码和登陆密码不一致!</font>");
