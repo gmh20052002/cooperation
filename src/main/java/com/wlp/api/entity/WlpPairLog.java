@@ -5,71 +5,81 @@ import java.util.Date;
 public class WlpPairLog {
     private String id;
 
-    private Long pairMoney;
+	private Long pairMoney;
 
-    private String fromUser;
+	private String fromUser;
 
-    private String toUser;
+	private String toUser;
 
-    private Date orderTime;
+	private Date orderTime;
 
-    private Date pairTime;
+	private Date pairTime;
 
-    private String status;
+	private String status;
 
-    public String getId() {
-        return id;
-    }
+	private String payType;
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+	public String getId() {
+		return id;
+	}
 
-    public Long getPairMoney() {
-        return pairMoney;
-    }
+	public void setId(String id) {
+		this.id = id == null ? null : id.trim();
+	}
 
-    public void setPairMoney(Long pairMoney) {
-        this.pairMoney = pairMoney;
-    }
+	public Long getPairMoney() {
+		return pairMoney;
+	}
 
-    public String getFromUser() {
-        return fromUser;
-    }
+	public void setPairMoney(Long pairMoney) {
+		this.pairMoney = pairMoney;
+	}
 
-    public void setFromUser(String fromUser) {
-        this.fromUser = fromUser == null ? null : fromUser.trim();
-    }
+	public String getFromUser() {
+		return fromUser;
+	}
 
-    public String getToUser() {
-        return toUser;
-    }
+	public void setFromUser(String fromUser) {
+		this.fromUser = fromUser == null ? null : fromUser.trim();
+	}
 
-    public void setToUser(String toUser) {
-        this.toUser = toUser == null ? null : toUser.trim();
-    }
+	public String getToUser() {
+		return toUser;
+	}
 
-    public Date getOrderTime() {
-        return orderTime;
-    }
+	public void setToUser(String toUser) {
+		this.toUser = toUser == null ? null : toUser.trim();
+	}
 
-    public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
-    }
+	public Date getOrderTime() {
+		return orderTime;
+	}
 
-    public Date getPairTime() {
-        return pairTime;
-    }
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
 
-    public void setPairTime(Date pairTime) {
-        this.pairTime = pairTime;
-    }
+	public Date getPairTime() {
+		return pairTime;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public void setPairTime(Date pairTime) {
+		this.pairTime = pairTime;
+	}
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status == null ? null : status.trim();
+	}
+
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType == null ? null : payType.trim();
+	}
 }

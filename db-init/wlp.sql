@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-02-16 22:40:10
+Date: 2016-02-18 23:23:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,6 +46,7 @@ CREATE TABLE `wlp_pair_log` (
   `ORDER_TIME` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '下单时间',
   `PAIR_TIME` timestamp NULL DEFAULT NULL COMMENT '配对时间',
   `STATUS` varchar(10) DEFAULT NULL COMMENT '状态',
+  `PAY_TYPE` varchar(255) NOT NULL DEFAULT '' COMMENT '支付方式bank银行alipay支付宝wechat--微信',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

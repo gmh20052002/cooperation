@@ -3,7 +3,11 @@ package com.wlp.api.service;
 import java.util.List;
 
 import com.wlp.api.entity.WlpUser;
-
+/**
+ * 用户会员操作接口
+ * @author 明华
+ *
+ */
 public interface WlpUserService {
 	/**
 	 * 普通登录

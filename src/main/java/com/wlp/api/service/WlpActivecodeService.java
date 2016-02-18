@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.wlp.api.entity.WlpActivecode;
 
+/**
+ * 激活码管理接口
+ * @author 明华
+ *
+ */
 public interface WlpActivecodeService {
 	/**
 	 * 获取用户可用激活码
