@@ -3,21 +3,58 @@ package com.wlp.api.entity;
 import java.util.Date;
 
 public class WlpPairLog {
-    private String id;
 
+	private String orderPic;
+
+	public String getOrderPic() {
+		return orderPic;
+	}
+
+	public void setOrderPic(String orderPic) {
+		this.orderPic = orderPic == null ? null : orderPic.trim();
+	}
+
+	private String id;
+
+	/**
+	 * 配对金额
+	 */
 	private Long pairMoney;
 
+	/**
+	 * 支付�?
+	 */
 	private String fromUser;
 
+	/**
+	 * 受益�?
+	 */
 	private String toUser;
 
+	/**
+	 * 交易完成时间
+	 */
 	private Date orderTime;
 
+	/**
+	 * 匹配时间
+	 */
 	private Date pairTime;
 
+	/**
+	 * 交易状�?：状态：0--未完成，1--已完成
+	 */
 	private String status;
-
+	
+	/**
+	 * 支付方式：bank--银行,alipay--支付宝?wechat--微信
+	 */
 	private String payType;
+
+	/**
+	 * 提现类型：dynamic--互助提现,help--互助提现
+	 */
+	private String extrakType;
 
 	public String getId() {
 		return id;
@@ -82,4 +119,13 @@ public class WlpPairLog {
 	public void setPayType(String payType) {
 		this.payType = payType == null ? null : payType.trim();
 	}
+
+	public String getExtrakType() {
+		return extrakType;
+	}
+
+	public void setExtrakType(String extrakType) {
+		this.extrakType = extrakType == null ? null : extrakType.trim();
+	}
+
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-02-18 23:23:10
+Date: 2016-02-20 01:22:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,8 +45,10 @@ CREATE TABLE `wlp_pair_log` (
   `TO_USER` varchar(255) DEFAULT NULL,
   `ORDER_TIME` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '下单时间',
   `PAIR_TIME` timestamp NULL DEFAULT NULL COMMENT '配对时间',
-  `STATUS` varchar(10) DEFAULT NULL COMMENT '状态',
+  `STATUS` varchar(10) DEFAULT NULL COMMENT '状态：0--未完成，1--已完成',
   `PAY_TYPE` varchar(255) NOT NULL DEFAULT '' COMMENT '支付方式bank银行alipay支付宝wechat--微信',
+  `EXTRAK_TYPE` varchar(255) DEFAULT NULL COMMENT '提现类型：dynamic--动态体现,help--互助提现',
+  `ORDER_PIC` varchar(255) DEFAULT NULL COMMENT '交易图片地址，一般为一张转帐截图',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -88,7 +90,8 @@ DROP TABLE IF EXISTS `wlp_wallet`;
 CREATE TABLE `wlp_wallet` (
   `ID` varchar(64) NOT NULL,
   `EMAIL` varchar(255) NOT NULL COMMENT '钱包帐号',
-  `BALANCE` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '余额',
+  `CAPITAL` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '本金',
+  `BONUS` decimal(10,0) DEFAULT NULL COMMENT '分红',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

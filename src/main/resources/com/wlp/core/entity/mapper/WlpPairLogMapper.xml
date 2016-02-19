@@ -10,9 +10,12 @@
     <result column="PAIR_TIME" jdbcType="TIMESTAMP" property="pairTime" />
     <result column="STATUS" jdbcType="VARCHAR" property="status" />
     <result column="PAY_TYPE" jdbcType="VARCHAR" property="payType" />
+    <result column="EXTRAK_TYPE" jdbcType="VARCHAR" property="extrakType" />
+    <result column="ORDER_PIC" jdbcType="VARCHAR" property="orderPic" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, PAIR_MONEY, FROM_USER, TO_USER, ORDER_TIME, PAIR_TIME, STATUS, PAY_TYPE
+    ID, PAIR_MONEY, FROM_USER, TO_USER, ORDER_TIME, PAIR_TIME, STATUS, PAY_TYPE, EXTRAK_TYPE, 
+    ORDER_PIC
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -27,10 +30,12 @@
   <insert id="insert" parameterType="com.wlp.api.entity.WlpPairLog">
     insert into wlp_pair_log (ID, PAIR_MONEY, FROM_USER, 
       TO_USER, ORDER_TIME, PAIR_TIME, 
-      STATUS, PAY_TYPE)
+      STATUS, PAY_TYPE, EXTRAK_TYPE, 
+      ORDER_PIC)
     values (#{id,jdbcType=VARCHAR}, #{pairMoney,jdbcType=DECIMAL}, #{fromUser,jdbcType=VARCHAR}, 
       #{toUser,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{pairTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR})
+      #{status,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{extrakType,jdbcType=VARCHAR}, 
+      #{orderPic,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wlp.api.entity.WlpPairLog">
     insert into wlp_pair_log
@@ -59,6 +64,12 @@
       <if test="payType != null">
         PAY_TYPE,
       </if>
+      <if test="extrakType != null">
+        EXTRAK_TYPE,
+      </if>
+      <if test="orderPic != null">
+        ORDER_PIC,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -84,6 +95,12 @@
       </if>
       <if test="payType != null">
         #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="extrakType != null">
+        #{extrakType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPic != null">
+        #{orderPic,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -111,6 +128,12 @@
       <if test="payType != null">
         PAY_TYPE = #{payType,jdbcType=VARCHAR},
       </if>
+      <if test="extrakType != null">
+        EXTRAK_TYPE = #{extrakType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPic != null">
+        ORDER_PIC = #{orderPic,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -122,7 +145,9 @@
       ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
       PAIR_TIME = #{pairTime,jdbcType=TIMESTAMP},
       STATUS = #{status,jdbcType=VARCHAR},
-      PAY_TYPE = #{payType,jdbcType=VARCHAR}
+      PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      EXTRAK_TYPE = #{extrakType,jdbcType=VARCHAR},
+      ORDER_PIC = #{orderPic,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   
@@ -152,6 +177,9 @@
 		      	</if>
 		      	<if test="condition.payType != null">
 		        	PAY_TYPE = #{condition.payType,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.extrakType != null">
+		        	EXTRAK_TYPE = #{condition.extrakType,jdbcType=VARCHAR}
 		      	</if>
 			</if>
 		</where>

@@ -6,4 +6,6 @@ public class CommonCst {
 	public static final String NOT_USED = "0";
 	public static final String USED = "1";
 
+	public static final String NOT_COMPLETE_ORDER = "0";
+	public static final String COMPLETE_ORDER = "1";
 }
