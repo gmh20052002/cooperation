@@ -39,11 +39,11 @@
 			selectByExampleQueryId="false">
 		</table> -->
 
-		<table tableName="WLP_ACTIVECODE" domainObjectName="WlpActivecode"
+		<!-- <table tableName="WLP_ACTIVECODE" domainObjectName="WlpActivecode"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-		</table>
+		</table> -->
 
 		<table tableName="WLP_PAIR_LOG" domainObjectName="WlpPairLog"
 			enableCountByExample="false" enableUpdateByExample="false"
@@ -51,11 +51,11 @@
 			selectByExampleQueryId="false">
 		</table>
 
-		<table tableName="WLP_WALLET" domainObjectName="WlpWallet"
+		<!-- <table tableName="WLP_WALLET" domainObjectName="WlpWallet"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-		</table>
+		</table> -->
 			
 	</context>
 </generatorConfiguration>

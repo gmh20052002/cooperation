@@ -3,73 +3,129 @@ package com.wlp.api.entity;
 import java.util.Date;
 
 public class WlpPairLog {
-    private String id;
 
-    private Long pairMoney;
+	private String orderPic;
 
-    private String fromUser;
+	public String getOrderPic() {
+		return orderPic;
+	}
 
-    private String toUser;
+	public void setOrderPic(String orderPic) {
+		this.orderPic = orderPic == null ? null : orderPic.trim();
+	}
 
-    private Date orderTime;
+	private String id;
 
-    private Date pairTime;
+	/**
+	 * 配对金额
+	 */
+	private Long pairMoney;
 
-    private String status;
+	/**
+	 * 支付�?
+	 */
+	private String fromUser;
 
-    public String getId() {
-        return id;
-    }
+	/**
+	 * 受益�?
+	 */
+	private String toUser;
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+	/**
+	 * 交易完成时间
+	 */
+	private Date orderTime;
 
-    public Long getPairMoney() {
-        return pairMoney;
-    }
+	/**
+	 * 匹配时间
+	 */
+	private Date pairTime;
 
-    public void setPairMoney(Long pairMoney) {
-        this.pairMoney = pairMoney;
-    }
+	/**
+	 * 交易状�?：状态：0--未完成，1--已完成
+	 */
+	private String status;
+	
+	/**
+	 * 支付方式：bank--银行,alipay--支付宝?wechat--微信
+	 */
+	private String payType;
 
-    public String getFromUser() {
-        return fromUser;
-    }
+	/**
+	 * 提现类型：dynamic--互助提现,help--互助提现
+	 */
+	private String extrakType;
 
-    public void setFromUser(String fromUser) {
-        this.fromUser = fromUser == null ? null : fromUser.trim();
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getToUser() {
-        return toUser;
-    }
+	public void setId(String id) {
+		this.id = id == null ? null : id.trim();
+	}
 
-    public void setToUser(String toUser) {
-        this.toUser = toUser == null ? null : toUser.trim();
-    }
+	public Long getPairMoney() {
+		return pairMoney;
+	}
 
-    public Date getOrderTime() {
-        return orderTime;
-    }
+	public void setPairMoney(Long pairMoney) {
+		this.pairMoney = pairMoney;
+	}
 
-    public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
-    }
+	public String getFromUser() {
+		return fromUser;
+	}
 
-    public Date getPairTime() {
-        return pairTime;
-    }
+	public void setFromUser(String fromUser) {
+		this.fromUser = fromUser == null ? null : fromUser.trim();
+	}
 
-    public void setPairTime(Date pairTime) {
-        this.pairTime = pairTime;
-    }
+	public String getToUser() {
+		return toUser;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public void setToUser(String toUser) {
+		this.toUser = toUser == null ? null : toUser.trim();
+	}
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
+	public Date getOrderTime() {
+		return orderTime;
+	}
+
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
+
+	public Date getPairTime() {
+		return pairTime;
+	}
+
+	public void setPairTime(Date pairTime) {
+		this.pairTime = pairTime;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status == null ? null : status.trim();
+	}
+
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType == null ? null : payType.trim();
+	}
+
+	public String getExtrakType() {
+		return extrakType;
+	}
+
+	public void setExtrakType(String extrakType) {
+		this.extrakType = extrakType == null ? null : extrakType.trim();
+	}
+
 }

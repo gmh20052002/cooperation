@@ -1,117 +1,187 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wlp.core.dao.WlpPairLogMapper" >
-  <resultMap id="BaseResultMap" type="com.wlp.api.entity.WlpPairLog" >
-    <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="PAIR_MONEY" property="pairMoney" jdbcType="DECIMAL" />
-    <result column="FROM_USER" property="fromUser" jdbcType="VARCHAR" />
-    <result column="TO_USER" property="toUser" jdbcType="VARCHAR" />
-    <result column="ORDER_TIME" property="orderTime" jdbcType="TIMESTAMP" />
-    <result column="PAIR_TIME" property="pairTime" jdbcType="TIMESTAMP" />
-    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlp.core.dao.WlpPairLogMapper">
+  <resultMap id="BaseResultMap" type="com.wlp.api.entity.WlpPairLog">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="PAIR_MONEY" jdbcType="DECIMAL" property="pairMoney" />
+    <result column="FROM_USER" jdbcType="VARCHAR" property="fromUser" />
+    <result column="TO_USER" jdbcType="VARCHAR" property="toUser" />
+    <result column="ORDER_TIME" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="PAIR_TIME" jdbcType="TIMESTAMP" property="pairTime" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="PAY_TYPE" jdbcType="VARCHAR" property="payType" />
+    <result column="EXTRAK_TYPE" jdbcType="VARCHAR" property="extrakType" />
+    <result column="ORDER_PIC" jdbcType="VARCHAR" property="orderPic" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    ID, PAIR_MONEY, FROM_USER, TO_USER, ORDER_TIME, PAIR_TIME, STATUS
+  <sql id="Base_Column_List">
+    ID, PAIR_MONEY, FROM_USER, TO_USER, ORDER_TIME, PAIR_TIME, STATUS, PAY_TYPE, EXTRAK_TYPE, 
+    ORDER_PIC
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from wlp_pair_log
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from wlp_pair_log
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.wlp.api.entity.WlpPairLog" >
+  <insert id="insert" parameterType="com.wlp.api.entity.WlpPairLog">
     insert into wlp_pair_log (ID, PAIR_MONEY, FROM_USER, 
       TO_USER, ORDER_TIME, PAIR_TIME, 
-      STATUS)
+      STATUS, PAY_TYPE, EXTRAK_TYPE, 
+      ORDER_PIC)
     values (#{id,jdbcType=VARCHAR}, #{pairMoney,jdbcType=DECIMAL}, #{fromUser,jdbcType=VARCHAR}, 
       #{toUser,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{pairTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=VARCHAR})
+      #{status,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{extrakType,jdbcType=VARCHAR}, 
+      #{orderPic,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wlp.api.entity.WlpPairLog" >
+  <insert id="insertSelective" parameterType="com.wlp.api.entity.WlpPairLog">
     insert into wlp_pair_log
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         ID,
       </if>
-      <if test="pairMoney != null" >
+      <if test="pairMoney != null">
         PAIR_MONEY,
       </if>
-      <if test="fromUser != null" >
+      <if test="fromUser != null">
         FROM_USER,
       </if>
-      <if test="toUser != null" >
+      <if test="toUser != null">
         TO_USER,
       </if>
-      <if test="orderTime != null" >
+      <if test="orderTime != null">
         ORDER_TIME,
       </if>
-      <if test="pairTime != null" >
+      <if test="pairTime != null">
         PAIR_TIME,
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         STATUS,
       </if>
+      <if test="payType != null">
+        PAY_TYPE,
+      </if>
+      <if test="extrakType != null">
+        EXTRAK_TYPE,
+      </if>
+      <if test="orderPic != null">
+        ORDER_PIC,
+      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="pairMoney != null" >
+      <if test="pairMoney != null">
         #{pairMoney,jdbcType=DECIMAL},
       </if>
-      <if test="fromUser != null" >
+      <if test="fromUser != null">
         #{fromUser,jdbcType=VARCHAR},
       </if>
-      <if test="toUser != null" >
+      <if test="toUser != null">
         #{toUser,jdbcType=VARCHAR},
       </if>
-      <if test="orderTime != null" >
+      <if test="orderTime != null">
         #{orderTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="pairTime != null" >
+      <if test="pairTime != null">
         #{pairTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="extrakType != null">
+        #{extrakType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPic != null">
+        #{orderPic,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wlp.api.entity.WlpPairLog" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.wlp.api.entity.WlpPairLog">
     update wlp_pair_log
-    <set >
-      <if test="pairMoney != null" >
+    <set>
+      <if test="pairMoney != null">
         PAIR_MONEY = #{pairMoney,jdbcType=DECIMAL},
       </if>
-      <if test="fromUser != null" >
+      <if test="fromUser != null">
         FROM_USER = #{fromUser,jdbcType=VARCHAR},
       </if>
-      <if test="toUser != null" >
+      <if test="toUser != null">
         TO_USER = #{toUser,jdbcType=VARCHAR},
       </if>
-      <if test="orderTime != null" >
+      <if test="orderTime != null">
         ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="pairTime != null" >
+      <if test="pairTime != null">
         PAIR_TIME = #{pairTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="extrakType != null">
+        EXTRAK_TYPE = #{extrakType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPic != null">
+        ORDER_PIC = #{orderPic,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpPairLog" >
+  <update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpPairLog">
     update wlp_pair_log
     set PAIR_MONEY = #{pairMoney,jdbcType=DECIMAL},
       FROM_USER = #{fromUser,jdbcType=VARCHAR},
       TO_USER = #{toUser,jdbcType=VARCHAR},
       ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
       PAIR_TIME = #{pairTime,jdbcType=TIMESTAMP},
-      STATUS = #{status,jdbcType=VARCHAR}
+      STATUS = #{status,jdbcType=VARCHAR},
+      PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      EXTRAK_TYPE = #{extrakType,jdbcType=VARCHAR},
+      ORDER_PIC = #{orderPic,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByCondition" parameterType="com.wlp.api.entity.WlpPairLog" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from wlp_pair_log
+		<where>
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+		      	<if test="condition.pairMoney != null">
+		        	PAIR_MONEY = #{condition.pairMoney,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.fromUser != null">
+		        	FROM_USER = #{condition.fromUser,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.fromUser != null">
+		        	FROM_USER = #{condition.fromUser,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.toUser != null">
+		        	TO_USER = #{condition.toUser,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.status != null">
+		        	STATUS = #{condition.status,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.payType != null">
+		        	PAY_TYPE = #{condition.payType,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.extrakType != null">
+		        	EXTRAK_TYPE = #{condition.extrakType,jdbcType=VARCHAR}
+		      	</if>
+			</if>
+		</where>
+	</select>
 </mapper>
