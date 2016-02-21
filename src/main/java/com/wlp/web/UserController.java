@@ -216,14 +216,24 @@ public class UserController {
 		session.invalidate();
 	}
 
-	@RequestMapping(value = "/wlp/transLogin", method = RequestMethod.GET)
-	public @ResponseBody WlpUser transLogin(@RequestParam(required = true) String userName,
+	@RequestMapping(value = "/wlp/transLogin", method = RequestMethod.POST)
+	public @ResponseBody Boolean transLogin(
 			@RequestParam(required = true) String transPassword) {
 		try {
-			return wlpUserService.transLogin(userName, transPassword);
+			if(transPassword==null){
+				return false;
+			}
+			HttpSession session = request.getSession();
+			String userName = (String) session.getAttribute(USER_NAME);
+			if (userName == null) {
+				return false;
+			}
+			if( wlpUserService.transLogin(userName, transPassword)!=null){
+				return true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 }

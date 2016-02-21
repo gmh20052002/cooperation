@@ -41,46 +41,46 @@
 			 var password3 =$("#password3").val(); 
 			 if(!password3){
 					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，登陆密码不能为空!</font>");
+			        $("#showRegMes").html("<font color=red>修改失败，登陆密码不能为空!</font>");
 			        $("#password3").focus();
 					return false;
 				}			 
 			 if(password3.length<6||password3.length>20){				 
 				    $("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，登陆密码6-20位字母数字组合!</font>");
+			        $("#showRegMes").html("<font color=red>修改失败，登陆密码6-20位字母数字组合!</font>");
 			        $("#password3").focus();
 					return false;
 			 }
 			 var password4 =$("#password4").val(); 
 			 if(!password4){
 					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，支付密码不能为空!</font>");
+			        $("#showRegMes").html("<font color=red>修改失败，支付密码不能为空!</font>");
 			        $("#password4").focus();
 					return false;
 				}
 			 if(password4.length<6||password4.length>20){				 
 				    $("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，要设置的新密码为6-20位字母数字组合!</font>");
+			        $("#showRegMes").html("<font color=red>修改失败，要设置的新密码为6-20位字母数字组合!</font>");
 			        $("#password4").focus();
 					return false;
 			 }
 			 var password5 =$("#password5").val(); 
 			 if(!password5){
 					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，确认密码不能为空!</font>");
+			        $("#showRegMes").html("<font color=red>修改失败，确认密码不能为空!</font>");
 			        $("#password5").focus();			  
 					return false;
 				}	
 			 if(password5.length<6||password5.length>20){				 
 				    $("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，新密码为6-20位字母数字组合!</font>"); 
+			        $("#showRegMes").html("<font color=red>修改失败，新密码为6-20位字母数字组合!</font>"); 
 			        $("#password5").focus();
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
 			 }
 			 if(password5!=password4){
 					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，两次输入密码不一致!</font>");
+			        $("#showRegMes").html("<font color=red>修改失败，两次输入密码不一致!</font>");
 			        $("#password5").focus();
 					return false;
 				}
@@ -115,9 +115,9 @@
 
 <div data-role="page" id="page"  data-title="平安互助">
 	<div data-role="header" data-theme="f" >
-      <a href="updateNavi.html" data-role="button" data-icon="arrow-l" data-rel="back" data-iconpos="notext">Delete</a>
+      <a href="updateNavi.html" data-role="button" data-icon="arrow-l" data-rel="back" data-iconpos="notext">返回</a>
 		<h1  style="font-size: 13px;">修改支付密码</h1>
-      <a href="memCenter.html" data-role="button" data-icon="home"   data-iconpos="notext">Delete</a>
+      <a href="memCenter.html" data-role="button" data-icon="home"   data-iconpos="notext">主页</a>
 	</div>
      <div data-role="content" class="ui-content" role="main">		
       <form action="#" method="post" id="regForm">
@@ -136,7 +136,7 @@
          <div data-role="main"  style=" text-align: center;">
                 <a href="#" id="updateUserPayPsd" data-role="button"
 					data-theme="e">确认修改</a> 
-                       <input type="reset"  value="重置">
+           <!--             <input type="reset"  value="重置"> -->
                             <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
                 </div>
               </form>  

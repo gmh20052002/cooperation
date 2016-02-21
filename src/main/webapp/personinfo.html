@@ -36,6 +36,59 @@
 <script type="text/javascript" charset="utf-8"
 	src="./js/frame/jquery.mobile-1.3.2.js"></script>
 	<script type="text/javascript">
+	
+	function _cleantip(){
+		   $("#showRegMes").hide();	
+	}
+	
+	function buiness(){
+		$.ajax({				
+			type : 'POST',
+			url : '/wlp/updateUserInfo',
+			data : {
+				username : $("#username").val(),telphone : $("#phone").val(),wechat : $("#wechat").val(),
+				alipay : $("#alipay").val(),bankname : $("#select-native-1").val(),bankusername : $("#bankusername").val(),bankacct : $("#bankacct").val()
+				},
+				
+			dataType : 'json',
+			success : function(data, type, request) {
+				// location.href="memCenter.html"; 
+				   $("#showRegMes").show();
+			       $("#showRegMes").html("<font >信息修改成功</font>");
+			       window.setTimeout(function(){_cleantip()},3200);
+			}
+		}); 
+	}
+	
+	function continueDeal(){
+		
+		var psd=$("#dealpsd").val()
+		if(!psd){
+			   $("#showDealMes").show();
+		       $("#showDealMes").html("<font color='red'>交易密码不能未空</font>");
+		       $("#dealpsd").focus();
+				return false;
+		}
+		$.ajax({				
+			type : 'POST',
+			url : '/wlp/transLogin',		
+			data:{  'transPassword':psd},
+			dataType : 'json',
+			success : function(data, type, request) {
+				if(data){
+					$('.ui-dialog').dialog('close');
+			           buiness();
+
+				 }else{
+				       $("#showDealMes").show();
+				       $("#showDealMes").html("<font color='red'>交易密码错误</font>");
+				 }
+			}
+		});
+	
+	}
+
+	
 	$(document).ready(function() {
 		$.ajax({
 			type : "GET",
@@ -50,9 +103,10 @@
 				       $('#alipay').val(data.alipay);
 				       $('#bankname').val(data.bankName);
 				       $("#select-native-1 option[value='"+data.bankName+"']").prop("selected",true);
-				       $('#select-native-1').selectmenu('refresh');
+				     
 				       $('#bankusername').val(data.bankUsername);
 				       $('#bankacct').val(data.bankAcct);
+				       $('#select-native-1').selectmenu('refresh');
 				}else{
 					 location.href="index.html#loginPage"; 
 				}
@@ -63,61 +117,46 @@
 			  var uname =$("#username").val(); 
 				if(!uname){
 					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，昵称不能为空!</font>");
+			        $("#showRegMes").html("<font color=red>修改信息失败，昵称不能为空!</font>");
 			        $("#username").focus();
 					return false;
 				}
 				 var telphone =$("#phone").val(); 
 				 if(!telphone){
 						$("#showRegMes").show();
-				        $("#showRegMes").html("<font color=red>注册失败，手机号码不能为空!</font>");
+				        $("#showRegMes").html("<font color=red>修改信息失败，手机号码不能为空!</font>");
 				        $("#phone").focus();
 						return false;
 					}
 				 var wechat =$("#wechat").val(); 
 				 if(!wechat){
 						$("#showRegMes").show();
-				        $("#showRegMes").html("<font color=red>注册失败，微信号不能为空!</font>");
+				        $("#showRegMes").html("<font color=red>修改信息失败，微信号不能为空!</font>");
 				        $("#wechat").focus();
 						return false;
 					}
 				 var alipay =$("#alipay").val(); 
 				 if(!alipay){
 						$("#showRegMes").show();
-				        $("#showRegMes").html("<font color=red>注册失败，支付宝不能为空!</font>");
+				        $("#showRegMes").html("<font color=red>修改信息失败，支付宝不能为空!</font>");
 				        $("#alipay").focus();
 						return false;
 					}
 				 var bankusername =$("#bankusername").val(); 
 				 if(!bankusername){
 						$("#showRegMes").show();
-				        $("#showRegMes").html("<font color=red>注册失败，银行账户名不能为空!</font>");
+				        $("#showRegMes").html("<font color=red>修改信息失败，银行账户名不能为空!</font>");
 				        $("#bankusername").focus();
 						return false;
 					}
 				 var bankacct =$("#bankacct").val(); 
 				 if(!bankacct){
 						$("#showRegMes").show();
-				        $("#showRegMes").html("<font color=red>注册失败，银行账号不能为空!</font>");
+				        $("#showRegMes").html("<font color=red>修改信息失败，银行账号不能为空!</font>");
 				        $("#bankacct").focus();
 						return false;
 					}
-			$.ajax({				
-				type : 'POST',
-				url : '/wlp/updateUserInfo',
-				data : {
-					username : $("#username").val(),telphone : $("#phone").val(),wechat : $("#wechat").val(),
-					alipay : $("#alipay").val(),bankname : $("#select-native-1").val(),bankusername : $("#bankusername").val(),bankacct : $("#bankacct").val()
-					},
-					
-				dataType : 'json',
-				success : function(data, type, request) {
-					 location.href="memCenter.html"; 
-				},
-				error : function(xmlhttprequest, errorinfo) {
-					
-				}
-			});
+			
 		});
 	});
 		
@@ -163,9 +202,8 @@
              
 					<label for="bankacct">银行账号： </label><input  type="text" name="bankacct" pattern="[0-9]*" placeholder=""    id="bankacct" data-clear-btn="true">                  
                   <div data-role="main"  style=" text-align: center;">
-                <a  id="saveinfo" data-role="button"
-					data-theme="e">完成</a> 
-                       <input type="reset"  value="重置">
+                <a  href="dealPsd.html"  data-rel="dialog"    data-role="button" data-theme="e" id="saveinfo">修改</a> 
+                  <!--      <input type="reset"  value="重置"> -->
                             <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
                 </div>
               </form>  
