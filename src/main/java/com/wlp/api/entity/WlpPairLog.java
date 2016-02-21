@@ -15,6 +15,11 @@ public class WlpPairLog {
 	}
 
 	private String id;
+	
+	/**
+	 * 查询条件用，关联邮箱
+	 */
+	private String email;
 
 	/**
 	 * 配对金额
@@ -126,6 +131,14 @@ public class WlpPairLog {
 
 	public void setExtrakType(String extrakType) {
 		this.extrakType = extrakType == null ? null : extrakType.trim();
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
