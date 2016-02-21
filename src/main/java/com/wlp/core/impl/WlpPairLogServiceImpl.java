@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wlp.api.entity.CommonCst;
+import com.wlp.api.entity.Order;
+import com.wlp.api.entity.Sort;
 import com.wlp.api.entity.WlpPairLog;
 import com.wlp.api.service.WlpPairLogService;
 import com.wlp.core.dao.WlpPairLogMapper;
@@ -39,8 +41,13 @@ public class WlpPairLogServiceImpl implements WlpPairLogService {
 
 	@Override
 	public List<WlpPairLog> getWlpPairLogs(String email, String extrakType) {
-		// TODO Auto-generated method stub
-		return null;
+		WlpPairLog condition = new WlpPairLog();
+		condition.setExtrakType(extrakType);
+		condition.setEmail(email);
+		Order order = new Order();
+		order.setOrderBy("ORDER_TIME", Sort.DESC);
+		List<WlpPairLog> result = wlpPairLogMapper.selectByCondition(condition, order, null);
+		return result;
 	}
 
 	public WlpPairLogMapper getWlpPairLogMapper() {
