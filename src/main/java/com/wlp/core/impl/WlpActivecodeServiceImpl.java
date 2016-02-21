@@ -67,4 +67,21 @@ public class WlpActivecodeServiceImpl implements WlpActivecodeService {
 		this.wlpActivecodeMapper = wlpActivecodeMapper;
 	}
 
+	@Override
+	public void activeUser(String email,String code) {
+		WlpActivecode condition = new WlpActivecode();
+		condition.setEmail(email);
+		List<WlpActivecode> result  = wlpActivecodeMapper.selectByCondition(condition, null, null);
+		if(result != null && !result.isEmpty()){
+			for(WlpActivecode acode:result){
+				if(acode.getCode().equals(code)){
+					acode.setStatus(CommonCst.USED);
+					wlpActivecodeMapper.updateByPrimaryKeySelective(acode);
+					break;
+				}
+			}
+		}
+
+	}
+
 }

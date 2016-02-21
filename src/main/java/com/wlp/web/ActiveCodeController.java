@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.wlp.api.entity.CommonCst;
 import com.wlp.api.entity.WlpActivecode;
 import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpActivecodeService;
@@ -48,7 +50,7 @@ public class ActiveCodeController {
 		return codes;
 	}
 	/**
-	 * 已使用激活码
+	 * 已分享的激活码
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getUseActivecodes", method = RequestMethod.GET)
@@ -61,6 +63,31 @@ public class ActiveCodeController {
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getSharedActivecodes(username);
 		return codes;
 	}
+	
+	/**
+	 * 已使用激活码
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/getMyUsedActivecodes", method = RequestMethod.GET)
+	public @ResponseBody WlpActivecode getMyUsedActivecodes() {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute(USER_NAME);
+		if (username == null) {
+			return null;
+		}
+		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getUsedActivecodes(username);
+		if (codes== null || codes.size() < 1) {
+			return null;		
+		}
+			for (WlpActivecode coder : codes) {
+				if(coder.getStatus().equals(CommonCst.USED)){
+					return coder;
+				}
+				
+			}
+		return null;
+	}
+	
 	/**
 	 * 激活码使用记录
 	 * @return
@@ -238,6 +265,7 @@ public class ActiveCodeController {
 					if(coder.getCode().equals(code)){
 						user.setStatus("1");
 						wlpUserService.updateUser(user);
+						wlpActivecodeService.activeUser(username, code);
 						 flag = true;
 						break;					
 					}

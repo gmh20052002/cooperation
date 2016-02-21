@@ -38,7 +38,9 @@ public class UserController {
 		try {
 			HttpSession session = request.getSession();
 			session.setAttribute(USER_NAME, userName);
-			return wlpUserService.commonLogin(userName, password);
+			WlpUser logined_user =wlpUserService.commonLogin(userName, password);
+			session.setAttribute("logined_user", logined_user);
+			return logined_user;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -47,7 +47,11 @@
 					var img=data.remark;
 					  $('#introman').html(data.recEmail);
 				       $('#email').html(data.email);
-				       $('#username').html(data.userName);
+				       if(data.status=='1'){
+				    	   $('#username').html(data.userName);
+				       }else{
+				    	   $('#username').html(data.userName+"(未激活)");
+				       }				     
 				       var path="img/headpic/" + img+ ".jpg";
 				       $("#headimg").attr('src',path); 			   
 				}else{

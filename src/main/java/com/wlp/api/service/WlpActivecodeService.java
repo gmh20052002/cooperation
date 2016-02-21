@@ -34,4 +34,10 @@ public interface WlpActivecodeService {
 	 * @return
 	 */
 	public WlpActivecode shareActivecode(String fromEmail, String toEmail);
+	/**
+	 * 激活用户状态
+	 * @param email
+	 * @return
+	 */
+	public void activeUser(String emai,String code);
 }

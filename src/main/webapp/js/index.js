@@ -26,6 +26,7 @@ $(document).ready(function() {
 			url : "/wlp/login",
 			data :{userName:$("#email").val(),password:$("#password").val()},
 			success : function(data) {
+				console.log(data)
 				   $('#loginButton').buttonMarkup({ theme: "e" });
 				   $('#logintext').html('登陆');
 				if(data&&data.userName){
@@ -37,6 +38,7 @@ $(document).ready(function() {
 			},
 			 dataType: 'json',
 			error : function(xmlhttprequest, errorinfo) {
+				console.log(11111111111111)
 				   $('#loginButton').buttonMarkup({ theme: "e" });
 				   $('#logintext').html('登陆');
 			    $("#showMes").html("<font color=red>登录失败，邮箱或密码错误!</font>");

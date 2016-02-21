@@ -37,6 +37,26 @@
 	src="./js/frame/jquery.mobile-1.3.2.js"></script>
 		<script type="text/javascript">
 	$(document).ready(function() {
+		
+		$.ajax({				
+			type : 'GET',
+			url : '/wlp/getMyUsedActivecodes',			
+			dataType : 'json',
+			success : function(data, type, request) {
+				console.log(data)
+				if(data){
+					$("#email").val(data.code)
+				//    $("#showRegMes").show();
+			       //  $("#showRegMes").html("<font >激活成功</font>");
+			        $("#tip").html("已成功激活");
+			    	$("#shareActivecodes").prop('disabled',"true").addClass("ui-disabled").data('disabled',true);
+				 }else{
+					 
+				 }
+			}
+		});
+		
+		
 		$("#shareActivecodes").click(function() {
 			 var telphone = $("#email").val(); 
 			 if(!telphone){
@@ -53,19 +73,20 @@
 					},				
 				dataType : 'json',
 				success : function(data, type, request) {
-					console.log(data)
 					if(data){
-					    $("#showRegMes").show();
-				        $("#showRegMes").html("<font >激活成功</font>");
+					//    $("#showRegMes").show();
+				       //  $("#showRegMes").html("<font >激活成功</font>");
+				        $("#tip").html("已成功激活");
+				    	$("#shareActivecodes").prop('disabled',"true").addClass("ui-disabled").data('disabled',true);
 					 }else{
 						     $("#showRegMes").show();
-					        $("#showRegMes").html("<font color=red>激活失败，激活码错误或登录超时!</font>");
+					        $("#showRegMes").html("<font color=red>激活失败，激活码错误!</font>");
 					        $("#email").focus();
 					 }
 				},
 				error : function(xmlhttprequest, errorinfo) {
 					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>激活失败，激活码错误或登录超时!</font>");
+			        $("#showRegMes").html("<font color=red>激活失败，激活码错误!</font>");
 				}
 			});
 		});
@@ -88,7 +109,7 @@
                      <input type="text" name="email" id="email" placeholder="请输入激活码"  data-clear-btn="true"/> 
            
          <div data-role="main"  style=" text-align: center;">
-                <a href="#" data-role="button" data-theme="e" id="shareActivecodes">激活</a> 
+                <a href="#" data-role="button" data-theme="e"  id="shareActivecodes"><span id="tip">激活</span></a> 
                             <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
                 </div>
            

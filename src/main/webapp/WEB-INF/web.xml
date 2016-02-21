@@ -63,11 +63,11 @@
 		<filter-class>com.wlp.web.LoginedFilter</filter-class>
 		<init-param>
 			<param-name>blankUrlStr</param-name>
-			<param-value>/**/index.html;/**/*.css;/**/*.js</param-value>
+			<param-value>/**/index.html;/**/*.css;/**/*.js;/wlp/login;</param-value>
 		</init-param>
 		<init-param>
 			<param-name>orderUrlStr</param-name>
-			<param-value></param-value>
+			<param-value>/wlp/login;</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
