@@ -1,0 +1,152 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///E:/cooperation-master/src/main/webapp/memberCenter.html -->
+<html class="ui-mobile"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--<base href="file:///E:/cooperation-master/src/main/webapp/memberCenter.html">--><base href=".">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>平安互助-合作共赢</title>
+<style>
+.ui-bar-f {
+    color: white;
+     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#81a8ce),color-stop(1,#5e87b0));
+    border: 1px solid #456f9a;
+    background: #5e87b0;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 -1px 1px #254f7a;
+
+}
+.ui-body-f {
+    color: white;
+    background-color: #5e87b0;
+}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="user-scalable=no, width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="./css/frame/jquery.mobile-1.3.2.css">
+<link rel="stylesheet" href="./css/global.css">
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery-1.8.2.min.js"></script>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$.ajax({
+			type : "GET",
+			url : "/wlp/getCanUseActivecodes",
+			success : function(data) {
+				  console.log(data)
+				if(data&&data.length>0){	
+					$("#showRegMes").show();
+				       $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
+					for(var i=0;i<data.length;i++){
+						var state="未激活";
+						if(data[i].status=='1'){
+							state="激活"
+						}
+						  $("#table").append("<tr>"
+		                           +"<th>"+data[i].email+"</th>"
+			                             +"<td>"+data[i].code+"</td>"
+			                             +"<td>"+state+"</td>"
+			                             +"<td>"+data[i].createTime+"</td>"
+		                       +"</tr>");            						
+					}			                 
+				 }else{				
+				}
+			}
+		});
+		
+		
+	});
+	function myFunction(x)
+	{
+		 		 var keyword= $("#search").val();
+		 		$('#table tbody').empty();
+		 		$.ajax({
+		 			type : 'POST',
+					data:{ 'keyword':keyword },
+					url : "/wlp/getCanUseActivecodesBySearch",
+					success : function(data) {
+						  console.log(data)
+						if(data&&data.length>0){
+							$("#showRegMes").show();
+						    $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
+							for(var i=0;i<data.length;i++){
+							var state="未激活";
+								if(data[i].status=='1'){
+									state="激活"
+								} else if(data[i].status=='0'){
+									 state="未激活";
+								}else{
+									state=data[i].status;
+								}
+								  $("#table").append("<tr>"
+				                           +"<th>"+data[i].email+"</th>"
+					                             +"<td>"+data[i].code+"</td>"
+					                             +"<td>"+state+"</td>"
+					                             +"<td>"+data[i].createTime+"</td>"
+				                       +"</tr>");            						
+							}			                 
+						 }else{				
+						}
+					}
+				});
+	}
+	function myFunction2(x)
+	{
+		 	
+	}
+		</script>
+
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery.mobile-1.3.2.js"></script>
+</head> 
+<body class="ui-mobile-viewport ui-overlay-a">
+
+<div data-role="page" id="page">
+	<div data-role="header" data-theme="f" >
+        <a href="updateNavi.html" data-role="button" data-icon="arrow-l" data-rel="back" data-iconpos="notext">Delete</a>
+		<h1  style="font-size: 14px;">可用激活码</h1>
+       <a href="memCenter.html" data-role="button" data-icon="home"   data-iconpos="notext">Delete</a>
+	</div>
+  <div data-role="content" class="ui-content" role="main">	
+       <div data-role="fieldcontain">      
+        <label for="search">查询：</label>
+        <input type="search" name="search" id="search" placeholder="请输入要查询的内容..." onfocus="myFunction2(this);"  onblur="myFunction(this);" >
+  </div>
+     
+   <table id="table" data-role="table" id="table-custom-2" data-mode="column" class=" table-stripe ui-responsive" data-column-btn-theme="e">
+         <thead>
+           <tr class="ui-bar-d">
+             <th >用户</th>
+             <th >激活码</th>
+             <th ><abbr title="Rotten Tomato Rating">状态</abbr></th>
+               <th >生成时间</th>
+           </tr>
+         </thead>
+         <tbody>
+        
+         </tbody>
+       </table>
+   
+<!--         <select name="day" id="day" data-native-menu="true">
+         <option value="mon">每页10行</option>
+         <option value="tue">每页15行</option>
+         <option value="wed">每页20行</option>
+         <option value="thu">每页30行</option>
+         <option value="fri">每页50行</option> 
+        </select>
+     -->
+      <div data-role="main"  style=" text-align: center;">
+             <h2 class="text-primary"><span id="showRegMes"></span> </h2>
+             </div>
+   
+     
+	</div>
+<div data-role="footer"  data-theme="f"   data-position="fixed">
+    <h1>平安互助-合作共赢</h1>
+  </div>
+</div>
+
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div></body></html>

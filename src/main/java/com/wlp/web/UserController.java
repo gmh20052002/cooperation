@@ -1,5 +1,7 @@
 package com.wlp.web;
 
+import java.awt.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ public class UserController {
 	@Autowired
 	private HttpServletRequest request;
 
-	String USER_NAME = "USER_NAME";
+	private static final String USER_NAME = "USER_NAME";
 
 	public WlpUserService getWlpUserService() {
 		return wlpUserService;
@@ -60,7 +62,6 @@ public class UserController {
 			@RequestParam(required = true) String introemail) {
 		Boolean flag = false;
 		try {
-
 			WlpUser user = new WlpUser();
 			user.setUserName(username);
 			user.setMobilePhone(telphone);
