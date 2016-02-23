@@ -42,10 +42,7 @@
 					   $("#showRegMes").show();
 				       $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
 					for(var i=0;i<data.length;i++){
-						var state="未激活";
-						if(data[i].status=='1'){
-							state="激活"
-						}
+
 						  $("#table").append("<tr>"
 		                           +"<th>"+(i+1)+"</th>"
 			                             +"<td>"+data[i].userName+"</td>"
@@ -70,27 +67,19 @@
 		 		$.ajax({
 		 			type : 'POST',
 					data:{ 'keyword':keyword },
-					url : projectName+"/wlp/getUseActivecodesBySearch",
+					url : projectName+"/wlp/getMyTeamUsersBySearch",
 					success : function(data) {
 						  console.log(data)
 						if(data&&data.length>0){
 							$("#showRegMes").show();
 						    $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
 							for(var i=0;i<data.length;i++){
-							var state="未激活";
-								if(data[i].status=='1'){
-									state="激活"
-								} else if(data[i].status=='0'){
-									 state="未激活";
-								}else{
-									state=data[i].status;
-								}
+						
 								  $("#table").append("<tr>"
-				                           +"<th>"+data[i].email+"</th>"
-					                             +"<td>"+data[i].code+"</td>"
-					                             +"<td>"+state+"</td>"
-					                             +"<td>"+data[i].shareTime+"</td>"
-				                       +"</tr>");            						
+				                           +"<th>"+(i+1)+"</th>"
+					                             +"<td>"+data[i].userName+"</td>"
+					                             +"<td>"+data[i].email+"</td>"
+				                       +"</tr>");      				
 							}			                 
 						 }else{				
 								$("#showRegMes").show();
