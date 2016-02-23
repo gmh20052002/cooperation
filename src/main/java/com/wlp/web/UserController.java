@@ -1,6 +1,7 @@
 package com.wlp.web;
 
 import java.awt.List;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -235,5 +236,22 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	/**
+	 * 获取用户的团队
+	 * @param email
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/getMyTeamUsers", method = RequestMethod.GET)
+	public @ResponseBody ArrayList<WlpUser> getMyTeamUsers(){
+		
+
+			HttpSession session = request.getSession();
+			String userName = (String) session.getAttribute(USER_NAME);
+			if (userName == null) {
+				return null;
+			}
+				return (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);	
 	}
 }
