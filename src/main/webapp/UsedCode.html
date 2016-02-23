@@ -41,7 +41,7 @@
 				if(data&&data.length>0){	
 					$("#showRegMes").show();
 				       $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
-					for(var i=0;i<data.length;i++){
+					for(var i=0;i<data.length;i++){ 
 						var state="未激活";
 						if(data[i].status=='1'){
 							state="激活" 
