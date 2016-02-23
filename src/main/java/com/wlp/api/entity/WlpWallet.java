@@ -1,33 +1,57 @@
 package com.wlp.api.entity;
 
+/**
+ * 我的钱包
+ * @author Administrator
+ *
+ */
 public class WlpWallet {
     private String id;
 
-    private String email;
+    /**
+     * 邮箱
+     */
+	private String email;
 
-    private Long balance;
+	/**
+	 * 本金
+	 */
+	private Long capital;
 
-    public String getId() {
-        return id;
-    }
+	/**
+	 * 分红
+	 */
+	private Long bonus;
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setId(String id) {
+		this.id = id == null ? null : id.trim();
+	}
 
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Long getBalance() {
-        return balance;
-    }
+	public void setEmail(String email) {
+		this.email = email == null ? null : email.trim();
+	}
 
-    public void setBalance(Long balance) {
-        this.balance = balance;
-    }
+	public Long getCapital() {
+		return capital == null ? 0 : capital;
+	}
+
+	public void setCapital(Long capital) {
+		this.capital = capital;
+	}
+
+	public Long getBonus() {
+		return bonus == null ? 0 : bonus;
+	}
+
+	public void setBonus(Long bonus) {
+		this.bonus = bonus;
+	}
 }

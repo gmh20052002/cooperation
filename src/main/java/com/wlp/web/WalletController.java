@@ -6,5 +6,5 @@ package com.wlp.web;
  *
  */
 public class WalletController {
-
+	
 }

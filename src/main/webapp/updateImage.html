@@ -71,6 +71,8 @@
  	<div data-role="page" id="imgPage" data-dom-cache="true" data-title="平安互助">
 		<script type="text/javascript">
 			var myScroll;
+			  var pathName=window.document.location.pathname;
+			  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 			function loaded4() {
 				if (myScroll != null) {
 					myScroll.destroy();
@@ -93,10 +95,10 @@
 										imageId : img},
 									dataType : 'json',
 									success : function(data, type, request) {
-										location.href="memCenter.html"
+										location.href=projectName+"/memCenter.html"
 									},
 									error : function(xmlhttprequest, errorinfo) {
-										location.href="memCenter.html"
+										location.href=projectName+"/memCenter.html"
 									}
 								});
 		
