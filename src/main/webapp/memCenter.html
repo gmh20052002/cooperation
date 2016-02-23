@@ -37,10 +37,12 @@
 <script type="text/javascript" charset="utf-8"
 	src="./js/frame/jquery.mobile-1.3.2.js"></script>
 	<script type="text/javascript">
+	  var pathName=window.document.location.pathname;
+	  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 	$(document).ready(function() {
 		$.ajax({
 			type : "GET",
-			url : "/wlp/getUserInfo",
+			url : projectName+ "/wlp/getUserInfo",
 			success : function(data) {
 				  console.log(data)
 				if(data){				     
@@ -52,23 +54,23 @@
 				       }else{
 				    	   $('#username').html(data.userName+"(未激活)");
 				       }				     
-				       var path="img/headpic/" + img+ ".jpg";
+				       var path=projectName+"/img/headpic/" + img+ ".jpg";
 				       $("#headimg").attr('src',path); 			   
 				}else{
-					 location.href="index.html#loginPage"; 
+					 location.href=projectName+"/index.html#loginPage"; 
 				}
 			}
 		});
 		$("#loginout").click(function() {
 			$.ajax({
 				type : 'GET',
-				url : '/wlp/loginout',
+				url : projectName+'/wlp/loginout',
 				dataType : 'json',
 				success : function(data, type, request) {
-		             location.href="index.html#loginPage";   		            
+		             location.href=projectName+"index.html#loginPage";   		            
 				},
 				error : function(xmlhttprequest, errorinfo) {
-					  location.href="index.html#loginPage";   	
+					  location.href=projectName+"index.html#loginPage";   	
 				}
 			});
 		});

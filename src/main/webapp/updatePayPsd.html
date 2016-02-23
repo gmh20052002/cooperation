@@ -36,7 +36,13 @@
 <script type="text/javascript" charset="utf-8"
 	src="./js/frame/jquery.mobile-1.3.2.js"></script>
 		<script type="text/javascript">
+		
+		function _cleantip(){
+			   $("#showRegMes").hide();	
+		}
 	$(document).ready(function() {
+		  var pathName=window.document.location.pathname;
+		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		$("#updateUserPayPsd").click(function() {
 			 var password3 =$("#password3").val(); 
 			 if(!password3){
@@ -86,14 +92,16 @@
 				}
 			$.ajax({				
 				type : 'POST',
-				url : '/wlp/updateUserPayPsd',
+				url : projectName+'/wlp/updateUserPayPsd',
 				data : {
 					oldpsd : $("#password3").val(),newpsd : $("#password4").val()
 					},				
 				dataType : 'json',
 				success : function(data, type, request) {
 					if(data){
-					 location.href="memCenter.html"; 
+						   $("#showRegMes").show();
+					       $("#showRegMes").html("<font >密码修改成功</font>");
+					       window.setTimeout(function(){_cleantip()},3200);
 					 }else{
 						 $("#showRegMes").show();
 					        $("#showRegMes").html("<font color=red>密码修改失败，旧密码输入错误!</font>");

@@ -38,7 +38,8 @@
 	
 	
 		<script type="text/javascript">
-		
+		  var pathName=window.document.location.pathname;
+		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		function continueDeal(){
 			
 			console.log($("#dealpsd").val())
@@ -49,9 +50,10 @@
 			       $("#dealpsd").focus();
 					return false;
 			}
+		
 			$.ajax({				
 				type : 'POST',
-				url : '/wlp/transLogin',		
+				url :projectName+ '/wlp/transLogin',		
 				data:{  'transPassword':psd},
 				dataType : 'json',
 				success : function(data, type, request) {
@@ -60,7 +62,7 @@
 						$('.ui-dialog').dialog('close');
 						 $.ajax({				
 								type : 'POST',
-								url : '/wlp/activeUser',
+								url : projectName+'/wlp/activeUser',
 								data : {
 									code : $("#email").val()
 									},				
@@ -95,10 +97,11 @@
 
 
 	$(document).ready(function() {
-		
+		  var pathName=window.document.location.pathname;
+		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		$.ajax({				
 			type : 'GET',
-			url : '/wlp/getMyUsedActivecodes',			
+			url : projectName+'/wlp/getMyUsedActivecodes',			
 			dataType : 'json',
 			success : function(data, type, request) {
 				console.log(data)

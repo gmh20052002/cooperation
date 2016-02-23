@@ -20,17 +20,18 @@ $(document).ready(function() {
         $('#loginButton').buttonMarkup({ theme: "e" });
 		return false;
 	}
-
+	  var pathName=window.document.location.pathname;
+	  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		$.ajax({
 			type : "GET",
-			url : "/wlp/login",
+			url : projectName+"/wlp/login",
 			data :{userName:$("#email").val(),password:$("#password").val()},
 			success : function(data) {
-				console.log(data)
+				console.log(projectName)
 				   $('#loginButton').buttonMarkup({ theme: "e" });
 				   $('#logintext').html('登陆');
 				if(data&&data.userName){
-			      location.href='memCenter.html';
+			      location.href=projectName+'/memCenter.html';
 				}
 				else{
 				    $("#showMes").html("<font color=red>登录失败，邮箱或密码错误!</font>");
@@ -167,14 +168,14 @@ $(document).ready(function() {
 		$.ajax({
 		
 			type : 'POST',
-			url : '/wlp/regUser',
+			url : projectName+'/wlp/regUser',
 			data : {
 				username : $("#username5").val(),telphone : $("#telphone").val(),email : $("#email2").val(),
 				password : $("#password3").val(),paypassword : $("#password5").val(),introemail : $("#email4").val()},
 			dataType : 'json',
 			success : function(data, type, request) {
 				if(data){
-	                location.href="memCenter.html";   
+	                location.href=projectName+"/memCenter.html";   
 	            }else{
 	            	 $('#regButton').buttonMarkup({ theme: "e" });
 	            }    

@@ -80,14 +80,15 @@
 				});
 			}
 			function selectImg(img) {
+				
 				$("#headimg").html(
-						"<img src=\"img/headpic/" + img
+						"<img src="+projectName+"/img/headpic/" + img
 								+ ".jpg\"  onerror=\"errpic(this)\"/>")
 			//	goTo("#chooPage");
 								$.ajax({
 									
 									type : 'POST',
-									url : '/wlp/updateUserImage',
+									url : projectName+'/wlp/updateUserImage',
 									data : {
 										imageId : img},
 									dataType : 'json',

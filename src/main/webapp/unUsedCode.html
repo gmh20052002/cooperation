@@ -30,11 +30,13 @@
 	src="./js/frame/jquery-1.8.2.min.js"></script>
 
 	<script type="text/javascript">
+	  var pathName=window.document.location.pathname;
+	  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 	$(document).ready(function() {
 		
 		$.ajax({
 			type : "GET",
-			url : "/wlp/getCanUseActivecodes",
+			url : projectName+"/wlp/getCanUseActivecodes",
 			success : function(data) {
 				  console.log(data)
 				if(data&&data.length>0){	
@@ -63,12 +65,14 @@
 	});
 	function myFunction(x)
 	{
+		  var pathName=window.document.location.pathname;
+		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		 		 var keyword= $("#search").val();
 		 		$('#table tbody').empty();
 		 		$.ajax({
 		 			type : 'POST',
 					data:{ 'keyword':keyword },
-					url : "/wlp/getCanUseActivecodesBySearch",
+					url : projectName+"/wlp/getCanUseActivecodesBySearch",
 					success : function(data) {
 						  console.log(data)
 						if(data&&data.length>0){
