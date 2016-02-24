@@ -215,7 +215,6 @@ $(document).ready(function() {
 				password : $("#password3").val(),paypassword : $("#password5").val(),introemail : $("#email4").val()},
 			dataType : 'json',
 			success : function(data, type, request) {
-				console.log(data)
 				if(data){
 	                location.href=projectName+"/memCenter.html";   	           
 	            }else {
