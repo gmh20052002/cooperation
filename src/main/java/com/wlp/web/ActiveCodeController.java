@@ -147,15 +147,15 @@ public class ActiveCodeController {
 				if (email.contains(keyword) || state.contains(keyword) || code.getCode().contains(keyword)) {
 
 					if (email.contains(keyword)) {
-						email = email.replaceAll(keyword, " <span style='color:red'>" + keyword + "</span>");
+						email = email.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
 						code.setEmail(email);
 					}
 					if (state.contains(keyword)) {
-						code.setStatus(state.replaceAll(keyword, " <span style='color:red'>" + keyword + "</span>"));
+						code.setStatus(state.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
 					}
 					if (code.getCode().contains(keyword)) {
 						code.setCode(
-								code.getCode().replaceAll(keyword, " <span style='color:red'>" + keyword + "</span>"));
+								code.getCode().replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
 					}
 
 					results.add(code);
@@ -193,15 +193,15 @@ public class ActiveCodeController {
 				if (email.contains(keyword) || state.contains(keyword) || code.getCode().contains(keyword)) {
 
 					if (email.contains(keyword)) {
-						email = email.replaceAll(keyword, " <span style='color:red'>" + keyword + "</span>");
+						email = email.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
 						code.setEmail(email);
 					}
 					if (state.contains(keyword)) {
-						code.setStatus(state.replaceAll(keyword, " <span style='color:red'>" + keyword + "</span>"));
+						code.setStatus(state.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
 					}
 					if (code.getCode().contains(keyword)) {
 						code.setCode(
-								code.getCode().replaceAll(keyword, " <span style='color:red'>" + keyword + "</span>"));
+								code.getCode().replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
 					}
 
 					results.add(code);

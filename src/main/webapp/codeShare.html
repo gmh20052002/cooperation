@@ -46,6 +46,15 @@
 			        $("#email").focus();
 					return false;
 				}
+			   var myreg2 = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+				  if(!myreg2.test(telphone))
+	              {
+	          		$("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，用户邮箱格式不正确!</font>");
+	                 $("#email").focus();
+
+	                 return false;
+	            }
 			  var pathName=window.document.location.pathname;
 			  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 			$.ajax({				
