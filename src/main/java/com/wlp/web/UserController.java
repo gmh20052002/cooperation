@@ -74,6 +74,12 @@ public class UserController {
 			user.setLoginPassword(password);
 			user.setTransPassword(paypassword);
 			user.setRecEmail(introemail);
+			WlpUser cuser = wlpUserService.getUserByEmail(introemail);
+			if(cuser==null){
+				user.setEmail(null);
+				user.setUserName(username);
+				return false;
+			}
 			if (wlpUserService.regUser(user) != null) {
 				flag = true;
 			}

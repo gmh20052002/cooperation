@@ -11,6 +11,17 @@ $(document).ready(function() {
         $('#loginButton').buttonMarkup({ theme: "e" });
 		return false;
 	}
+	  //对电子邮件的验证
+	             var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	              if(!myreg.test(uname))
+	              {
+	          		$("#showMes").show();
+	                $("#showMes").html("<font color=red>邮箱格式不正确!</font>");
+	                 $("#email").focus();
+	                 $('#logintext').html('登陆');
+	                 $('#loginButton').buttonMarkup({ theme: "e" });
+	                 return false;
+	            }
 	var psd = $("#password").val(); 
 	if(!psd){
 		$("#showMes").show();
@@ -39,7 +50,6 @@ $(document).ready(function() {
 			},
 			 dataType: 'json',
 			error : function(xmlhttprequest, errorinfo) {
-				console.log(11111111111111)
 				   $('#loginButton').buttonMarkup({ theme: "e" });
 				   $('#logintext').html('登陆');
 			    $("#showMes").html("<font color=red>登录失败，邮箱或密码错误!</font>");
@@ -70,6 +80,15 @@ $(document).ready(function() {
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
 				}
+			 var treg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+			 if (!treg.test(telphone)) {
+					$("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，手机号码格式错误!</font>");
+			        $("#telphone").focus();
+			        $('#regtext').html('注册');
+			        $('#regButton').buttonMarkup({ theme: "e" });
+					return false;
+				}
 			 var email2 =$("#email2").val(); 
 			 if(!email2){
 					$("#showRegMes").show();
@@ -79,6 +98,16 @@ $(document).ready(function() {
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
 				}
+			   var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	              if(!myreg.test(email2))
+	              {
+	          		$("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，登陆邮箱格式不正确!</font>");
+	                 $("#email2").focus();
+	                 $('#regtext').html('注册');
+				      $('#regButton').buttonMarkup({ theme: "e" });
+	                 return false;
+	            }
 			 var password3 =$("#password3").val(); 
 			 if(!password3){
 					$("#showRegMes").show();
@@ -159,12 +188,22 @@ $(document).ready(function() {
 			 var email4 =$("#email4").val(); 
 			 if(!email4){
 					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，介绍人邮箱 不能为空!</font>");
+			        $("#showRegMes").html("<font color=red>注册失败，介绍人邮箱不能为空!</font>");
 			        $("#email4").focus();
 			        $('#regtext').html('注册');
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
 				}
+			   var myreg2 = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+			  if(!myreg2.test(email4))
+              {
+          		$("#showRegMes").show();
+		        $("#showRegMes").html("<font color=red>注册失败，介绍人邮箱格式不正确!</font>");
+                 $("#email4").focus();
+                 $('#regtext').html('注册');
+			      $('#regButton').buttonMarkup({ theme: "e" });
+                 return false;
+            }
 			  var pathName=window.document.location.pathname;
 			  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		$.ajax({
@@ -176,10 +215,15 @@ $(document).ready(function() {
 				password : $("#password3").val(),paypassword : $("#password5").val(),introemail : $("#email4").val()},
 			dataType : 'json',
 			success : function(data, type, request) {
+				console.log(data)
 				if(data){
-	                location.href=projectName+"/memCenter.html";   
-	            }else{
-	            	 $('#regButton').buttonMarkup({ theme: "e" });
+	                location.href=projectName+"/memCenter.html";   	           
+	            }else {
+	               	$("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，介绍人不存在!</font>");
+	                 $("#email4").focus();
+	                 $('#regtext').html('注册');
+				      $('#regButton').buttonMarkup({ theme: "e" });
 	            }    
 			},
 			error : function(xmlhttprequest, errorinfo) {
