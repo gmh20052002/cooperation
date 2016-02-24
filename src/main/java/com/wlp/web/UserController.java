@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.wlp.api.entity.WlpActivecode;
 import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpUserService;
 
@@ -261,41 +259,5 @@ public class UserController {
 				return null;
 			}
 				return (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);	
-	}
-
-	/**
-	 * 查询用户的团队
-	 * @param email
-	 * @return
-	 */
-	@RequestMapping(value = "/wlp/getMyTeamUsersBySearch", method = RequestMethod.POST)
-	public @ResponseBody ArrayList<WlpUser> getMyTeamUsersBySearch(@RequestParam(required = true) String keyword){
-			HttpSession session = request.getSession();
-			String userName = (String) session.getAttribute(USER_NAME);
-			if (userName == null) {
-				return null;
-			}
-			 ArrayList<WlpUser>users= (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);	
-				if (keyword == null || keyword.isEmpty()) {
-					return users;
-				}
-				ArrayList<WlpUser> results = new ArrayList<WlpUser>();
-				if (users != null && users.size() > 0) {
-					for (WlpUser user : users) {
-						String email = user.getEmail();
-						String username=user.getUserName();
-				        if ( user.getEmail().contains(keyword) || user.getUserName().contains(keyword)) {
-				    		if (email.contains(keyword)) {
-								email = email.replaceAll(keyword, " <span style='color:red'>" + keyword + "</span>");
-								user.setEmail(email);
-							}
-							if (username.contains(keyword)) {
-								user.setUserName(username.replaceAll(keyword, " <span style='color:red'>" + keyword + "</span>"));
-							}
-							results.add(user);
-			    	}
-				}
-					}	
-				return results;
 	}
 }

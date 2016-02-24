@@ -1,71 +1,105 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wlp.core.dao.WlpWalletMapper" >
-  <resultMap id="BaseResultMap" type="com.wlp.api.entity.WlpWallet" >
-    <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
-    <result column="BALANCE" property="balance" jdbcType="DECIMAL" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlp.core.dao.WlpWalletMapper">
+  <resultMap id="BaseResultMap" type="com.wlp.api.entity.WlpWallet">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="CAPITAL" jdbcType="DECIMAL" property="capital" />
+    <result column="BONUS" jdbcType="DECIMAL" property="bonus" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    ID, EMAIL, BALANCE
+  <sql id="Base_Column_List">
+    ID, EMAIL, CAPITAL, BONUS
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from wlp_wallet
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from wlp_wallet
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.wlp.api.entity.WlpWallet" >
-    insert into wlp_wallet (ID, EMAIL, BALANCE
-      )
-    values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{balance,jdbcType=DECIMAL}
-      )
+  <insert id="insert" parameterType="com.wlp.api.entity.WlpWallet">
+    insert into wlp_wallet (ID, EMAIL, CAPITAL, 
+      BONUS)
+    values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{capital,jdbcType=DECIMAL}, 
+      #{bonus,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.wlp.api.entity.WlpWallet" >
+  <insert id="insertSelective" parameterType="com.wlp.api.entity.WlpWallet">
     insert into wlp_wallet
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         ID,
       </if>
-      <if test="email != null" >
+      <if test="email != null">
         EMAIL,
       </if>
-      <if test="balance != null" >
-        BALANCE,
+      <if test="capital != null">
+        CAPITAL,
+      </if>
+      <if test="bonus != null">
+        BONUS,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="email != null" >
+      <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="balance != null" >
-        #{balance,jdbcType=DECIMAL},
+      <if test="capital != null">
+        #{capital,jdbcType=DECIMAL},
+      </if>
+      <if test="bonus != null">
+        #{bonus,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wlp.api.entity.WlpWallet" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.wlp.api.entity.WlpWallet">
     update wlp_wallet
-    <set >
-      <if test="email != null" >
+    <set>
+      <if test="email != null">
         EMAIL = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="balance != null" >
-        BALANCE = #{balance,jdbcType=DECIMAL},
+      <if test="capital != null">
+        CAPITAL = #{capital,jdbcType=DECIMAL},
+      </if>
+      <if test="bonus != null">
+        BONUS = #{bonus,jdbcType=DECIMAL},
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpWallet" >
+  <update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpWallet">
     update wlp_wallet
     set EMAIL = #{email,jdbcType=VARCHAR},
-      BALANCE = #{balance,jdbcType=DECIMAL}
+      CAPITAL = #{capital,jdbcType=DECIMAL},
+      BONUS = #{bonus,jdbcType=DECIMAL}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="com.wlp.api.entity.WlpWallet">
+		select
+		<include refid="Base_Column_List" />
+		from wlp_wallet
+		<where>
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+		      	<if test="condition.email != null" >
+		        	EMAIL = #{condition.email,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.capital != null" >
+		        	CAPITAL = #{condition.capital,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="condition.bonus != null" >
+		        	BONUS = #{condition.bonus,jdbcType=VARCHAR}
+		      	</if>
+			</if>
+		</where>
+	</select>
 </mapper>
