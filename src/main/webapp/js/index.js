@@ -219,7 +219,7 @@ $(document).ready(function() {
 				if(data){
 	                location.href=projectName+"/memCenter.html";   	           
 	            }else {
-	               	$("#showRegMes").show();
+	               	$("#showRegMes").show(); 
 			        $("#showRegMes").html("<font color=red>注册失败，介绍人不存在!</font>");
 	                 $("#email4").focus();
 	                 $('#regtext').html('注册');
