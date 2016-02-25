@@ -32,11 +32,12 @@ public class ActiveCodeController {
 
 	@Autowired
 	WlpUserService wlpUserService;
-	
+
 	private static final String USER_NAME = "USER_NAME";
 
 	/**
 	 * 可用激活码
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getCanUseActivecodes", method = RequestMethod.GET)
@@ -49,8 +50,10 @@ public class ActiveCodeController {
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getCanUseActivecodes(username);
 		return codes;
 	}
+
 	/**
 	 * 已分享的激活码
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getUseActivecodes", method = RequestMethod.GET)
@@ -63,9 +66,10 @@ public class ActiveCodeController {
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getSharedActivecodes(username);
 		return codes;
 	}
-	
+
 	/**
 	 * 已使用激活码
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getMyUsedActivecodes", method = RequestMethod.GET)
@@ -76,20 +80,21 @@ public class ActiveCodeController {
 			return null;
 		}
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getUsedActivecodes(username);
-		if (codes== null || codes.size() < 1) {
-			return null;		
+		if (codes == null || codes.size() < 1) {
+			return null;
 		}
-			for (WlpActivecode coder : codes) {
-				if(coder.getStatus().equals(CommonCst.USED)){
-					return coder;
-				}
-				
+		for (WlpActivecode coder : codes) {
+			if (coder.getStatus().equals(CommonCst.USED)) {
+				return coder;
 			}
+
+		}
 		return null;
 	}
-	
+
 	/**
 	 * 激活码使用记录
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getUseActivecodesHistory", method = RequestMethod.GET)
@@ -102,25 +107,83 @@ public class ActiveCodeController {
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getSharedActivecodes(username);
 		if (codes != null && codes.size() > 0) {
 			for (WlpActivecode code : codes) {
-			    String fromusername=code.getEmail();
-				 	WlpUser user = wlpUserService.getUserByEmail(fromusername);
-						if (user!= null) {
-							fromusername=user.getUserName();
-						}
-						  String tousername=code.getShareEmail();
-						 	WlpUser touser = wlpUserService.getUserByEmail(tousername);
-								if (touser != null) {
-									tousername=touser.getUserName();
-								}
-								code.setEmail(fromusername);
-								code.setShareEmail(tousername);
+				String fromusername = code.getEmail();
+				WlpUser user = wlpUserService.getUserByEmail(fromusername);
+				if (user != null) {
+					fromusername = user.getUserName();
 				}
+				String tousername = code.getShareEmail();
+				WlpUser touser = wlpUserService.getUserByEmail(tousername);
+				if (touser != null) {
+					tousername = touser.getUserName();
+				}
+				code.setEmail(fromusername);
+				code.setShareEmail(tousername);
 			}
+		}
 		return codes;
 	}
-	 
+
+	/**
+	 * 激活码使用记录查询
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/getUseActivecodesHistoryBySearch", method = RequestMethod.POST)
+	public @ResponseBody ArrayList<WlpActivecode> getUseActivecodesHistoryBySearch(
+			@RequestParam(required = true) String keyword) {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute(USER_NAME);
+		if (username == null) {
+			return null;
+		}
+		ArrayList<WlpActivecode> results = new ArrayList<WlpActivecode>();
+		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getSharedActivecodes(username);
+
+		if (codes != null && codes.size() > 0) {
+			for (WlpActivecode code : codes) {
+				String fromusername = code.getEmail();
+				WlpUser user = wlpUserService.getUserByEmail(fromusername);
+				if (user != null) {
+					fromusername = user.getUserName();
+				}
+				String tousername = code.getShareEmail();
+				WlpUser touser = wlpUserService.getUserByEmail(tousername);
+				if (touser != null) {
+					tousername = touser.getUserName();
+				}
+				code.setEmail(fromusername);
+				code.setShareEmail(tousername);
+				if (keyword == null || keyword.isEmpty()) {
+					results.add(code);
+					continue;
+				}
+				if (fromusername.contains(keyword) || tousername.contains(keyword)
+						|| code.getCode().contains(keyword)) {
+
+					if (tousername.contains(keyword)) {
+						tousername = tousername.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
+						code.setShareEmail(tousername);
+					}
+					if (fromusername.contains(keyword)) {
+						code.setEmail(
+								fromusername.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
+					}
+					if (code.getCode().contains(keyword)) {
+						code.setCode(
+								code.getCode().replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
+					}
+
+					results.add(code);
+				}
+			}
+		}
+		return results;
+	}
+
 	/**
 	 * 可用激活码查询
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getCanUseActivecodesBySearch", method = RequestMethod.POST)
@@ -165,8 +228,10 @@ public class ActiveCodeController {
 		}
 		return results;
 	}
+
 	/**
 	 * 已使用激活码查询
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getUseActivecodesBySearch", method = RequestMethod.POST)
@@ -211,8 +276,10 @@ public class ActiveCodeController {
 		}
 		return results;
 	}
+
 	/**
 	 * 共享激活码
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/shareActivecodes", method = RequestMethod.POST)
@@ -223,7 +290,7 @@ public class ActiveCodeController {
 		if (username == null || othername == null) {
 			return false;
 		}
-		
+
 		try {
 			WlpUser user = wlpUserService.getUserByEmail(othername);
 			if (user == null) {
@@ -239,9 +306,10 @@ public class ActiveCodeController {
 
 		return flag;
 	}
-	
+
 	/**
 	 * 激活用户
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/activeUser", method = RequestMethod.POST)
@@ -251,26 +319,27 @@ public class ActiveCodeController {
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null || code == null) {
 			return false;
-		}	
+		}
 		try {
 			WlpUser user = wlpUserService.getUserByEmail(username);
 			if (user == null) {
 				return false;
 			}
-			ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getCanUseActivecodes(username);
-			if (codes== null || codes.size() < 1) {
-				return false;			
+			ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService
+					.getCanUseActivecodes(username);
+			if (codes == null || codes.size() < 1) {
+				return false;
 			}
-				for (WlpActivecode coder : codes) {
-					if(coder.getCode().equals(code)){
-						user.setStatus("1");
-						wlpUserService.updateUser(user);
-						wlpActivecodeService.activeUser(username, code);
-						 flag = true;
-						break;					
-					}
-					
+			for (WlpActivecode coder : codes) {
+				if (coder.getCode().equals(code)) {
+					user.setStatus("1");
+					wlpUserService.updateUser(user);
+					wlpActivecodeService.activeUser(username, code);
+					flag = true;
+					break;
 				}
+
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

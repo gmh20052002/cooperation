@@ -186,24 +186,18 @@ $(document).ready(function() {
 					return false;
 				}
 			 var email4 =$("#email4").val(); 
-			 if(!email4){
-					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，介绍人邮箱不能为空!</font>");
-			        $("#email4").focus();
-			        $('#regtext').html('注册');
-			        $('#regButton').buttonMarkup({ theme: "e" });
-					return false;
-				}
 			   var myreg2 = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-			  if(!myreg2.test(email4))
-              {
-          		$("#showRegMes").show();
-		        $("#showRegMes").html("<font color=red>注册失败，介绍人邮箱格式不正确!</font>");
-                 $("#email4").focus();
-                 $('#regtext').html('注册');
-			      $('#regButton').buttonMarkup({ theme: "e" });
+			 if(email4){
+			         if(!myreg2.test(email4))
+                  {
+          		     $("#showRegMes").show();
+		             $("#showRegMes").html("<font color=red>注册失败，介绍人邮箱格式不正确!</font>");
+                     $("#email4").focus();
+                    $('#regtext').html('注册');
+			        $('#regButton').buttonMarkup({ theme: "e" });
                  return false;
             }
+			  }
 			  var pathName=window.document.location.pathname;
 			  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		$.ajax({
@@ -218,10 +212,10 @@ $(document).ready(function() {
 				if(data){
 	                location.href=projectName+"/memCenter.html";   	           
 	            }else {
-	               	$("#showRegMes").show(); 
-			        $("#showRegMes").html("<font color=red>注册失败，介绍人不存在!</font>");
-	                 $("#email4").focus();
-	                 $('#regtext').html('注册');
+	          //   	$("#showRegMes").show(); 
+			  //      $("#showRegMes").html("<font color=red>注册失败，介绍人不存在!</font>");
+	           //      $("#email4").focus();
+	          //       $('#regtext').html('注册');
 				      $('#regButton').buttonMarkup({ theme: "e" });
 	            }    
 			},

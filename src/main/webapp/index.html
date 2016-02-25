@@ -48,16 +48,16 @@
 <body>
 	<div data-role="page" id="loginPage" data-dom-cache="true"  data-title="平安互助">
 		<script type="text/javascript">
-			$("#loginPage").live('pageinit', function() {
+/* 			$("#loginPage").live('pageinit', function() {
 				//bind swipe event
 				$('#loginPage').bind("swipeleft", function() {
 					$.mobile.changePage('#regPage', {
 						transition : "slide"
 					});
 				});
-			});
-			$("#regPage").live("pageshow", function() {
-			});
+			}); */
+	/* 		$("#regPage").live("pageshow", function() {
+			}); */
 		
 		</script>
 		<div data-role="header" data-theme="b">
@@ -101,20 +101,20 @@
 			$("#regPage").live('pageinit', function() {
 				
 				//bind swipe event
-				$('#regPage').bind("swiperight", function() {
+		/* 		$('#regPage').bind("swiperight", function() {
 					$.mobile.changePage('#loginPage', {
 						transition : "slide",
 						reverse : true
 					});
-				});
+				}); */
 			/* 	$('#regPage').bind("swipeleft", function() {
 					$.mobile.changePage('#imgPage', {
 						transition : "slide"
 					});
 				}); */
 			});
-			$("#regPage").live("pageshow", function() {
-			});
+		/* 	$("#regPage").live("pageshow", function() {
+			}); */
 		</script>
 		<div data-role="header" data-theme="b">
 		<a href="index.html"  data-icon="arrow-l" data-iconpos="notext"></a>
@@ -150,7 +150,7 @@
                      <input type="password" name="password6" id="password6" value="" placeholder=" 确认交易密码" class="required"  data-clear-btn="true" /> 
                
 					 <label for="email4">介绍人邮箱</label>
-                     <input type="text" name="email4" id="email4" placeholder="介绍人邮箱" class="required" data-clear-btn="true"/> 
+                     <input type="text" name="email4" id="email4" placeholder="介绍人邮箱"  data-clear-btn="true"/> 
                      
                         		
                     <!--     <a href="#" data-role="button" onclick="goTo('#imgPage')">选择头像</a> 

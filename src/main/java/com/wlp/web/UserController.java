@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.wlp.api.entity.WlpActivecode;
 import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpUserService;
 
@@ -72,12 +74,6 @@ public class UserController {
 			user.setLoginPassword(password);
 			user.setTransPassword(paypassword);
 			user.setRecEmail(introemail);
-			WlpUser cuser = wlpUserService.getUserByEmail(introemail);
-			if(cuser==null){
-				user.setEmail(null);
-				user.setUserName(username);
-				return false;
-			}
 			if (wlpUserService.regUser(user) != null) {
 				flag = true;
 			}
@@ -259,5 +255,53 @@ public class UserController {
 				return null;
 			}
 				return (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);	
+	}
+	/**
+	 * 查询用户的团队
+	 * @param email
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/getMyTeamUsersBySearch", method = RequestMethod.POST)
+	public @ResponseBody ArrayList<WlpUser> getMyTeamUsersBySearch(@RequestParam(required = true) String keyword){
+		
+
+			HttpSession session = request.getSession();
+			String userName = (String) session.getAttribute(USER_NAME);
+			if (userName == null) {
+				return null;
+			}
+			ArrayList<WlpUser> results = new ArrayList<WlpUser>();
+			ArrayList<WlpUser> codes= (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);	
+		
+			if (codes != null && codes.size() > 0) {
+				for (int i=0; i<codes.size() ;i++) {
+				     String no=String.valueOf((i+1));			
+					WlpUser code=codes.get(i);
+					code.setId(no);
+					String email = code.getEmail();
+					String username=code.getUserName();
+					if (keyword == null || keyword.isEmpty()) {
+						results.add(code);
+				           	continue;
+					}
+					if (email.contains(keyword) || no.contains(keyword) || username.contains(keyword)) {
+
+						if (email.contains(keyword)) {
+							email = email.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
+							code.setEmail(email);
+						}
+						if (no.contains(keyword)) {
+							code.setId(no.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
+						}
+						if (username.contains(keyword)) {
+							code.setUserName(username.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
+						}
+
+						results.add(code);
+					}
+				}
+
+			}
+			return results;
 	}
 }
