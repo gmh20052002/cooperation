@@ -3367,4 +3367,7 @@ div.ui-slider-switch.ui-mini {
 	.ui-responsive-panel .ui-panel-dismiss-display-push {
 		display: none;
 	}	
+	.p-f-3{
+	padding-top: 3px;
+	}
 }

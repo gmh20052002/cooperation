@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$("#loginButton").click(function() {
 		 $('#logintext').html('登陆中');
-		 $('#loginButton').buttonMarkup({ theme: "f" });
+		 $('#loginButton').buttonMarkup({ theme: "e" });
     var uname =$("#email").val(); 
 	if(!uname){
 		$("#showMes").show();
@@ -60,7 +60,7 @@ $(document).ready(function() {
 
 	$("#regButton").live('click', function() {
 		 $('#regtext').html('注册中');
-		 $('#regButton').buttonMarkup({ theme: "f" });
+		 $('#regButton').buttonMarkup({ theme: "e" });
 		 
 		    var uname =$("#username5").val(); 
 			if(!uname){

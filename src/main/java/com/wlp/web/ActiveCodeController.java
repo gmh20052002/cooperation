@@ -24,8 +24,6 @@ import com.wlp.api.service.WlpUserService;
  */
 @Controller()
 public class ActiveCodeController {
-	@Autowired
-	private HttpServletRequest request;
 
 	@Autowired
 	WlpActivecodeService wlpActivecodeService;
@@ -41,7 +39,7 @@ public class ActiveCodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getCanUseActivecodes", method = RequestMethod.GET)
-	public @ResponseBody ArrayList<WlpActivecode> getCanUseActivecodes() {
+	public @ResponseBody ArrayList<WlpActivecode> getCanUseActivecodes(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		String cname = username;
@@ -68,7 +66,7 @@ public class ActiveCodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getUseActivecodes", method = RequestMethod.GET)
-	public @ResponseBody ArrayList<WlpActivecode> getUseActivecodes() {
+	public @ResponseBody ArrayList<WlpActivecode> getUseActivecodes(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		String cname = username;
@@ -95,7 +93,7 @@ public class ActiveCodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getMyUsedActivecodes", method = RequestMethod.GET)
-	public @ResponseBody WlpActivecode getMyUsedActivecodes() {
+	public @ResponseBody WlpActivecode getMyUsedActivecodes(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null) {
@@ -120,7 +118,7 @@ public class ActiveCodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getUseActivecodesHistory", method = RequestMethod.GET)
-	public @ResponseBody ArrayList<WlpActivecode> getUseActivecodesHistory() {
+	public @ResponseBody ArrayList<WlpActivecode> getUseActivecodesHistory(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null) {
@@ -153,7 +151,7 @@ public class ActiveCodeController {
 	 */
 	@RequestMapping(value = "/wlp/getUseActivecodesHistoryBySearch", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<WlpActivecode> getUseActivecodesHistoryBySearch(
-			@RequestParam(required = true) String keyword) {
+			@RequestParam(required = true) String keyword,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null) {
@@ -209,7 +207,7 @@ public class ActiveCodeController {
 	 */
 	@RequestMapping(value = "/wlp/getCanUseActivecodesBySearch", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<WlpActivecode> getCanUseActivecodesBySearch(
-			@RequestParam(required = true) String keyword) {
+			@RequestParam(required = true) String keyword,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		String cname = username;
@@ -262,7 +260,7 @@ public class ActiveCodeController {
 	 */
 	@RequestMapping(value = "/wlp/getUseActivecodesBySearch", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<WlpActivecode> getUseActivecodesBySearch(
-			@RequestParam(required = true) String keyword) {
+			@RequestParam(required = true) String keyword,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		String cname = username;
@@ -313,7 +311,7 @@ public class ActiveCodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/shareActivecodes", method = RequestMethod.POST)
-	public @ResponseBody Boolean shareActivecodes(@RequestParam(required = true) String othername) {
+	public @ResponseBody Boolean shareActivecodes(@RequestParam(required = true) String othername,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Boolean flag = false;
 		String username = (String) session.getAttribute(USER_NAME);
@@ -343,7 +341,7 @@ public class ActiveCodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/activeUser", method = RequestMethod.POST)
-	public @ResponseBody Boolean activeUser(@RequestParam(required = true) String code) {
+	public @ResponseBody Boolean activeUser(@RequestParam(required = true) String code,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Boolean flag = false;
 		String username = (String) session.getAttribute(USER_NAME);

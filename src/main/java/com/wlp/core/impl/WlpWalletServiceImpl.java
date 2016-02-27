@@ -53,7 +53,7 @@ public class WlpWalletServiceImpl implements WlpWalletService {
 		WlpWallet condition = new WlpWallet();
 		condition.setEmail(email);
 		List<WlpWallet> result = wlpWalletMapper.selectByCondition(condition, null, null);
-		if(result != null){
+		if(result != null&&result.size()>0){
 			return result.get(0);
 		}
 		return null;

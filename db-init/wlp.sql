@@ -34,6 +34,7 @@ CREATE TABLE `wlp_activecode` (
 -- Records of wlp_activecode
 -- ----------------------------
 
+
 -- ----------------------------
 -- Table structure for wlp_pair_log
 -- ----------------------------
@@ -50,11 +51,30 @@ CREATE TABLE `wlp_pair_log` (
   `EXTRAK_TYPE` varchar(255) DEFAULT NULL COMMENT '提现类型：dynamic--动态体现,help--互助提现',
   `ORDER_PIC` varchar(255) DEFAULT NULL COMMENT '交易图片地址，一般为一张转帐截图',
   `REMARK` varchar(2000) DEFAULT NULL,
+  `TO_OLD_BALANCE` decimal(10,0) DEFAULT NULL COMMENT '接受方原余额',
+  `TO_BALANCE` decimal(10,0) DEFAULT NULL COMMENT '接受方余额',
+  `FROM_OLD_BALANCE` decimal(10,0) DEFAULT NULL COMMENT '提供方原余额',
+  `FROM_BALANCE` decimal(10,0) DEFAULT NULL COMMENT '提供方余额',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wlp_pair_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for wlp_pair_pipeline
+-- ----------------------------
+DROP TABLE IF EXISTS `wlp_pair_pipeline`;
+CREATE TABLE `wlp_pair_pipeline` (
+  `ID` varchar(64) NOT NULL COMMENT '交易配对管道表',
+  `LOOP` int(11) DEFAULT NULL,
+  `EMAIL` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of wlp_pair_pipeline
 -- ----------------------------
 
 -- ----------------------------
@@ -85,8 +105,6 @@ CREATE TABLE `wlp_user` (
 -- Records of wlp_user
 -- ----------------------------
 
-
-
 -- ----------------------------
 -- Table structure for wlp_wallet
 -- ----------------------------
@@ -98,6 +116,10 @@ CREATE TABLE `wlp_wallet` (
   `BONUS` decimal(10,0) DEFAULT NULL COMMENT '分红',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of wlp_wallet
+-- ----------------------------
 
 -- ----------------------------
 -- Records of wlp_wallet

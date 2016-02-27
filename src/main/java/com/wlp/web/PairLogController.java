@@ -2,20 +2,15 @@ package com.wlp.web;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.wlp.api.entity.WlpActivecode;
 import com.wlp.api.entity.WlpPairLog;
-import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpPairLogService;
 
 /**
@@ -27,8 +22,6 @@ import com.wlp.api.service.WlpPairLogService;
  */
 @Controller()
 public class PairLogController {
-	@Autowired
-	private HttpServletRequest request;
 
 	@Autowired
 	WlpPairLogService wlpPairLogService;
@@ -40,8 +33,8 @@ public class PairLogController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/wlp/ getMyWlpPairLogs", method = RequestMethod.GET)
-	public @ResponseBody List<WlpPairLog> getMyWlpPairLogs() {
+	@RequestMapping(value = "/wlp/getMyWlpPairLogs", method = RequestMethod.GET)
+	public @ResponseBody List<WlpPairLog> getMyWlpPairLogs(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null) {
@@ -64,13 +57,31 @@ public class PairLogController {
 		}
 		return logs;
 	}
+	
+	/**
+	 * 请求帮助
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/getHelp", method = RequestMethod.POST)
+	public @ResponseBody List<WlpPairLog> getHelp(HttpServletRequest request,@RequestParam(required = true) String money,@RequestParam(required = true) String payway) {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute(USER_NAME);
+		if (username == null) {
+			return null;
+		}
+		
+	
+		return null;
+	}
+	
 	/**
 	 * 根据关键字查询我的历程--查询我的所有交易记录
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/wlp/ getMyWlpPairLogsBySearch", method = RequestMethod.POST)
-	public @ResponseBody List<WlpPairLog> getMyWlpPairLogsBySearch(@RequestParam(required = true) String keyword) {
+	@RequestMapping(value = "/wlp/getMyWlpPairLogsBySearch", method = RequestMethod.POST)
+	public @ResponseBody List<WlpPairLog> getMyWlpPairLogsBySearch(@RequestParam(required = true) String keyword,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null) {

@@ -63,35 +63,6 @@
 		}); 
 	}
 	
-	function continueDeal(){
-		
-		var psd=$("#dealpsd").val()
-		if(!psd){
-			   $("#showDealMes").show();
-		       $("#showDealMes").html("<font color='red'>交易密码不能未空</font>");
-		       $("#dealpsd").focus();
-				return false;
-		}
-		  var pathName=window.document.location.pathname;
-		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
-		$.ajax({				
-			type : 'POST',
-			url :projectName+ '/wlp/transLogin',		
-			data:{  'transPassword':psd},
-			dataType : 'json',
-			success : function(data, type, request) {
-				if(data){
-					$('.ui-dialog').dialog('close');
-			           buiness();
-
-				 }else{
-				       $("#showDealMes").show();
-				       $("#showDealMes").html("<font color='red'>交易密码错误</font>");
-				 }
-			}
-		});
-	
-	}
 
 	
 	$(document).ready(function() {
@@ -163,7 +134,8 @@
 				        $("#bankacct").focus();
 						return false;
 					}
-			
+
+				 buiness();
 		});
 	});
 		
@@ -199,9 +171,14 @@
         <option value="1">中国建设银行</option>
         <option value="2">中国农业银行</option>
         <option value="3">中国工商银行</option>
-        <option value="4">中国银行</option>
+        <option value="4">中国银行</option>         
          <option value="5">交通银行</option>
-          <option value="6">招商银行</option>
+         <option value="6">招商银行</option>
+         <option value="7">中国邮政银行</option>
+         <option value="8">民生银行</option>
+         <option value="9">兴业银行</option>
+         <option value="10">光大银行</option>
+         <option value="11">华夏银行</option>
     </select>
 
                 
@@ -209,7 +186,7 @@
              
 					<label for="bankacct">银行账号： </label><input  type="text" name="bankacct" pattern="[0-9]*" placeholder=""    id="bankacct" data-clear-btn="true">                  
                   <div data-role="main"  style=" text-align: center;">
-                <a  href="dealPsd.html"    rel="external" data-rel="dialog"    data-role="button" data-theme="e" id="saveinfo">修改</a> 
+                <a  href="#"    rel="external"  data-role="button" data-theme="e" id="saveinfo">保存</a> 
                   <!--      <input type="reset"  value="重置"> -->
                             <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
                 </div>

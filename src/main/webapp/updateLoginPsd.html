@@ -73,34 +73,7 @@
 		});
 	}
 	
-	function continueDeal(){
-		  var pathName=window.document.location.pathname;
-		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
-		var psd=$("#dealpsd").val()
-		if(!psd){
-			   $("#showDealMes").show();
-		       $("#showDealMes").html("<font color='red'>交易密码不能未空</font>");
-		       $("#dealpsd").focus();
-				return false;
-		}
-		$.ajax({				
-			type : 'POST',
-			url : projectName+'/wlp/transLogin',		
-			data:{  'transPassword':psd},
-			dataType : 'json',
-			success : function(data, type, request) {
-				if(data){
-					$('.ui-dialog').dialog('close');
-			           buiness();
-
-				 }else{
-				       $("#showDealMes").show();
-				       $("#showDealMes").html("<font color='red'>交易密码错误</font>");
-				 }
-			}
-		});
 	
-	}
 	
 	$(document).ready(function() {
 		
@@ -151,7 +124,7 @@
 			        $("#password5").focus();
 					return false;
 				}
-		
+			 buiness();
 		});
 	});
 		
@@ -180,7 +153,7 @@
                      <input type="password" name="password5" id="password5" value="" placeholder="请重新输入要设置的新密码"  data-clear-btn="true"/> 
                    </div>
         <div data-role="main"  style=" text-align: center;">
-                <a href="dealPsd.html"  rel="external" data-rel="dialog" data-role="button" data-theme="e"  id="updateUserLoginPsd" >修改</a> 
+                <a href="#"  data-role="button" data-theme="e"  id="updateUserLoginPsd" >保存</a> 
 <!--                        <input type="reset"  value="重置">   -->
                <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
                 </div>
