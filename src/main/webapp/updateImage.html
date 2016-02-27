@@ -116,9 +116,9 @@
 											+ ".jpg\" onerror=\"errpic(this)\" onclick=\"selectImg("
 											+ i + ")\"/></a>";
 									content = content + "</li>";
-								}
+								} 
 								$("#headpicul").append(content);
-
+ 
 								//bind swipe event
 								$('#imgPage').bind("swiperight", function() {
 									$.mobile.changePage('#regPage', {
