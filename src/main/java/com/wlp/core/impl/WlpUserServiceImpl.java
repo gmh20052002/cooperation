@@ -1,5 +1,6 @@
 package com.wlp.core.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -107,6 +108,7 @@ public class WlpUserServiceImpl implements WlpUserService {
 		List<WlpActivecode> codes = wlpActivecodeMapper.selectByCondition(condition, null, null);
 		if (user != null && codes != null && !codes.isEmpty()) {
 			user.setStatus(CommonCst.ACTIVE);
+			user.setActiveTime(new Date());
 			WlpActivecode code = codes.get(0);
 			code.setStatus(CommonCst.USED);
 			//将激活码状态改为已使用

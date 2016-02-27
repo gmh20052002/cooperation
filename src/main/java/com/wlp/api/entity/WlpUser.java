@@ -1,143 +1,155 @@
 package com.wlp.api.entity;
 
+import java.util.Date;
+
 public class WlpUser {
     private String id;
 
-    private String userName;
+	private String userName;
 
-    private String mobilePhone;
+	private String mobilePhone;
 
-    private String email;
+	private String email;
 
-    private String loginPassword;
+	private String loginPassword;
 
-    private String transPassword;
+	private String transPassword;
 
-    private String recEmail;
+	private String recEmail;
 
-    private String remark;
-    
-    private String wechat;
-    
-    private String alipay;
+	private String remark;
 
-    private String bankName;
+	private String wechat;
 
-    private String bankUsername;
+	private String alipay;
 
-    private String bankAcct;
+	private String bankName;
 
-    private String status;
+	private String bankUsername;
 
-    public String getId() {
-        return id;
-    }
+	private String bankAcct;
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+	private String status;
 
-    public String getUserName() {
-        return userName;
-    }
+	private Date activeTime;
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getMobilePhone() {
-        return mobilePhone;
-    }
+	public void setId(String id) {
+		this.id = id == null ? null : id.trim();
+	}
 
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone == null ? null : mobilePhone.trim();
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName == null ? null : userName.trim();
+	}
 
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
+	public String getMobilePhone() {
+		return mobilePhone;
+	}
 
-    public String getLoginPassword() {
-        return loginPassword;
-    }
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = mobilePhone == null ? null : mobilePhone.trim();
+	}
 
-    public void setLoginPassword(String loginPassword) {
-        this.loginPassword = loginPassword == null ? null : loginPassword.trim();
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getTransPassword() {
-        return transPassword;
-    }
+	public void setEmail(String email) {
+		this.email = email == null ? null : email.trim();
+	}
 
-    public void setTransPassword(String transPassword) {
-        this.transPassword = transPassword == null ? null : transPassword.trim();
-    }
+	public String getLoginPassword() {
+		return loginPassword;
+	}
 
-    public String getRecEmail() {
-        return recEmail;
-    }
+	public void setLoginPassword(String loginPassword) {
+		this.loginPassword = loginPassword == null ? null : loginPassword.trim();
+	}
 
-    public void setRecEmail(String recEmail) {
-        this.recEmail = recEmail == null ? null : recEmail.trim();
-    }
+	public String getTransPassword() {
+		return transPassword;
+	}
 
-    public String getRemark() {
-        return remark;
-    }
+	public void setTransPassword(String transPassword) {
+		this.transPassword = transPassword == null ? null : transPassword.trim();
+	}
 
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
+	public String getRecEmail() {
+		return recEmail;
+	}
 
-    public String getAlipay() {
-        return alipay;
-    }
+	public void setRecEmail(String recEmail) {
+		this.recEmail = recEmail == null ? null : recEmail.trim();
+	}
 
-    public void setAlipay(String alipay) {
-        this.alipay = alipay == null ? null : alipay.trim();
-    }
+	public String getRemark() {
+		return remark;
+	}
 
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName == null ? null : bankName.trim();
-    }
-
-    public String getBankUsername() {
-        return bankUsername;
-    }
-
-    public void setBankUsername(String bankUsername) {
-        this.bankUsername = bankUsername == null ? null : bankUsername.trim();
-    }
-
-    public String getBankAcct() {
-        return bankAcct;
-    }
-
-    public void setBankAcct(String bankAcct) {
-        this.bankAcct = bankAcct == null ? null : bankAcct.trim();
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
+	}
 
 	public String getWechat() {
 		return wechat;
 	}
 
 	public void setWechat(String wechat) {
-		this.wechat = wechat;
+		this.wechat = wechat == null ? null : wechat.trim();
+	}
+
+	public String getAlipay() {
+		return alipay;
+	}
+
+	public void setAlipay(String alipay) {
+		this.alipay = alipay == null ? null : alipay.trim();
+	}
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName == null ? null : bankName.trim();
+	}
+
+	public String getBankUsername() {
+		return bankUsername;
+	}
+
+	public void setBankUsername(String bankUsername) {
+		this.bankUsername = bankUsername == null ? null : bankUsername.trim();
+	}
+
+	public String getBankAcct() {
+		return bankAcct;
+	}
+
+	public void setBankAcct(String bankAcct) {
+		this.bankAcct = bankAcct == null ? null : bankAcct.trim();
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status == null ? null : status.trim();
+	}
+
+	public Date getActiveTime() {
+		return activeTime;
+	}
+
+	public void setActiveTime(Date activeTime) {
+		this.activeTime = activeTime;
 	}
 }
