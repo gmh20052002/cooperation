@@ -48,4 +48,15 @@ public class WlpWalletServiceImpl implements WlpWalletService {
 		return null;
 	}
 
+	@Override
+	public WlpWallet getWlpWalletByEmail(String email) {
+		WlpWallet condition = new WlpWallet();
+		condition.setEmail(email);
+		List<WlpWallet> result = wlpWalletMapper.selectByCondition(condition, null, null);
+		if(result != null){
+			return result.get(0);
+		}
+		return null;
+	}
+
 }

@@ -69,4 +69,6 @@
 	</bean>
 	
 	<bean name="wlpUserService" class="com.wlp.core.impl.WlpUserServiceImpl" />
+	
+	<bean  class="com.wlp.web.ScheduleTask" />
 </beans>

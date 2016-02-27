@@ -1,213 +1,216 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wlp.core.dao.WlpUserMapper">
-	<resultMap id="BaseResultMap" type="com.wlp.api.entity.WlpUser">
-		<id column="ID" property="id" jdbcType="VARCHAR" />
-		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
-		<result column="MOBILE_PHONE" property="mobilePhone" jdbcType="VARCHAR" />
-		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
-		<result column="LOGIN_PASSWORD" property="loginPassword"
-			jdbcType="VARCHAR" />
-		<result column="TRANS_PASSWORD" property="transPassword"
-			jdbcType="VARCHAR" />
-		<result column="REC_EMAIL" property="recEmail" jdbcType="VARCHAR" />
-		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
-		<result column="WECHAT" property="wechat" jdbcType="VARCHAR" />
-		<result column="ALIPAY" property="alipay" jdbcType="VARCHAR" />
-		<result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
-		<result column="BANK_USERNAME" property="bankUsername"
-			jdbcType="VARCHAR" />
-		<result column="BANK_ACCT" property="bankAcct" jdbcType="VARCHAR" />
-		<result column="STATUS" property="status" jdbcType="VARCHAR" />
-	</resultMap>
-	<sql id="Base_Column_List">
-		ID, USER_NAME, MOBILE_PHONE, EMAIL, LOGIN_PASSWORD, TRANS_PASSWORD,
-		REC_EMAIL, REMARK,
-		WECHAT, ALIPAY, BANK_NAME, BANK_USERNAME, BANK_ACCT, STATUS
-	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from wlp_user
-		where ID = #{id,jdbcType=VARCHAR}
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from wlp_user
-		where ID = #{id,jdbcType=VARCHAR}
-	</delete>
-	<insert id="insert" parameterType="com.wlp.api.entity.WlpUser">
-		insert into wlp_user (ID, USER_NAME, MOBILE_PHONE,
-		EMAIL, LOGIN_PASSWORD, TRANS_PASSWORD,
-		REC_EMAIL, REMARK, WECHAT, ALIPAY,
-		BANK_NAME, BANK_USERNAME, BANK_ACCT,
-		STATUS)
-		values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
-		#{mobilePhone,jdbcType=VARCHAR},
-		#{email,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{transPassword,jdbcType=VARCHAR},
-		#{recEmail,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
-		#{wechat,jdbcType=VARCHAR}, #{alipay,jdbcType=VARCHAR},
-		#{bankName,jdbcType=VARCHAR}, #{bankUsername,jdbcType=VARCHAR},
-		#{bankAcct,jdbcType=VARCHAR},
-		#{status,jdbcType=VARCHAR})
-	</insert>
-	<insert id="insertSelective" parameterType="com.wlp.api.entity.WlpUser">
-		insert into wlp_user
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				ID,
-			</if>
-			<if test="userName != null">
-				USER_NAME,
-			</if>
-			<if test="mobilePhone != null">
-				MOBILE_PHONE,
-			</if>
-			<if test="email != null">
-				EMAIL,
-			</if>
-			<if test="loginPassword != null">
-				LOGIN_PASSWORD,
-			</if>
-			<if test="transPassword != null">
-				TRANS_PASSWORD,
-			</if>
-			<if test="recEmail != null">
-				REC_EMAIL,
-			</if>
-			<if test="remark != null">
-				REMARK,
-			</if>
-			<if test="wechat != null">
-				WECHAT,
-			</if>
-			<if test="alipay != null">
-				ALIPAY,
-			</if>
-			<if test="bankName != null">
-				BANK_NAME,
-			</if>
-			<if test="bankUsername != null">
-				BANK_USERNAME,
-			</if>
-			<if test="bankAcct != null">
-				BANK_ACCT,
-			</if>
-			<if test="status != null">
-				STATUS,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=VARCHAR},
-			</if>
-			<if test="userName != null">
-				#{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="mobilePhone != null">
-				#{mobilePhone,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				#{email,jdbcType=VARCHAR},
-			</if>
-			<if test="loginPassword != null">
-				#{loginPassword,jdbcType=VARCHAR},
-			</if>
-			<if test="transPassword != null">
-				#{transPassword,jdbcType=VARCHAR},
-			</if>
-			<if test="recEmail != null">
-				#{recEmail,jdbcType=VARCHAR},
-			</if>
-			<if test="remark != null">
-				#{remark,jdbcType=VARCHAR},
-			</if>
-			<if test="wechat != null">
-				#{wechat,jdbcType=VARCHAR},
-			</if>
-			<if test="alipay != null">
-				#{alipay,jdbcType=VARCHAR},
-			</if>
-			<if test="bankName != null">
-				#{bankName,jdbcType=VARCHAR},
-			</if>
-			<if test="bankUsername != null">
-				#{bankUsername,jdbcType=VARCHAR},
-			</if>
-			<if test="bankAcct != null">
-				#{bankAcct,jdbcType=VARCHAR},
-			</if>
-			<if test="status != null">
-				#{status,jdbcType=VARCHAR},
-			</if>
-		</trim>
-	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.wlp.api.entity.WlpUser">
-		update wlp_user
-		<set>
-			<if test="userName != null">
-				USER_NAME = #{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="mobilePhone != null">
-				MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				EMAIL = #{email,jdbcType=VARCHAR},
-			</if>
-			<if test="loginPassword != null">
-				LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
-			</if>
-			<if test="transPassword != null">
-				TRANS_PASSWORD = #{transPassword,jdbcType=VARCHAR},
-			</if>
-			<if test="recEmail != null">
-				REC_EMAIL = #{recEmail,jdbcType=VARCHAR},
-			</if>
-			<if test="remark != null">
-				REMARK = #{remark,jdbcType=VARCHAR},
-			</if>
-			<if test="wechat != null">
-				WECHAT = #{wechat,jdbcType=VARCHAR},
-			</if>
-			<if test="alipay != null">
-				ALIPAY = #{alipay,jdbcType=VARCHAR},
-			</if>
-			<if test="bankName != null">
-				BANK_NAME = #{bankName,jdbcType=VARCHAR},
-			</if>
-			<if test="bankUsername != null">
-				BANK_USERNAME = #{bankUsername,jdbcType=VARCHAR},
-			</if>
-			<if test="bankAcct != null">
-				BANK_ACCT = #{bankAcct,jdbcType=VARCHAR},
-			</if>
-			<if test="status != null">
-				STATUS = #{status,jdbcType=VARCHAR},
-			</if>
-		</set>
-		where ID = #{id,jdbcType=VARCHAR}
-	</update>
+  <resultMap id="BaseResultMap" type="com.wlp.api.entity.WlpUser">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="LOGIN_PASSWORD" jdbcType="VARCHAR" property="loginPassword" />
+    <result column="TRANS_PASSWORD" jdbcType="VARCHAR" property="transPassword" />
+    <result column="REC_EMAIL" jdbcType="VARCHAR" property="recEmail" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="WECHAT" jdbcType="VARCHAR" property="wechat" />
+    <result column="ALIPAY" jdbcType="VARCHAR" property="alipay" />
+    <result column="BANK_NAME" jdbcType="VARCHAR" property="bankName" />
+    <result column="BANK_USERNAME" jdbcType="VARCHAR" property="bankUsername" />
+    <result column="BANK_ACCT" jdbcType="VARCHAR" property="bankAcct" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="ACTIVE_TIME" jdbcType="DATE" property="activeTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, USER_NAME, MOBILE_PHONE, EMAIL, LOGIN_PASSWORD, TRANS_PASSWORD, REC_EMAIL, REMARK, 
+    WECHAT, ALIPAY, BANK_NAME, BANK_USERNAME, BANK_ACCT, STATUS, ACTIVE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wlp_user
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from wlp_user
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wlp.api.entity.WlpUser">
+    insert into wlp_user (ID, USER_NAME, MOBILE_PHONE, 
+      EMAIL, LOGIN_PASSWORD, TRANS_PASSWORD, 
+      REC_EMAIL, REMARK, WECHAT, 
+      ALIPAY, BANK_NAME, BANK_USERNAME, 
+      BANK_ACCT, STATUS, ACTIVE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{transPassword,jdbcType=VARCHAR}, 
+      #{recEmail,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, 
+      #{alipay,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankUsername,jdbcType=VARCHAR}, 
+      #{bankAcct,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{activeTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wlp.api.entity.WlpUser">
+    insert into wlp_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD,
+      </if>
+      <if test="transPassword != null">
+        TRANS_PASSWORD,
+      </if>
+      <if test="recEmail != null">
+        REC_EMAIL,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="wechat != null">
+        WECHAT,
+      </if>
+      <if test="alipay != null">
+        ALIPAY,
+      </if>
+      <if test="bankName != null">
+        BANK_NAME,
+      </if>
+      <if test="bankUsername != null">
+        BANK_USERNAME,
+      </if>
+      <if test="bankAcct != null">
+        BANK_ACCT,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="activeTime != null">
+        ACTIVE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="transPassword != null">
+        #{transPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="recEmail != null">
+        #{recEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="alipay != null">
+        #{alipay,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankUsername != null">
+        #{bankUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAcct != null">
+        #{bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="activeTime != null">
+        #{activeTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wlp.api.entity.WlpUser">
+    update wlp_user
+    <set>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="transPassword != null">
+        TRANS_PASSWORD = #{transPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="recEmail != null">
+        REC_EMAIL = #{recEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        WECHAT = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="alipay != null">
+        ALIPAY = #{alipay,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankUsername != null">
+        BANK_USERNAME = #{bankUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAcct != null">
+        BANK_ACCT = #{bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="activeTime != null">
+        ACTIVE_TIME = #{activeTime,jdbcType=DATE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpUser">
+    update wlp_user
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      TRANS_PASSWORD = #{transPassword,jdbcType=VARCHAR},
+      REC_EMAIL = #{recEmail,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      WECHAT = #{wechat,jdbcType=VARCHAR},
+      ALIPAY = #{alipay,jdbcType=VARCHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      BANK_USERNAME = #{bankUsername,jdbcType=VARCHAR},
+      BANK_ACCT = #{bankAcct,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      ACTIVE_TIME = #{activeTime,jdbcType=DATE}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
 
-	<update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpUser">
-		update wlp_user
-		set USER_NAME = #{userName,jdbcType=VARCHAR},
-		MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
-		EMAIL = #{email,jdbcType=VARCHAR},
-		LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
-		TRANS_PASSWORD = #{transPassword,jdbcType=VARCHAR},
-		REC_EMAIL = #{recEmail,jdbcType=VARCHAR},
-		REMARK = #{remark,jdbcType=VARCHAR},
-		WECHAT = #{wechat,jdbcType=VARCHAR},
-		ALIPAY = #{alipay,jdbcType=VARCHAR},
-		BANK_NAME = #{bankName,jdbcType=VARCHAR},
-		BANK_USERNAME = #{bankUsername,jdbcType=VARCHAR},
-		BANK_ACCT = #{bankAcct,jdbcType=VARCHAR},
-		STATUS = #{status,jdbcType=VARCHAR}
-		where ID = #{id,jdbcType=VARCHAR}
-	</update>
-
-	<select id="selectByCondition" resultMap="BaseResultMap"
-		parameterType="com.wlp.api.entity.WlpUser">
+	<select id="selectByCondition" parameterType="com.wlp.api.entity.WlpUser" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from wlp_user

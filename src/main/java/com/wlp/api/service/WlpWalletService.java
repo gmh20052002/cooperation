@@ -8,4 +8,6 @@ public interface WlpWalletService {
 	public WlpWallet updateWlpWallet(WlpWallet data);
 	
 	public Long getbalance(String email);
+	
+	public WlpWallet getWlpWalletByEmail(String email);
 }
