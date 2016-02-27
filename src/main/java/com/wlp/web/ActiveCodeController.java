@@ -230,9 +230,9 @@ public class ActiveCodeController {
 					results.add(code);
 					continue;
 				}
-				String state = "未激活";
+				String state = "未使用";
 				if ("1".equals(code.getStatus())) {
-					state = "激活";
+					state = "使用";
 				}
 				if (cname.contains(keyword) || state.contains(keyword) || code.getCode().contains(keyword)) {
 
@@ -283,9 +283,9 @@ public class ActiveCodeController {
 					results.add(code);
 					continue;
 				}
-				String state = "未激活";
+				String state = "未使用";
 				if ("1".equals(code.getStatus())) {
-					state = "激活";
+					state = "已使用";
 				}
 				if (cname.contains(keyword) || state.contains(keyword) || code.getCode().contains(keyword)) {
 					if (cname.contains(keyword)) {

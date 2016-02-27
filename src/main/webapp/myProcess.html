@@ -33,24 +33,21 @@
 	$(document).ready(function() {
 		  var pathName=window.document.location.pathname;
 		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
-		$.ajax({ 
-			type : "GET",  
-			url : projectName+"/wlp/getUseActivecodes",
+		$.ajax({
+			type : "GET",
+			url : projectName+"/wlp/getMyWlpPairLogs",
 			success : function(data) {
 				  console.log(data)
 				if(data&&data.length>0){	
-					$("#showRegMes").show();
+					   $("#showRegMes").show();
 				       $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
-					for(var i=0;i<data.length;i++){ 
-						var state="未使用";
-						if(data[i].status=='1'){
-							state="使用" 
-						}
+					for(var i=0;i<data.length;i++){
+
 						  $("#table").append("<tr>"
-		                           +"<th>"+data[i].email+"</th>"
-			                             +"<td>"+data[i].code+"</td>"
-			                             +"<td>"+state+"</td>"
-			                             +"<td>"+data[i].createTime+"</td>"
+		                           +"<th>"+data[i].pairMoney+"</th>"
+			                             +"<td>"+data[i].orderTime+"</td>"
+			                             +"<td>"+data[i].pairTime+"</td>"
+			                             +"<td>"+data[i].status+"</td>"
 		                       +"</tr>");            						
 					}			                 
 				 }else{			
@@ -71,27 +68,20 @@
 		 		$.ajax({
 		 			type : 'POST',
 					data:{ 'keyword':keyword },
-					url : projectName+"/wlp/getUseActivecodesBySearch",
+					url : projectName+"/wlp/getMyWlpPairLogsBySearch",
 					success : function(data) {
 						  console.log(data)
 						if(data&&data.length>0){
 							$("#showRegMes").show();
 						    $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
 							for(var i=0;i<data.length;i++){
-							var state="未激活";
-								if(data[i].status=='1'){
-									state="激活"
-								} else if(data[i].status=='0'){
-									 state="未激活";
-								}else{
-									state=data[i].status;
-								}
+						
 								  $("#table").append("<tr>"
-				                           +"<th>"+data[i].email+"</th>"
-					                             +"<td>"+data[i].code+"</td>"
-					                             +"<td>"+state+"</td>"
-					                             +"<td>"+data[i].shareTime+"</td>"
-				                       +"</tr>");            						
+				                           +"<th>"+data[i].orderPic+"</th>"
+					                             +"<td>"+data[i].orderTime+"</td>"
+					                             +"<td>"+data[i].pairTime+"</td>"
+					                             +"<td>"+data[i].status+"</td>"
+				                       +"</tr>");            					
 							}			                 
 						 }else{				
 								$("#showRegMes").show();
@@ -113,8 +103,8 @@
 
 <div data-role="page" id="page">
 	<div data-role="header" data-theme="f" >
-        <a href="acodeManage.html" data-role="button" data-icon="arrow-l" data-rel="back" data-iconpos="notext">返回</a>
-		<h1  style="font-size: 14px;">已分享激活码</h1>
+        <a href="myTeam.html" data-role="button" data-icon="arrow-l" data-rel="back" data-iconpos="notext">返回</a>
+		<h1  style="font-size: 14px;">我的历程</h1>
        <a href="memCenter.html"  rel="external" data-role="button" data-icon="home"   data-iconpos="notext">主页</a>
 	</div>
   <div data-role="content" class="ui-content" role="main">	
@@ -126,10 +116,10 @@
    <table id="table" data-role="table" id="table-custom-2" data-mode="column" class=" table-stripe ui-responsive" data-column-btn-theme="e">
          <thead>
            <tr class="ui-bar-d">
-             <th >用户</th>
-             <th >激活码</th>
-             <th ><abbr title="Rotten Tomato Rating">状态</abbr></th>
-               <th >共享时间</th>
+              <th >金额</th>
+             <th >下单时间</th>
+                 <th >配对时间</th>
+             <th >状态</th>            
            </tr>
          </thead>
          <tbody>
