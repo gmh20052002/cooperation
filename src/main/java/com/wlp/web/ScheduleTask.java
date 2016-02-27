@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,20 +52,21 @@ public class ScheduleTask implements InitializingBean {
 								currentCalendar.setTime(new Date());
 								int startDay = activeCalendar.get(Calendar.DAY_OF_YEAR);
 								int endDay = currentCalendar.get(Calendar.DAY_OF_YEAR);
-								
+
 								int lengthDay = (endDay - startDay);
-								//本金
+								// 本金
 								long capital = wlpWallet.getCapital();
-								//分红
+								// 分红
 								long bonus = wlpWallet.getBonus();
-								
+
 								int lv = 3;
-								if(lengthDay > 0){
+								if (lengthDay > 0) {
 									lv += lengthDay;
 								}
-								if(capital*1.45 >= bonus + (capital*(lv/100))){//分红总盈利不能超过145%
-									log.debug("用户["+email+"]本次分红["+capital*(lv/100)+"]元，分红时间["+new Date()+"]");
-									wlpWallet.setBonus(bonus + (capital*(lv/100)));
+								if (capital * 1.45 >= bonus + (capital * (lv / 100))) {// 分红总盈利不能超过145%
+									log.debug("用户[" + email + "]本次分红[" + capital * (lv / 100) + "]元，分红时间[" + new Date()
+											+ "]");
+									wlpWallet.setBonus(bonus + (capital * (lv / 100)));
 									wlpWalletService.updateWlpWallet(wlpWallet);
 								}
 							}

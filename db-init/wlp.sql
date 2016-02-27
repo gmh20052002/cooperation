@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-02-27 12:14:16
+Date: 2016-02-27 13:29:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,6 +58,7 @@ CREATE TABLE `wlp_pair_log` (
   `PAY_TYPE` varchar(255) NOT NULL DEFAULT '' COMMENT '支付方式bank银行alipay支付宝wechat--微信',
   `EXTRAK_TYPE` varchar(255) DEFAULT NULL COMMENT '提现类型：dynamic--动态体现,help--互助提现',
   `ORDER_PIC` varchar(255) DEFAULT NULL COMMENT '交易图片地址，一般为一张转帐截图',
+  `REMARK` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -92,7 +93,7 @@ CREATE TABLE `wlp_user` (
 -- ----------------------------
 -- Records of wlp_user
 -- ----------------------------
-INSERT INTO `wlp_user` VALUES ('1001', '胡康伟', '1377777777', 'admin@163.com', '777777', '888888', 'admin', '2', '999', '999', '4', '999', '999', '1', null);
+INSERT INTO `wlp_user` VALUES ('1001', '胡康伟', '1377777777', 'admin@163.com', '777777', '888888', 'admin', '4', '999', '999', '4', '999', '999', '1', null);
 INSERT INTO `wlp_user` VALUES ('1002', '王大锤', '138888888', 'hukangwei', '888888', '888888', 'admin', '5', null, null, null, null, null, '1', null);
 INSERT INTO `wlp_user` VALUES ('1003', '易中天', null, 'lisi', '888888', '888888', 'admin', '5', null, null, null, null, null, '0', null);
 

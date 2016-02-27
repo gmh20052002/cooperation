@@ -67,7 +67,7 @@
 		</init-param>
 		<init-param>
 			<param-name>orderUrlStr</param-name>
-			<param-value>/**/wlp/login;/**/wlp/regUser;</param-value>
+			<param-value>;</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

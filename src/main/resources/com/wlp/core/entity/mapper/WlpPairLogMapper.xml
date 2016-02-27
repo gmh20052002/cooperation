@@ -12,12 +12,12 @@
 		<result column="PAY_TYPE" jdbcType="VARCHAR" property="payType" />
 		<result column="EXTRAK_TYPE" jdbcType="VARCHAR" property="extrakType" />
 		<result column="ORDER_PIC" jdbcType="VARCHAR" property="orderPic" />
+		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, PAIR_MONEY, FROM_USER, TO_USER, ORDER_TIME, PAIR_TIME,
-		STATUS,
+		ID, PAIR_MONEY, FROM_USER, TO_USER, ORDER_TIME, PAIR_TIME, STATUS,
 		PAY_TYPE, EXTRAK_TYPE,
-		ORDER_PIC
+		ORDER_PIC, REMARK
 	</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
@@ -27,26 +27,20 @@
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from
-		wlp_pair_log
+		delete from wlp_pair_log
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.wlp.api.entity.WlpPairLog">
-		insert into wlp_pair_log (ID,
-		PAIR_MONEY, FROM_USER,
+		insert into wlp_pair_log (ID, PAIR_MONEY, FROM_USER,
 		TO_USER, ORDER_TIME, PAIR_TIME,
-		STATUS, PAY_TYPE,
-		EXTRAK_TYPE,
-		ORDER_PIC)
-		values (#{id,jdbcType=VARCHAR},
-		#{pairMoney,jdbcType=DECIMAL},
+		STATUS, PAY_TYPE, EXTRAK_TYPE,
+		ORDER_PIC, REMARK)
+		values (#{id,jdbcType=VARCHAR}, #{pairMoney,jdbcType=DECIMAL},
 		#{fromUser,jdbcType=VARCHAR},
-		#{toUser,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP},
-		#{pairTime,jdbcType=TIMESTAMP},
-		#{status,jdbcType=VARCHAR},
-		#{payType,jdbcType=VARCHAR},
+		#{toUser,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{pairTime,jdbcType=TIMESTAMP},
+		#{status,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR},
 		#{extrakType,jdbcType=VARCHAR},
-		#{orderPic,jdbcType=VARCHAR})
+		#{orderPic,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.wlp.api.entity.WlpPairLog">
 		insert into wlp_pair_log
@@ -81,6 +75,9 @@
 			<if test="orderPic != null">
 				ORDER_PIC,
 			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -112,6 +109,9 @@
 			</if>
 			<if test="orderPic != null">
 				#{orderPic,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -145,25 +145,24 @@
 			<if test="orderPic != null">
 				ORDER_PIC = #{orderPic,jdbcType=VARCHAR},
 			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpPairLog">
-		update
-		wlp_pair_log
+		update wlp_pair_log
 		set PAIR_MONEY = #{pairMoney,jdbcType=DECIMAL},
-		FROM_USER =
-		#{fromUser,jdbcType=VARCHAR},
+		FROM_USER = #{fromUser,jdbcType=VARCHAR},
 		TO_USER = #{toUser,jdbcType=VARCHAR},
 		ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
-		PAIR_TIME =
-		#{pairTime,jdbcType=TIMESTAMP},
+		PAIR_TIME = #{pairTime,jdbcType=TIMESTAMP},
 		STATUS = #{status,jdbcType=VARCHAR},
 		PAY_TYPE = #{payType,jdbcType=VARCHAR},
-		EXTRAK_TYPE =
-		#{extrakType,jdbcType=VARCHAR},
-		ORDER_PIC =
-		#{orderPic,jdbcType=VARCHAR}
+		EXTRAK_TYPE = #{extrakType,jdbcType=VARCHAR},
+		ORDER_PIC = #{orderPic,jdbcType=VARCHAR},
+		REMARK = #{remark,jdbcType=VARCHAR}
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 

@@ -4,62 +4,29 @@ import java.util.Date;
 
 public class WlpPairLog {
 
-	private String orderPic;
-
-	public String getOrderPic() {
-		return orderPic;
-	}
-
-	public void setOrderPic(String orderPic) {
-		this.orderPic = orderPic == null ? null : orderPic.trim();
-	}
-
 	private String id;
-	
-	/**
-	 * 查询条件用，关联邮箱
-	 */
-	private String email;
 
-	/**
-	 * 配对金额
-	 */
 	private Long pairMoney;
 
-	/**
-	 * 支付�?
-	 */
 	private String fromUser;
 
-	/**
-	 * 受益�?
-	 */
 	private String toUser;
 
-	/**
-	 * 交易完成时间
-	 */
 	private Date orderTime;
 
-	/**
-	 * 匹配时间
-	 */
 	private Date pairTime;
 
-	/**
-	 * 交易状�?：状态：0--未完成，1--已完成
-	 */
 	private String status;
-	
-	/**
-	 * 支付方式：bank--银行,alipay--支付宝?wechat--微信
-	 */
+
 	private String payType;
 
-	/**
-	 * 提现类型：dynamic--互助提现,help--互助提现
-	 */
 	private String extrakType;
+
+	private String orderPic;
+
+	private String remark;
+	
+	private String email;
 
 	public String getId() {
 		return id;
@@ -131,6 +98,22 @@ public class WlpPairLog {
 
 	public void setExtrakType(String extrakType) {
 		this.extrakType = extrakType == null ? null : extrakType.trim();
+	}
+
+	public String getOrderPic() {
+		return orderPic;
+	}
+
+	public void setOrderPic(String orderPic) {
+		this.orderPic = orderPic == null ? null : orderPic.trim();
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
 	}
 
 	public String getEmail() {
