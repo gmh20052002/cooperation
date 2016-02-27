@@ -94,6 +94,7 @@ public class LoginedFilter implements Filter {
 				if ("true".equals(order_logined)) {
 
 				} else {
+					httpServletRequest.setAttribute("hisUrl", currentURL);
 					redirectLoginPage(httpServletRequest, httpServletResponse, "dealPsd.html");
 				}
 			}
