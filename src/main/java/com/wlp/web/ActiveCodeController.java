@@ -44,10 +44,21 @@ public class ActiveCodeController {
 	public @ResponseBody ArrayList<WlpActivecode> getCanUseActivecodes() {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
+		String cname = username;
 		if (username == null) {
 			return null;
+		} else {
+			WlpUser user = wlpUserService.getUserByEmail(username);
+			if (user != null) {
+				cname = user.getUserName();
+			}
 		}
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getCanUseActivecodes(username);
+		if (codes != null && codes.size() > 0) {
+			for (WlpActivecode code : codes) {
+				code.setEmail(cname);
+			}
+		}
 		return codes;
 	}
 
@@ -60,10 +71,21 @@ public class ActiveCodeController {
 	public @ResponseBody ArrayList<WlpActivecode> getUseActivecodes() {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
+		String cname = username;
 		if (username == null) {
 			return null;
+		} else {
+			WlpUser user = wlpUserService.getUserByEmail(username);
+			if (user != null && user.getUserName() != null) {
+				cname = user.getUserName();
+			}
 		}
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getSharedActivecodes(username);
+		if (codes != null && codes.size() > 0) {
+			for (WlpActivecode code : codes) {
+				code.setEmail(cname);
+			}
+		}
 		return codes;
 	}
 
@@ -125,7 +147,7 @@ public class ActiveCodeController {
 	}
 
 	/**
-	 * 激活码使用记录查询
+	 * 已分享使用记录查询
 	 * 
 	 * @return
 	 */
@@ -173,7 +195,6 @@ public class ActiveCodeController {
 						code.setCode(
 								code.getCode().replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
 					}
-
 					results.add(code);
 				}
 			}
@@ -191,27 +212,33 @@ public class ActiveCodeController {
 			@RequestParam(required = true) String keyword) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
+		String cname = username;
 		if (username == null) {
 			return null;
+		} else {
+			WlpUser user = wlpUserService.getUserByEmail(username);
+			if (user != null && user.getUserName() != null) {
+				cname = user.getUserName();
+			}
 		}
 		ArrayList<WlpActivecode> results = new ArrayList<WlpActivecode>();
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getCanUseActivecodes(username);
-		if (keyword == null || keyword.isEmpty()) {
-			return codes;
-		}
-
 		if (codes != null && codes.size() > 0) {
 			for (WlpActivecode code : codes) {
+				code.setEmail(cname);
+				if (keyword == null || keyword.isEmpty()) {
+					results.add(code);
+					continue;
+				}
 				String state = "未激活";
 				if ("1".equals(code.getStatus())) {
 					state = "激活";
 				}
-				String email = code.getEmail();
-				if (email.contains(keyword) || state.contains(keyword) || code.getCode().contains(keyword)) {
+				if (cname.contains(keyword) || state.contains(keyword) || code.getCode().contains(keyword)) {
 
-					if (email.contains(keyword)) {
-						email = email.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
-						code.setEmail(email);
+					if (cname.contains(keyword)) {
+						cname = cname.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
+						code.setEmail(cname);
 					}
 					if (state.contains(keyword)) {
 						code.setStatus(state.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
@@ -224,7 +251,6 @@ public class ActiveCodeController {
 					results.add(code);
 				}
 			}
-
 		}
 		return results;
 	}
@@ -239,27 +265,32 @@ public class ActiveCodeController {
 			@RequestParam(required = true) String keyword) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
+		String cname = username;
 		if (username == null) {
 			return null;
+		} else {
+			WlpUser user = wlpUserService.getUserByEmail(username);
+			if (user != null && user.getUserName() != null) {
+				cname = user.getUserName();
+			}
 		}
 		ArrayList<WlpActivecode> results = new ArrayList<WlpActivecode>();
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getSharedActivecodes(username);
-		if (keyword == null || keyword.isEmpty()) {
-			return codes;
-		}
-
 		if (codes != null && codes.size() > 0) {
 			for (WlpActivecode code : codes) {
+				code.setEmail(cname);
+				if (keyword == null || keyword.isEmpty()) {
+					results.add(code);
+					continue;
+				}
 				String state = "未激活";
 				if ("1".equals(code.getStatus())) {
 					state = "激活";
 				}
-				String email = code.getEmail();
-				if (email.contains(keyword) || state.contains(keyword) || code.getCode().contains(keyword)) {
-
-					if (email.contains(keyword)) {
-						email = email.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
-						code.setEmail(email);
+				if (cname.contains(keyword) || state.contains(keyword) || code.getCode().contains(keyword)) {
+					if (cname.contains(keyword)) {
+						cname = cname.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
+						code.setEmail(cname);
 					}
 					if (state.contains(keyword)) {
 						code.setStatus(state.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
@@ -268,7 +299,6 @@ public class ActiveCodeController {
 						code.setCode(
 								code.getCode().replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
 					}
-
 					results.add(code);
 				}
 			}
