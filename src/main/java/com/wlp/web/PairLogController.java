@@ -47,6 +47,7 @@ public class PairLogController {
 		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		if (logs != null && logs.size() > 0) {
 			for (WlpPairLog log : logs) {
+				log.setEmail(username);
 				String state = "未完成";
 				if ("1".equals(log.getStatus())) {
 					state = "已确认";
@@ -55,7 +56,7 @@ public class PairLogController {
 				if ((log.getFromUser() != null && log.getFromUser().equals(username))) {
 					long money = log.getPairMoney();
 					money = 0 - money;
-					log.setPairMoney(money);
+					log.setPairMoney(money);				
 				}
 			}
 		}
@@ -129,6 +130,76 @@ public class PairLogController {
 						log.setStatus(state.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
 					}
 				
+					results.add(log);
+				}
+			}
+		}
+		return results;
+	}
+	/**
+	 * 根据关键字查询我的交易记录--查询我的所有交易记录
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/getMyAllWlpPairLogsBySearch", method = RequestMethod.POST)
+	public @ResponseBody List<WlpPairLog> getMyAllWlpPairLogsBySearch(@RequestParam(required = true) String keyword,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute(USER_NAME);
+		if (username == null) {
+			return null;
+		}
+		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
+		String newMoney=null;
+		String oldMoney=null;
+		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
+		if (logs != null && logs.size() > 0) {
+			for (WlpPairLog log : logs) {
+				log.setEmail(username);
+				String state = "未完成";
+				if ("1".equals(log.getStatus())) {
+					state = "已确认";
+				}
+				log.setStatus(state);
+			
+				long money = log.getPairMoney();
+				if ((log.getFromUser() != null && log.getFromUser().equals(username))) {			
+					money = 0 - money;			
+					log.setPairMoney(money);				
+				}
+				log.setOrderPic(String.valueOf(money));
+				String searchMoney=String.valueOf(money);
+			
+				if(username.equals(log.getFromUser())){
+				newMoney=String.valueOf(log.getFromBalance());
+			       oldMoney=String.valueOf(log.getFromOldBalance());
+				}
+				else if(username.equals(log.getToUser())){
+					newMoney=String.valueOf(log.getToBalance());
+					oldMoney=String.valueOf(log.getToOldBalance());
+				}
+				log.setRemark(oldMoney);
+				log.setPayType(newMoney);
+				if (keyword == null || keyword.isEmpty()) {
+					results.add(log);
+					continue;
+				}
+			
+				if (searchMoney.contains(keyword) || state.contains(keyword)||oldMoney.contains(keyword) || newMoney.contains(keyword)  ) {
+					if (searchMoney.contains(keyword)) {
+						searchMoney = searchMoney.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
+						log.setOrderPic(searchMoney);
+					}
+					if (state.contains(keyword)) {
+						log.setStatus(state.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
+					}
+					if (newMoney.contains(keyword)) {
+						newMoney = newMoney.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
+						log.setPayType(newMoney);
+					}
+					if (oldMoney.contains(keyword)) {
+						oldMoney = oldMoney.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
+						log.setRemark(oldMoney);
+					}
 					results.add(log);
 				}
 			}

@@ -42,11 +42,14 @@
 					   $("#showRegMes").show();
 				       $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
 					for(var i=0;i<data.length;i++){
-
+						   var ptime=data[i].pairTime;
+					     if(!ptime){
+				        	  ptime="";
+				          }
 						  $("#table").append("<tr>"
 		                           +"<th>"+data[i].pairMoney+"</th>"
 			                             +"<td>"+data[i].orderTime+"</td>"
-			                             +"<td>"+data[i].pairTime+"</td>"
+			                             +"<td>"+ptime+"</td>"
 			                             +"<td>"+data[i].status+"</td>"
 		                       +"</tr>");            						
 					}			                 
@@ -75,11 +78,14 @@
 							$("#showRegMes").show();
 						    $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
 							for(var i=0;i<data.length;i++){
-						
+						          var ptime=data[i].pairTime;
+						          if(!ptime){
+						        	  ptime="";
+						          }
 								  $("#table").append("<tr>"
 				                           +"<th>"+data[i].orderPic+"</th>"
 					                             +"<td>"+data[i].orderTime+"</td>"
-					                             +"<td>"+data[i].pairTime+"</td>"
+					                             +"<td>"+ptime+"</td>"
 					                             +"<td>"+data[i].status+"</td>"
 				                       +"</tr>");            					
 							}			                 
@@ -90,10 +96,7 @@
 					}
 				});
 	}
-	function myFunction2(x)
-	{
-		 	
-	}
+
 		</script>
 
 <script type="text/javascript" charset="utf-8"
