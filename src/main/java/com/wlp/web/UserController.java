@@ -194,6 +194,10 @@ public class UserController {
 		}
 		WlpUser user = wlpUserService.getUserByEmail(username);
 		if (user != null) {
+			WlpUser user2= wlpUserService.getUserByEmail(user.getRecEmail());
+			if(user2!=null&&user2.getUserName()!=null){
+				user.setRecEmail(user2.getUserName());
+			}
 			return user;
 		}
 		return null;

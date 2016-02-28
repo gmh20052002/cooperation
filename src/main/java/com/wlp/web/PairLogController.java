@@ -1,7 +1,11 @@
 package com.wlp.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +74,15 @@ public class PairLogController {
 		if (username == null) {
 			return null;
 		}
-		
+		WlpPairLog wlpPairLog=new WlpPairLog();
+		wlpPairLog.setEmail(username);
+		wlpPairLog.setToUser(username);
+		wlpPairLog.setPayType(payway);
+		wlpPairLog.setPairMoney(Long.parseLong(money));
+		wlpPairLog.setStatus("0");
+		wlpPairLog.setOrderTime(new Date());
+		wlpPairLog.setExtrakType("dynamic");
+		wlpPairLogService.addWlpPairLog(wlpPairLog);
 	
 		return null;
 	}

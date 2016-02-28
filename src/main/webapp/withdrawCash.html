@@ -39,15 +39,48 @@
 	//	$('#slider-fill')[0].attributes[6].value=5000
 		 var pathName=window.document.location.pathname;
 		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
-		  
+			function _cleantip(){
+				   $("#showDealMes").hide();	
+			}
+			
+		
 		$(document).ready(function() {
+
+			$("#getHelp").click(function() {
+				var a=[];
+				var payway=""
+				$.each($(".xxx:checked"),function(i,n){
+					payway+=n.value;
+				    a[i]=n.value
+
+				});	
+		   if(a.length<1){
+			   $("#showDealMes").show();
+		       $("#showDealMes").html("<font color='red'>必须选择一种提现方式</font>");
+				return false;
+			   }
+		   console.log(a)
+		   $.ajax({				
+				type : 'POST',
+				url :projectName+ '/wlp/getHelp',		
+				data:{  'money':$('#slider-fill').val(),'payway':payway},
+				dataType : 'json',
+				success : function(data, type, request) {
+
+					   $("#showDealMes").show();
+				       $("#showDealMes").html("<font >已经成功发送帮助请求</font>");
+				       window.setTimeout(function(){_cleantip()},3200);
+				
+				}
+			});
+			});
 			$.ajax({
 				type : "GET",
 				url : projectName+ "/wlp/getMyWallet",
 				success : function(data) {
 					  console.log(data)
 					if(data){				     
-					    $("balance").val(data.capital+data.bonus);
+					    $("#balance").val(data.capital+data.bonus);
 					}else{
 					
 					}
@@ -66,31 +99,32 @@
         <a href="memCenter.html"  rel="external" data-role="button" data-icon="home"   data-iconpos="notext">主页</a>
 	</div>
   <div data-role="content" class="ui-content" role="main">		
-      <form action="#" method="post" id="regForm">
-    	<div data-role="fieldcontain">
+
+  
 					<label for="balance">动态余额: </label><input type="text" disabled="disabled" placeholder="" name="balance" value="222"  id="balance" >                  
-                </div>	
-                  	<div data-role="fieldcontain">
-					<!-- <label for="money2">提现余额: </label><input  type="text" placeholder="只能接受100的倍数" name="money2" value=""  id="money2"  data-clear-btn="true">    -->      
+         
+             
                           <label for="slider-fill">提现余额: </label>
 <input type="range" name="slider-fill" id="slider-fill" value="100" min="100" max="5000" step="100" data-highlight="true">      
-                </div>	
-
+   
        <div data-role="fieldcontain">
         <fieldset data-role="controlgroup">
           <legend>提现方式：</legend>
-            <label for="red">银行支付</label>
-            <input type="checkbox" name="favcolor" id="red" value="red">
-            <label for="green">支付宝支付</label>
-            <input type="checkbox" name="favcolor" id="green" value="green">
-            <label for="blue">微信支付</label>
-            <input type="checkbox" name="favcolor" id="blue" value="blue">  
+            <label for="1">银行支付</label>
+            <input type="checkbox"  class="xxx" name="favcolor" id="1" value="1" >
+            <label for="2">支付宝支付</label>
+            <input type="checkbox" class="xxx" name="favcolor" id="2" value="2"  checked="checked">
+            <label for="3">微信支付</label>
+            <input type="checkbox" class="xxx" name="favcolor" id="3" value="3">  
         </fieldset>
       </div>
-                <a href="#loginPage" id="regButton" data-role="button"
-					data-theme="e">请求帮助</a> 
+                <a href="#"  data-role="button"data-theme="e" id="getHelp">请求帮助</a> 
                          <a href="myWallet.html" id="regButton" data-role="button" rel="external" >取消</a>
-              </form>  
+                             <div data-role="main"  style=" text-align: center;">
+            
+                            <h2 class="text-primary"><span id="showDealMes"></span> </h2> 
+                </div>
+         
 	</div>
 <div data-role="footer"  data-theme="f"   data-position="fixed">
     <h1>平安互助-合作共赢</h1>
