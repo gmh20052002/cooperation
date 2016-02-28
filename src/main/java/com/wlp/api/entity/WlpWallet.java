@@ -40,7 +40,7 @@ public class WlpWallet {
 	}
 
 	public Long getCapital() {
-		return capital == null ? 0 : capital;
+		return capital;
 	}
 
 	public void setCapital(Long capital) {
@@ -48,7 +48,7 @@ public class WlpWallet {
 	}
 
 	public Long getBonus() {
-		return bonus == null ? 0 : bonus;
+		return bonus ;
 	}
 
 	public void setBonus(Long bonus) {

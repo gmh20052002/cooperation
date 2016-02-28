@@ -20,7 +20,6 @@ public interface WlpPairLogMapper {
 	int updateByPrimaryKeySelective(WlpPairLog record);
 
 	int updateByPrimaryKey(WlpPairLog record);
-
 	List<WlpPairLog> selectByCondition(
 			@Param("condition") WlpPairLog condition,
 			@Param("order") Order order, Page<WlpPairLog> page);

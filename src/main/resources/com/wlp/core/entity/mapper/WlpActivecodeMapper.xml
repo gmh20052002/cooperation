@@ -126,13 +126,13 @@
 					AND ID = #{condition.id,jdbcType=VARCHAR}
 				</if>
 		      	<if test="condition.code != null" >
-		        	CODE = #{condition.code,jdbcType=VARCHAR}
+		        	AND CODE = #{condition.code,jdbcType=VARCHAR}
 		      	</if>
 		      	<if test="condition.email != null" >
-		        	EMAIL = #{condition.email,jdbcType=VARCHAR}
+		        	AND EMAIL = #{condition.email,jdbcType=VARCHAR}
 		      	</if>
 		      	<if test="condition.shareEmail != null" >
-		        	SHARE_EMAIL = #{condition.shareEmail,jdbcType=VARCHAR}
+		        	AND SHARE_EMAIL = #{condition.shareEmail,jdbcType=VARCHAR}
 		      	</if>
 			</if>
 		</where>

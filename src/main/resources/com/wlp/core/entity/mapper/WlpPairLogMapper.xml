@@ -13,11 +13,15 @@
 		<result column="EXTRAK_TYPE" jdbcType="VARCHAR" property="extrakType" />
 		<result column="ORDER_PIC" jdbcType="VARCHAR" property="orderPic" />
 		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
+		<result column="TO_OLD_BALANCE" jdbcType="DECIMAL" property="toOldBalance" />
+		<result column="TO_BALANCE" jdbcType="DECIMAL" property="toBalance" />
+		<result column="FROM_OLD_BALANCE" jdbcType="DECIMAL" property="fromOldBalance" />
+		<result column="FROM_BALANCE" jdbcType="DECIMAL" property="fromBalance" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		ID, PAIR_MONEY, FROM_USER, TO_USER, ORDER_TIME, PAIR_TIME, STATUS,
 		PAY_TYPE, EXTRAK_TYPE,
-		ORDER_PIC, REMARK
+		ORDER_PIC, REMARK, TO_OLD_BALANCE, TO_BALANCE, FROM_OLD_BALANCE, FROM_BALANCE
 	</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
@@ -34,13 +38,18 @@
 		insert into wlp_pair_log (ID, PAIR_MONEY, FROM_USER,
 		TO_USER, ORDER_TIME, PAIR_TIME,
 		STATUS, PAY_TYPE, EXTRAK_TYPE,
-		ORDER_PIC, REMARK)
+		ORDER_PIC, REMARK, TO_OLD_BALANCE,
+		TO_BALANCE, FROM_OLD_BALANCE, FROM_BALANCE
+		)
 		values (#{id,jdbcType=VARCHAR}, #{pairMoney,jdbcType=DECIMAL},
 		#{fromUser,jdbcType=VARCHAR},
 		#{toUser,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{pairTime,jdbcType=TIMESTAMP},
 		#{status,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR},
 		#{extrakType,jdbcType=VARCHAR},
-		#{orderPic,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+		#{orderPic,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{toOldBalance,jdbcType=DECIMAL},
+		#{toBalance,jdbcType=DECIMAL}, #{fromOldBalance,jdbcType=DECIMAL},
+		#{fromBalance,jdbcType=DECIMAL}
+		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.wlp.api.entity.WlpPairLog">
 		insert into wlp_pair_log
@@ -78,6 +87,18 @@
 			<if test="remark != null">
 				REMARK,
 			</if>
+			<if test="toOldBalance != null">
+				TO_OLD_BALANCE,
+			</if>
+			<if test="toBalance != null">
+				TO_BALANCE,
+			</if>
+			<if test="fromOldBalance != null">
+				FROM_OLD_BALANCE,
+			</if>
+			<if test="fromBalance != null">
+				FROM_BALANCE,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -112,6 +133,18 @@
 			</if>
 			<if test="remark != null">
 				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="toOldBalance != null">
+				#{toOldBalance,jdbcType=DECIMAL},
+			</if>
+			<if test="toBalance != null">
+				#{toBalance,jdbcType=DECIMAL},
+			</if>
+			<if test="fromOldBalance != null">
+				#{fromOldBalance,jdbcType=DECIMAL},
+			</if>
+			<if test="fromBalance != null">
+				#{fromBalance,jdbcType=DECIMAL},
 			</if>
 		</trim>
 	</insert>
@@ -148,6 +181,18 @@
 			<if test="remark != null">
 				REMARK = #{remark,jdbcType=VARCHAR},
 			</if>
+			<if test="toOldBalance != null">
+				TO_OLD_BALANCE = #{toOldBalance,jdbcType=DECIMAL},
+			</if>
+			<if test="toBalance != null">
+				TO_BALANCE = #{toBalance,jdbcType=DECIMAL},
+			</if>
+			<if test="fromOldBalance != null">
+				FROM_OLD_BALANCE = #{fromOldBalance,jdbcType=DECIMAL},
+			</if>
+			<if test="fromBalance != null">
+				FROM_BALANCE = #{fromBalance,jdbcType=DECIMAL},
+			</if>
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
@@ -162,7 +207,11 @@
 		PAY_TYPE = #{payType,jdbcType=VARCHAR},
 		EXTRAK_TYPE = #{extrakType,jdbcType=VARCHAR},
 		ORDER_PIC = #{orderPic,jdbcType=VARCHAR},
-		REMARK = #{remark,jdbcType=VARCHAR}
+		REMARK = #{remark,jdbcType=VARCHAR},
+		TO_OLD_BALANCE = #{toOldBalance,jdbcType=DECIMAL},
+		TO_BALANCE = #{toBalance,jdbcType=DECIMAL},
+		FROM_OLD_BALANCE = #{fromOldBalance,jdbcType=DECIMAL},
+		FROM_BALANCE = #{fromBalance,jdbcType=DECIMAL}
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 
@@ -177,28 +226,28 @@
 					AND ID = #{condition.id,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.pairMoney != null">
-					PAIR_MONEY = #{condition.pairMoney,jdbcType=VARCHAR}
+					AND PAIR_MONEY = #{condition.pairMoney,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.fromUser != null">
-					FROM_USER = #{condition.fromUser,jdbcType=VARCHAR}
+					AND FROM_USER = #{condition.fromUser,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.fromUser != null">
-					FROM_USER = #{condition.fromUser,jdbcType=VARCHAR}
+					AND FROM_USER = #{condition.fromUser,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.toUser != null">
-					TO_USER = #{condition.toUser,jdbcType=VARCHAR}
+					AND TO_USER = #{condition.toUser,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.status != null">
-					STATUS = #{condition.status,jdbcType=VARCHAR}
+					AND STATUS = #{condition.status,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.payType != null">
-					PAY_TYPE = #{condition.payType,jdbcType=VARCHAR}
+					AND PAY_TYPE = #{condition.payType,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.extrakType != null">
-					EXTRAK_TYPE = #{condition.extrakType,jdbcType=VARCHAR}
+					AND EXTRAK_TYPE = #{condition.extrakType,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.email != null">
-					(FROM_USER = #{condition.email,jdbcType=VARCHAR} OR
+					AND (FROM_USER = #{condition.email,jdbcType=VARCHAR} OR
 					TO_USER =
 					#{condition.email,jdbcType=VARCHAR})
 				</if>

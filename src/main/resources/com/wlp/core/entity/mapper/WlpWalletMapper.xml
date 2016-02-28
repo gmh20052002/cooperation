@@ -91,13 +91,13 @@
 					AND ID = #{condition.id,jdbcType=VARCHAR}
 				</if>
 		      	<if test="condition.email != null" >
-		        	EMAIL = #{condition.email,jdbcType=VARCHAR}
+		        	AND EMAIL = #{condition.email,jdbcType=VARCHAR}
 		      	</if>
 		      	<if test="condition.capital != null" >
-		        	CAPITAL = #{condition.capital,jdbcType=VARCHAR}
+		        	AND CAPITAL = #{condition.capital,jdbcType=VARCHAR}
 		      	</if>
 		      	<if test="condition.bonus != null" >
-		        	BONUS = #{condition.bonus,jdbcType=VARCHAR}
+		        	AND BONUS = #{condition.bonus,jdbcType=VARCHAR}
 		      	</if>
 			</if>
 		</where>

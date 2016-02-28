@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wlp.core.dao.WlpPairPipelineMapper" >
+  <resultMap id="BaseResultMap" type="com.wlp.api.entity.WlpPairPipeline" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LOOP" property="loop" jdbcType="INTEGER" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, LOOP, EMAIL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wlp_pair_pipeline
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wlp_pair_pipeline
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wlp.api.entity.WlpPairPipeline" >
+    insert into wlp_pair_pipeline (ID, LOOP, EMAIL
+      )
+    values (#{id,jdbcType=VARCHAR}, #{loop,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wlp.api.entity.WlpPairPipeline" >
+    insert into wlp_pair_pipeline
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="loop != null" >
+        LOOP,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loop != null" >
+        #{loop,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wlp.api.entity.WlpPairPipeline" >
+    update wlp_pair_pipeline
+    <set >
+      <if test="loop != null" >
+        LOOP = #{loop,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpPairPipeline" >
+    update wlp_pair_pipeline
+    set LOOP = #{loop,jdbcType=INTEGER},
+      EMAIL = #{email,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="com.wlp.api.entity.WlpPairPipeline">
+		select
+		<include refid="Base_Column_List" />
+		from wlp_pair_pipeline
+		<where>
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+		      	<if test="condition.code != null" >
+		        	AND LOOP = #{condition.LOOP,jdbcType=INTEGER}
+		      	</if>
+		      	<if test="condition.email != null" >
+		        	AND EMAIL = #{condition.email,jdbcType=VARCHAR}
+		      	</if>
+			</if>
+		</where>
+	</select>
+</mapper>

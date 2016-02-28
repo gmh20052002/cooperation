@@ -25,6 +25,14 @@ public class WlpPairLog {
 	private String orderPic;
 
 	private String remark;
+
+	private Long toOldBalance;
+
+	private Long toBalance;
+
+	private Long fromOldBalance;
+
+	private Long fromBalance;
 	
 	private String email;
 
@@ -116,6 +124,38 @@ public class WlpPairLog {
 		this.remark = remark == null ? null : remark.trim();
 	}
 
+	public Long getToOldBalance() {
+		return toOldBalance;
+	}
+
+	public void setToOldBalance(Long toOldBalance) {
+		this.toOldBalance = toOldBalance;
+	}
+
+	public Long getToBalance() {
+		return toBalance;
+	}
+
+	public void setToBalance(Long toBalance) {
+		this.toBalance = toBalance;
+	}
+
+	public Long getFromOldBalance() {
+		return fromOldBalance;
+	}
+
+	public void setFromOldBalance(Long fromOldBalance) {
+		this.fromOldBalance = fromOldBalance;
+	}
+
+	public Long getFromBalance() {
+		return fromBalance;
+	}
+
+	public void setFromBalance(Long fromBalance) {
+		this.fromBalance = fromBalance;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -123,5 +163,4 @@ public class WlpPairLog {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 }
