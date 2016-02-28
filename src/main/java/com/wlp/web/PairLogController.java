@@ -3,9 +3,6 @@ package com.wlp.web;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.json.JsonArray;
-import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.wlp.api.entity.WlpPairLog;
+import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpPairLogService;
+import com.wlp.api.service.WlpUserService;
 
 /**
  * 交易记录管理 规则： 投资1000-5000，排队后日利息为： 第一天：3% 第二天：5% 。。。 第15天：17% 总盈利不得大于145%，否则强制出局
@@ -30,6 +29,9 @@ public class PairLogController {
 	@Autowired
 	WlpPairLogService wlpPairLogService;
 
+	@Autowired
+	WlpUserService wlpUserService;
+	
 	private static final String USER_NAME = "USER_NAME";
 
 	/**
@@ -62,7 +64,45 @@ public class PairLogController {
 		}
 		return logs;
 	}
-	
+	/**
+	 * 我的未完成交易--查询我的所有交易记录
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/getMyUnFinishWlpPairLogs", method = RequestMethod.GET)
+	public @ResponseBody List<WlpPairLog> getMyUnFinishWlpPairLogs(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute(USER_NAME);
+		if (username == null) {
+			return null;
+		}
+		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
+		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
+		if (logs != null && logs.size() > 0) {
+			for (WlpPairLog log : logs) {
+				log.setEmail(username);
+				String recEmail=log.getToUser();
+				if ("1".equals(log.getStatus())||username.equals(log.getToUser())||recEmail==null) {
+					continue;
+				}
+				WlpUser rec_user =null;
+				try{
+				 rec_user =wlpUserService.getUserByEmail(recEmail);
+				 recEmail=rec_user.getUserName();
+				}catch(Exception e){
+					e.printStackTrace();
+				}			
+				log.setStatus(recEmail);
+				if ((log.getFromUser() != null && log.getFromUser().equals(username))) {
+					long money = log.getPairMoney();
+					money = 0 - money;
+					log.setPairMoney(money);				
+				}
+				results.add(log);
+			}
+		}
+		return results;
+	}
 	/**
 	 * 请求帮助
 	 * 
