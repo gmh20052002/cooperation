@@ -16,7 +16,7 @@ $(document).ready(function() {
 	              if(!myreg.test(uname))
 	              {
 	          		$("#showMes").show();
-	                $("#showMes").html("<font color=red>邮箱格式不正确!</font>");
+	                $("#showMes").html("<font color=red>登录失败，邮箱或密码错误!</font>");
 	                 $("#email").focus();
 	                 $('#logintext').html('登陆');
 	                 $('#loginButton').buttonMarkup({ theme: "e" });
