@@ -43,9 +43,17 @@
 		url : projectName+ "/wlp/getMyWallet",
 		success : function(data) {
 			  console.log(data)
-			if(data){				     
-			    $("#div11").html(data.capital);
-			    $("#div22").html(data.bonus);
+			if(data){				
+				var ca=data.capital;
+				if(!ca){
+					ca=0;
+				}
+				var bonus=data.bonus;
+				if(!bonus){
+					bonus=0;
+				}
+			    $("#div11").html(ca);
+			    $("#div22").html(bonus);
 			}else{
 			
 			}
@@ -71,8 +79,8 @@
   
     <div  class="ui-bar ui-bar-c" style="height:140px;text-align: center;">
    <img src="img/dollar.jpg" width="90px" height="90px"><br/>
-      <span id="div1">本金</span>：<span  id="div11">300</span><br/>
-          <span  id="div2">分红</span>：<span  id="div22">600</span>
+      <span id="div1">本金</span>：<span  id="div11"></span><br/>
+          <span  id="div2">分红</span>：<span  id="div22"></span>
  
     </div>
     <a href="withdrawCash.html" id="regButton"  rel="external" data-role="button"
