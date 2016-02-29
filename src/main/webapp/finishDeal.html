@@ -1,0 +1,150 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///E:/cooperation-master/src/main/webapp/memberCenter.html -->
+<html class="ui-mobile"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--<base href="file:///E:/cooperation-master/src/main/webapp/memberCenter.html">--><base href=".">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>平安互助</title>
+<style>
+.ui-bar-f {
+    color: white;
+     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#81a8ce),color-stop(1,#5e87b0));
+    border: 1px solid #456f9a;
+    background: #5e87b0;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 -1px 1px #254f7a;
+
+}
+ 
+.ui-body-f {
+    color: white;
+    background-color: #5e87b0;
+}
+
+
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="user-scalable=no, width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="./css/frame/jquery.mobile-1.3.2.css">
+<link rel="stylesheet" href="./css/global.css">
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript">
+	  var pathName=window.document.location.pathname;
+	  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
+
+		function GetQueryString(name)
+		{
+		     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		     var r = window.location.search.substr(1).match(reg);
+		     if(r!=null)return  unescape(r[2]); return null;
+		}
+	
+	function _cleantip(){
+		   $("#showRegMes").hide();	
+	}
+	
+	function buiness(){
+		  var pathName=window.document.location.pathname;
+		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
+		$.ajax({				
+			type : 'POST',
+			url : projectName+'/wlp/updateUserInfo',
+			data : {
+				username : $("#username").val(),telphone : $("#phone").val(),wechat : $("#wechat").val(),
+				alipay : $("#alipay").val(),bankname : $("#select-native-1").val(),bankusername : $("#bankusername").val(),bankacct : $("#bankacct").val()
+				},
+				
+			dataType : 'json',
+			success : function(data, type, request) {
+				// location.href="memCenter.html"; 
+				   $("#showRegMes").show();
+			       $("#showRegMes").html("<font >信息修改成功</font>");
+			       window.setTimeout(function(){_cleantip()},3200);
+			}
+		}); 
+	}
+	
+
+	
+	$(document).ready(function() {
+		  var pathName=window.document.location.pathname;
+		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
+		    $('#email').val(GetQueryString("username"));
+		$.ajax({
+			type : "GET",
+			url : projectName+"/wlp/getUserInfo",
+			success : function(data) {
+				  console.log(data)
+				      $('#email').val(GetQueryString("username"));
+				if(data){				     
+					/*   $('#phone').val(data.mobilePhone);
+				       $('#email').html(data.email);
+				       $('#wechat').val(data.wechat);
+				       $('#username').val(data.userName);
+				       $('#alipay').val(data.alipay);
+				       $('#bankname').val(data.bankName);
+				       $("#select-native-1 option[value='"+data.bankName+"']").prop("selected",true);
+				     
+				       $('#bankusername').val(data.bankUsername);
+				       $('#bankacct').val(data.bankAcct);
+				       $('#select-native-1').selectmenu('refresh'); */
+				}else{
+					 location.href=projectName+"/index.html#loginPage"; 
+				}
+			}
+		});
+		
+		$("#saveinfo").click(function() {
+	
+
+				 buiness();
+		});
+	});
+		
+		</script>
+<script type="text/javascript" charset="utf-8"
+	src="./js/frame/jquery.mobile-1.3.2.js"></script>
+	
+</head> 
+<body class="ui-mobile-viewport ui-overlay-a">
+
+<div data-role="page" id="page2" data-title="平安互助">
+	<div data-role="header" data-theme="f" >
+        <a href="updateNavi.html" data-role="button" data-icon="arrow-l" data-rel="back" data-iconpos="notext">返回</a>
+		<h1  style="font-size: 14px;">完成交易</h1>
+       <a href="memCenter.html"   rel="external" data-role="button" data-icon="home"   data-iconpos="notext">主页</a>
+	</div>
+  <div data-role="content" class="ui-content" role="main">		
+      <form action="#" method="post" id="regForm">
+    	
+					<label for="email">接收者账号： </label><input type="text" placeholder="" name="email" value=""  id="email" >                  
+              
+					<label for="phone">手机号码: </label><input type="tel" placeholder="" name="phone" value="" class="required" pattern="[0-9]*" id="phone"  >                  
+                  
+					<label for="wechat">微信号： </label><input type="text" placeholder="" name="wechat" value=""  id="wechat" >                  
+           
+					<label for="alipay">接收方式</label><input type="text" placeholder="" name="alipay" value=""  id="alipay" >                  
+             
+     	              <label for="money">交易金额</label><input type="text" placeholder="" name="money" value=""  id="money" >                
+     	
+					<label for="bankusername">备注信息 </label><input type="text" placeholder="" name="bankusername"   id="bankusername" data-clear-btn="true">                  
+             
+              
+                  <div data-role="main"  style=" text-align: center;">
+                <a  href="#"    rel="external"  data-role="button" data-theme="e" id="saveinfo">完成</a> 
+                 <a href="unFinishPairLog.html"  id="xxx" rel="external"   data-role="button" data-theme="c">取消</a>
+                  <!--      <input type="reset"  value="重置"> -->
+                            <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
+                </div>
+              </form>  
+	</div>
+<div data-role="footer"  data-theme="f" data-position="fixed">
+    <h1>平安互助-合作共赢</h1>
+  </div>
+</div>
+
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div></body></html>

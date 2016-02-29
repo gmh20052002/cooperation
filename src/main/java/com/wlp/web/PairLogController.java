@@ -6,11 +6,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.wlp.api.entity.WlpPairLog;
 import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpPairLogService;
@@ -29,8 +32,6 @@ public class PairLogController {
 	@Autowired
 	WlpPairLogService wlpPairLogService;
 
-	@Autowired
-	WlpUserService wlpUserService;
 	
 	private static final String USER_NAME = "USER_NAME";
 
@@ -78,6 +79,8 @@ public class PairLogController {
 		}
 		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
 		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
+		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
+		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
 		if (logs != null && logs.size() > 0) {
 			for (WlpPairLog log : logs) {
 				log.setEmail(username);
@@ -89,6 +92,7 @@ public class PairLogController {
 				try{
 				 rec_user =wlpUserService.getUserByEmail(recEmail);
 				 recEmail=rec_user.getUserName();
+				 log.setId(rec_user.getRemark());
 				}catch(Exception e){
 					e.printStackTrace();
 				}			

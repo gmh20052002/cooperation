@@ -62,25 +62,29 @@ override
 */
 
 /*
-list ×ó±ß img
+list ï¿½ï¿½ï¿½ img
 */
 .ui-li-thumb,.ui-listview .ui-li-icon {
 	left: 16px;
 	top: 5px;
 }
 /*
-list ÎÄ×Ö
+list ï¿½ï¿½ï¿½ï¿½
 */
 .ui-li-desc {
 	font-size: 12px;
 	font-weight: normal;
 	display: block;
 	margin: -.6em 0 .6em;
+	padding-left: 35px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: normal;
+	
 }
-
+.ui-li {
+height: 67px;
+}
 .ui-li .ui-btn-inner a.ui-link-inherit,.ui-li-static.ui-li {
 	padding: .1em 5px;
 	display: block;
@@ -99,7 +103,7 @@ custom style
 	width:100%;
 	height:auto;
 
-     /*ÉèÖÃË®Æ½¾ÓÖÐ*/
+     /*ï¿½ï¿½ï¿½ï¿½Ë®Æ½ï¿½ï¿½ï¿½ï¿½*/
      text-align:center;
 }
 
@@ -146,25 +150,42 @@ custom style
 }
 
 .listpic {
-	width: 30px !important;
-	height: 30px !important;
+	width: 60px !important;
+	height: 60px !important;
 }
 
 .listtitle {
 	color: #006699;
 	margin-top: 1px;
 	font-size: 11pt;
+	margin-left: 35px;
 	font-weight: bold;
 }
-
+.listtitle2 {
+	color: #006699;
+	font-size: 12pt;
+margin-right: 18px;
+	font-weight: bold;
+	text-align: right;
+	margin-top: 39px;
+}
+.acolor{
+	color: #5e87b0;
+}
 .timestyle {
 	color: grey;
 	margin-top: 1px;
 	font-size: 10pt;
 	float: right;
 	margin-right: 5px;
+	font-weight: bold
 }
-
+.timestyle2 {
+	margin-top: 1px;
+	font-size: 10pt;
+	float: right;
+	margin-right: 5px;
+}
 .contentList img {
 	max-width: 60px;
 	max-height: 60px;
