@@ -22,10 +22,15 @@
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <meta http-equiv="pragma" content="no-cache">
+2 <meta http-equiv="cache-control" content="no-cache">
+3 <meta http-equiv="expires" content="0">  
 <meta name="viewport"
 	content="user-scalable=no, width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="./css/frame/jquery.mobile-1.3.2.css">
 <link rel="stylesheet" href="./css/global.css">
+	<script type="text/javascript" charset="utf-8"
+			src="./js/frame/iscroll.js"></script>
 <script type="text/javascript" charset="utf-8"
 	src="./js/frame/jquery-1.8.2.min.js"></script>
 
@@ -37,21 +42,49 @@
 			type : "GET",
 			url : projectName+"/wlp/getMyTeamUsers",
 			success : function(data) {
-				  console.log(data)
-				if(data&&data.length>0){	
-					   $("#showRegMes").show();
-				       $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
+			  	var content = ""
+			  	  console.log(data)
+				if(data&&data.length>0){					
 					for(var i=0;i<data.length;i++){
-
-						  $("#table").append("<tr>"
-		                           +"<th>"+(i+1)+"</th>"
-			                             +"<td>"+data[i].userName+"</td>"
-			                             +"<td>"+data[i].email+"</td>"
-		                       +"</tr>");            						
-					}			                 
+						var state="激活&nbsp;&nbsp;&nbsp;&nbsp;";
+						if(data[i].status=='0'){
+							state="<span style='color:red'>未激活</span>"
+						}
+						var userName=data[i].userName
+						if(userName.length>35){
+							userName=userName.substring(0,35)
+						}
+						var email=data[i].email
+						if(email.length>21){
+							email=email.substring(0,21)
+						}
+						content = content + "<li>";
+						content = content + "<img src=\"./img/headpic/"+data[i].remark+".jpg\" onerror=\"errpic(this)\" >";
+						content = content + "<h3 class=\"listtitle\">"+userName+"<span class=\"timestyle\">"+""+"</span></h3>";
+						content = content + "<p>";
+						content = content + "<span class='timestyle'></span><br />";
+						content = content + "</p>";
+						content = content + "<p style='padding-top: .3em'>";
+						content = content + "<span >账号："+email+"</span>";
+						content = content + "<span class='timestyle2'>状态："+state+"</span><br />";
+						content = content + "</p>";
+						content = content + "</li>";
+					}			       
+					content = content + "<li style='height: 25px;'>";
+					content = content + "<h3 class=\"listtitle\">"+""+"<span class=\"timestyle2\">一共"+data.length+"条记录&nbsp;&nbsp;&nbsp;</span></h3>";
+					content = content + "<p>";
+					content = content + "<span class='timestyle'></span><br />";
+					content = content + "</p>";
+					content = content + "</li>";
+					$("#contentList2").append(content).listview('refresh');
 				 }else{			
-						$("#showRegMes").show();
-					    $("#showRegMes").html("<font >没有记录</font>");
+						content = content + "<li style='height: 25px;'>";
+						content = content + "<h3 class=\"listtitle\">"+""+"<span class=\"timestyle2\">一共"+0+"条记录&nbsp;&nbsp;&nbsp;</span></h3>";
+						content = content + "<p>";
+						content = content + "<span class='timestyle'></span><br />";
+						content = content + "</p>";
+						content = content + "</li>";
+						$("#contentList2").append(content).listview('refresh');
 				}
 			}
 		});
@@ -64,26 +97,56 @@
 		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		 		 var keyword= $("#search").val();
 		 		$('#table tbody').empty();
+		 		console.log($('#table tbody'))
+		 		$("#contentList2  li").detach();
 		 		$.ajax({
 		 			type : 'POST',
 					data:{ 'keyword':keyword },
 					url : projectName+"/wlp/getMyTeamUsersBySearch",
 					success : function(data) {
 						  console.log(data)
+						    	var content = ""
 						if(data&&data.length>0){
-							$("#showRegMes").show();
-						    $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
 							for(var i=0;i<data.length;i++){
-						
-								  $("#table").append("<tr>"
-				                           +"<th>"+data[i].id+"</th>"
-					                             +"<td>"+data[i].userName+"</td>"
-					                             +"<td>"+data[i].email+"</td>"
-				                       +"</tr>");      				
-							}			                 
+								var state="激活&nbsp;&nbsp;&nbsp;&nbsp;";
+								if(data[i].status=='0'){
+									state="<span style='color:red'>未激活</span>"
+								}
+								var userName=data[i].userName
+								if(userName.length>35){
+									userName=userName.substring(0,35)
+								}
+								var email=data[i].email
+								if(email.length>21){
+									email=email.substring(0,21)
+								}
+								content = content + "<li>";
+								content = content + "<img src=\"./img/headpic/"+data[i].remark+".jpg\" onerror=\"errpic(this)\" >";
+								content = content + "<h3 class=\"listtitle\">"+userName+"<span class=\"timestyle\">"+""+"</span></h3>";
+								content = content + "<p>";
+								content = content + "<span class='timestyle'></span><br />";
+								content = content + "</p>";
+								content = content + "<p style='padding-top: .3em'>";
+								content = content + "<span >账号："+email+"</span>";
+								content = content + "<span class='timestyle2'>状态："+state+"</span><br />";
+								content = content + "</p>";
+								content = content + "</li>";
+							}			       
+							content = content + "<li style='height: 25px;'>";
+							content = content + "<h3 class=\"listtitle\">"+""+"<span class=\"timestyle2\">一共"+data.length+"条记录&nbsp;&nbsp;&nbsp;</span></h3>";
+							content = content + "<p>";
+							content = content + "<span class='timestyle'></span><br />";
+							content = content + "</p>";
+							content = content + "</li>";
+							$("#contentList2").append(content).listview('refresh');
 						 }else{				
-								$("#showRegMes").show();
-							    $("#showRegMes").html("<font >没有记录</font>");
+								content = content + "<li style='height: 25px;'>";
+								content = content + "<h3 class=\"listtitle\">"+""+"<span class=\"timestyle2\">一共"+0+"条记录&nbsp;&nbsp;&nbsp;</span></h3>";
+								content = content + "<p>";
+								content = content + "<span class='timestyle'></span><br />";
+								content = content + "</p>";
+								content = content + "</li>";
+								$("#contentList2").append(content).listview('refresh');
 						}
 					}
 				});
@@ -105,36 +168,22 @@
 		<h1  style="font-size: 14px;">我的团队</h1>
        <a href="memCenter.html"  rel="external" data-role="button" data-icon="home"   data-iconpos="notext">主页</a>
 	</div>
-  <div data-role="content" class="ui-content" role="main">	
-       <div data-role="fieldcontain">      
-        <label for="search">查询：</label>
-        <input type="search" name="search" id="search" placeholder="请输入要查询的内容..." onfocus="myFunction2(this);"  onblur="myFunction(this);" >
+  <div data-role="content"  role="main">	
+       
+        <input type="search" name="search" id="search" placeholder="可根据昵称或账号查询用户..." onfocus="myFunction2(this);"  onblur="myFunction(this);" >
   </div>
+  
+	<div data-role="content" data-theme="d">
+				<div id="wrapperContent2" class="wrapper">
+					<div id="scrollerContent2" class="scroller">
+						<ul data-role="listview" id="contentList2"   class="contentList"  style="margin: 1px;">
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+
      
-   <table id="table" data-role="table" id="table-custom-2" data-mode="column" class=" table-stripe ui-responsive" data-column-btn-theme="e">
-         <thead>
-           <tr class="ui-bar-d">
-              <th width='22%' >序号</th>
-             <th >昵称</th>
-             <th >邮箱</th>            
-           </tr>
-         </thead>
-         <tbody>
-        
-         </tbody>
-       </table>
-   
-<!--         <select name="day" id="day" data-native-menu="true">
-         <option value="mon">每页10行</option>
-         <option value="tue">每页15行</option>
-         <option value="wed">每页20行</option>
-         <option value="thu">每页30行</option>
-         <option value="fri">每页50行</option> 
-        </select>
-     -->
-      <div data-role="main"  style=" text-align: right;">
-             <h2 class="text-primary"><span id="showRegMes"></span> </h2>
-             </div>
    
      
 	</div>

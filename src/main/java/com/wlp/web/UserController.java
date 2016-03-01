@@ -1,15 +1,20 @@
 package com.wlp.web;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpUserService;
 
@@ -69,6 +74,11 @@ public class UserController {
 			user.setLoginPassword(password);
 			user.setTransPassword(paypassword);
 			user.setRecEmail(introemail);
+			  int max=40;
+              int min=1;
+              Random random = new Random();
+              int s = random.nextInt(max)%(max-min+1) + min;
+              user.setRemark(String.valueOf(s));
 			if (wlpUserService.regUser(user) != null) {
 				flag = true;
 			}
@@ -192,6 +202,8 @@ public class UserController {
 		if (username == null) {
 			return null;
 		}
+		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
+		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
 		WlpUser user = wlpUserService.getUserByEmail(username);
 		if (user != null) {
 			WlpUser user2= wlpUserService.getUserByEmail(user.getRecEmail());
@@ -251,6 +263,8 @@ public class UserController {
 	@RequestMapping(value = "/wlp/getMyTeamUsers", method = RequestMethod.GET)
 	public @ResponseBody ArrayList<WlpUser> getMyTeamUsers(HttpServletRequest request) {
 
+		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
+		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute(USER_NAME);
 		if (userName == null) {
@@ -273,6 +287,8 @@ public class UserController {
 		if (userName == null) {
 			return null;
 		}
+		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
+		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
 		ArrayList<WlpUser> results = new ArrayList<WlpUser>();
 		ArrayList<WlpUser> codes = (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);
 
@@ -280,21 +296,17 @@ public class UserController {
 			for (int i = 0; i < codes.size(); i++) {
 				String no = String.valueOf((i + 1));
 				WlpUser code = codes.get(i);
-				code.setId(no);
 				String email = code.getEmail();
 				String username = code.getUserName();
 				if (keyword == null || keyword.isEmpty()) {
 					results.add(code);
 					continue;
 				}
-				if (email.contains(keyword) || no.contains(keyword) || username.contains(keyword)) {
+				if (email.contains(keyword) || username.contains(keyword)) {
 
 					if (email.contains(keyword)) {
 						email = email.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
 						code.setEmail(email);
-					}
-					if (no.contains(keyword)) {
-						code.setId(no.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
 					}
 					if (username.contains(keyword)) {
 						code.setUserName(

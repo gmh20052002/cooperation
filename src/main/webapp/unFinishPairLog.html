@@ -68,9 +68,13 @@
 						for(var i=0;i<data.length;i++){
 							var html=projectName+"/finishDeal.html?username="+data[i].toUser+"&_t="+new Date();
 							var opr="<a href='"+html+"' class='acolor' data-ajax='false'>&nbsp;>&nbsp;&nbsp;</a>"
+							var userName=data[i].status;
+							if(userName.length>17){
+								userName=userName.substring(0,17);
+							}
 							content = content + "<li>";
 							content = content + "<img src=\"./img/headpic/"+data[i].id+".jpg\" onerror=\"errpic(this)\" >";
-							content = content + "<h3 class=\"listtitle\">"+data[i].status+"<span class=\"timestyle\">"+data[i].orderTime+"</span></h3>";
+							content = content + "<h3 class=\"listtitle\">"+userName+"<span class=\"timestyle\">"+data[i].orderTime+"</span></h3>";
 							content = content + "<p>";
 							content = content + "<span class='timestyle'>"+opr+" </span><br />";
 							content = content + "</p>";
@@ -80,6 +84,12 @@
 							content = content + "</p>";
 							content = content + "</li>";
 						}	
+						content = content + "<li style='height: 25px;'>";
+						content = content + "<h3 class=\"listtitle\">"+""+"<span class=\"timestyle2\">一共"+data.length+"条记录&nbsp;&nbsp;&nbsp;</span></h3>";
+						content = content + "<p>";
+						content = content + "<span class='timestyle'></span><br />";
+						content = content + "</p>";
+						content = content + "</li>";
 						$("#contentList2").append(content).listview('refresh');
 					 }else{			
 						 var data2="无记录";
@@ -108,7 +118,7 @@
        <a href="memCenter.html"   rel="external" data-role="button" data-icon="home"   data-iconpos="notext">主页</a>
 	</div>
 			<div data-role="content" data-theme="d">
-				<div id="wrapperContent2" class="wrapper">
+				<div id="wrapperContent2" class="wrapper2">
 					<div id="scrollerContent2" class="scroller">
 						<ul data-role="listview" id="contentList2" class="contentList">
 							
