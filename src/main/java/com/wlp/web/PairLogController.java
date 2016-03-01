@@ -92,7 +92,7 @@ public class PairLogController {
 				try{
 				 rec_user =wlpUserService.getUserByEmail(recEmail);
 				 recEmail=rec_user.getUserName();
-				 log.setId(rec_user.getRemark());
+				 log.setOrderPic(rec_user.getRemark());
 				}catch(Exception e){
 					e.printStackTrace();
 				}			
@@ -130,6 +130,21 @@ public class PairLogController {
 		wlpPairLogService.addWlpPairLog(wlpPairLog);
 	
 		return null;
+	}
+	
+	/**
+	 * 完成交易
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/completeWlpPairLog", method = RequestMethod.POST)
+	public @ResponseBody WlpPairLog completeWlpPairLog(HttpServletRequest request,@RequestParam(required = true) String pairLogId,@RequestParam(required = true) String pairPic) {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute(USER_NAME);
+		if (username == null||pairLogId.isEmpty()) {
+			return null;
+		}
+		return wlpPairLogService.completeWlpPairLog(pairLogId, pairPic);
 	}
 	
 	/**

@@ -99,6 +99,8 @@ public class UserController {
 		if (cname == null) {
 			return false;
 		}
+		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
+		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
 		try {
 			WlpUser user = wlpUserService.getUserByEmail(cname);
 			if (user != null) {

@@ -66,14 +66,14 @@
 						  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 						
 						for(var i=0;i<data.length;i++){
-							var html=projectName+"/finishDeal.html?username="+data[i].toUser+"&_t="+new Date();
+							var html=projectName+"/finishDeal.html?username="+data[i].toUser+"&_t="+new Date()+"&_m="+Math.floor(Math.random()*900000 + 100000)+data[i].pairMoney+"&_p="+data[i].payType+"&_n="+data[i].id;
 							var opr="<a href='"+html+"' class='acolor' data-ajax='false'>&nbsp;>&nbsp;&nbsp;</a>"
 							var userName=data[i].status;
 							if(userName.length>17){
 								userName=userName.substring(0,17);
 							}
 							content = content + "<li>";
-							content = content + "<img src=\"./img/headpic/"+data[i].id+".jpg\" onerror=\"errpic(this)\" >";
+							content = content + "<img src=\"./img/headpic/"+data[i].orderPic+".jpg\" onerror=\"errpic(this)\" >";
 							content = content + "<h3 class=\"listtitle\">"+userName+"<span class=\"timestyle\">"+data[i].orderTime+"</span></h3>";
 							content = content + "<p>";
 							content = content + "<span class='timestyle'>"+opr+" </span><br />";
