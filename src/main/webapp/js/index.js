@@ -31,21 +31,37 @@ $(document).ready(function() {
         $('#loginButton').buttonMarkup({ theme: "e" });
 		return false;
 	}
+	var randomCode = $("#randomCode").val(); 
+	if(!randomCode){
+		$("#showMes").show();
+        $("#showMes").html("<font color=red>登录失败，注册码不能为空!</font>");
+        $("#randomCode").focus();
+        $('#logintext').html('登陆');
+        $('#loginButton').buttonMarkup({ theme: "e" });
+		return false;
+	}
 	  var pathName=window.document.location.pathname;
 	  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		$.ajax({
 			type : "GET",
 			url : projectName+"/wlp/login",
-			data :{userName:$("#email").val(),password:$("#password").val()},
+			data :{userName:$("#email").val(),password:$("#password").val(),validateCode:$("#randomCode").val()},
 			success : function(data) {
-				console.log(projectName)
+			console.log(data)
 				   $('#loginButton').buttonMarkup({ theme: "e" });
 				   $('#logintext').html('登陆');
-				if(data&&data.userName){
+				   if(data&&data.id=="123456789"){
+						$("#showMes").show();
+						var imgNode = document.getElementById("vimg");
+						imgNode.src = "servlet/AuthImageServlet?t=" + Math.random();
+				        $("#showMes").html("<font color=red>登录失败，注册码输入错误!</font>");
+						}
+				   else if(data&&data.userName){
 			      location.href=projectName+'/memCenter.html';
 				}
 				else{
-				    $("#showMes").html("<font color=red>登录失败，邮箱或密码错误!</font>");
+					$("#showMes").show();
+				    $("#showMes").html("<font color=red>登录失败，邮箱或密码输入错误!</font>");
 				}
 			},
 			 dataType: 'json',

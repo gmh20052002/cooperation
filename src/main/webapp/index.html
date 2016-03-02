@@ -48,6 +48,11 @@
 <body>
 	<div data-role="page" id="loginPage" data-dom-cache="true"  data-title="平安互助">
 		<script type="text/javascript">
+		function changeCode() { 
+			var imgNode = document.getElementById("vimg");
+			imgNode.src = "servlet/AuthImageServlet?t=" + Math.random();
+			}
+		
 /* 			$("#loginPage").live('pageinit', function() {
 				//bind swipe event
 				$('#loginPage').bind("swipeleft", function() {
@@ -72,6 +77,12 @@
                    
                      <input type="password" name="password" id="password" placeholder="请输入密码" class="required" data-clear-btn="true"/>
 			
+	
+        <input type="text"  placeholder="输入验证码"  name="randomCode" id="randomCode"/>
+        
+        <div style="float: left;"><img id="vimg"  title="点击更换" onclick="changeCode();" src="servlet/AuthImageServlet"></div><div style="padding-top: 7px;"><span style="
+    font-size: 15px;">&nbsp;点击图片刷新验证码</span></div>
+        <br/>  
               
 				<a href="#" id="loginButton" data-role="button" data-theme="e"><span id='logintext'>登陆</span></a> <br /> 
                   <div data-role="main"  style=" text-align: center;">
