@@ -1,3 +1,34 @@
+
+	function myFunction(x)
+	{
+		  var pathName=window.document.location.pathname;
+		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
+		 		if($("#email2").val()){
+		 		$.ajax({
+		 			type : 'POST',
+					data:{ 'username':$("#email2").val() },
+					url :  projectName+"/wlp/checkUsernameIfExist",
+					success : function(data) {
+						  console.log(data)
+						if(data){
+						 	$("#showRegMes").hide();  
+						 }else{				
+							 	$("#showRegMes").show(); 
+							      $("#showRegMes").html("<font color=red>注册失败，用户账号已存在!</font>");
+					           $("#email2").focus();
+
+						}
+					}
+				});
+		 		}else{
+		 		 	$("#showRegMes").show(); 
+				      $("#showRegMes").html("<font color=red>用户账号不能为空!</font>");
+		 		}
+	}
+	function myFunction2(x)
+	{
+		 	
+	}
 $(document).ready(function() {
 	$("#loginButton").click(function() {
 		 $('#logintext').html('登陆中');
@@ -51,14 +82,14 @@ $(document).ready(function() {
 				}
 				else{
 					$("#showMes").show();
-				    $("#showMes").html("<font color=red>登录失败，邮箱或密码输入错误!</font>");
+				    $("#showMes").html("<font color=red>登录失败，用户名或密码输入错误!</font>");
 				}
 			},
 			 dataType: 'json',
 			error : function(xmlhttprequest, errorinfo) {
 				   $('#loginButton').buttonMarkup({ theme: "e" });
 				   $('#logintext').html('登陆');
-			    $("#showMes").html("<font color=red>登录失败，邮箱或密码错误!</font>");
+			    $("#showMes").html("<font color=red>登录失败，用户名或密码错误!</font>");
 
 				}
 		});
@@ -205,15 +236,16 @@ $(document).ready(function() {
 				password : $("#password3").val(),paypassword : $("#password5").val(),introemail : $("#email4").val()},
 			dataType : 'json',
 			success : function(data, type, request) {
+				console.log(data)
 				if(data){
 					var imgNode = document.getElementById("vimg");
 					imgNode.src = "servlet/AuthImageServlet?t=" + Math.random();
 	                location.href=projectName+"/index.html";   	           
 	            }else {
-	          //   	$("#showRegMes").show(); 
-			  //      $("#showRegMes").html("<font color=red>注册失败，介绍人不存在!</font>");
-	           //      $("#email4").focus();
-	          //       $('#regtext').html('注册');
+	         	$("#showRegMes").show(); 
+			      $("#showRegMes").html("<font color=red>注册失败，用户名已存在!</font>");
+	           $("#email2").focus();
+	           $('#regtext').html('注册');
 				      $('#regButton').buttonMarkup({ theme: "e" });
 	            }    
 			},

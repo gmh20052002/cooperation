@@ -30,17 +30,17 @@ public class UserController {
 	WlpUserService wlpUserService;
 
 	private int imgWidth = 0;
-	 
-    private int imgHeight = 0;
- 
-    private int codeCount = 0;
- 
-    private int x = 0;
- 
-    private int codeY;
- 
-    private Font mFont = new Font("Times New Roman", Font.PLAIN + Font.ITALIC, 19);  
- 
+
+	private int imgHeight = 0;
+
+	private int codeCount = 0;
+
+	private int x = 0;
+
+	private int codeY;
+
+	private Font mFont = new Font("Times New Roman", Font.PLAIN + Font.ITALIC, 19);
+
 	private static final String USER_NAME = "USER_NAME";
 
 	public WlpUserService getWlpUserService() {
@@ -53,15 +53,16 @@ public class UserController {
 
 	@RequestMapping(value = "/wlp/login", method = RequestMethod.GET)
 	public @ResponseBody WlpUser login(@RequestParam(required = true) String userName,
-			@RequestParam(required = true) String password,@RequestParam(required = true) String validateCode, HttpServletRequest request) {
+			@RequestParam(required = true) String password, @RequestParam(required = true) String validateCode,
+			HttpServletRequest request) {
 		try {
 			HttpSession session = request.getSession();
-			WlpUser user=new WlpUser();
+			WlpUser user = new WlpUser();
 			user.setId("123456789");
-			  String validateC = (String)session.getAttribute("validateCode");         
-			  if(validateCode==null||"".equals(validateCode)||!validateCode.equalsIgnoreCase(validateC)){         
-				  return user;
-			  }
+			String validateC = (String) session.getAttribute("validateCode");
+			if (validateCode == null || "".equals(validateCode) || !validateCode.equalsIgnoreCase(validateC)) {
+				return user;
+			}
 			session.setAttribute(USER_NAME, userName);
 			WlpUser logined_user = wlpUserService.commonLogin(userName, password);
 			session.setAttribute("logined_user", logined_user);
@@ -86,7 +87,7 @@ public class UserController {
 	public @ResponseBody Boolean regUser(@RequestParam(required = true) String username,
 			@RequestParam(required = true) String telphone, @RequestParam(required = true) String email,
 			@RequestParam(required = true) String password, @RequestParam(required = true) String paypassword,
-			@RequestParam(required = true) String introemail) {
+			@RequestParam(required = true) String introemail, HttpServletRequest request) {
 		Boolean flag = false;
 		try {
 			WlpUser user = new WlpUser();
@@ -96,13 +97,39 @@ public class UserController {
 			user.setLoginPassword(password);
 			user.setTransPassword(paypassword);
 			user.setRecEmail(introemail);
-			  int max=40;
-              int min=1;
-              Random random = new Random();
-              int s = random.nextInt(max)%(max-min+1) + min;
-              user.setRemark(String.valueOf(s));
+			int max = 40;
+			int min = 1;
+			Random random = new Random();
+			int s = random.nextInt(max) % (max - min + 1) + min;
+			user.setRemark(String.valueOf(s));
+			ApplicationContext ac1 = WebApplicationContextUtils
+					.getRequiredWebApplicationContext(request.getSession().getServletContext());
+			WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
+			WlpUser reuser = wlpUserService.getUserByEmail(email);
+			if (reuser != null) {
+				return false;
+			}
 			if (wlpUserService.regUser(user) != null) {
 				flag = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	@RequestMapping(value = "/wlp/checkUsernameIfExist", method = RequestMethod.POST)
+	public @ResponseBody Boolean checkUsernameIfExist(@RequestParam(required = true) String username, HttpServletRequest request) {
+		Boolean flag = true;
+		try {
+			if(username==null||username.isEmpty()){
+				return false;
+			}
+			ApplicationContext ac1 = WebApplicationContextUtils
+					.getRequiredWebApplicationContext(request.getSession().getServletContext());
+			WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
+			WlpUser reuser = wlpUserService.getUserByEmail(username);
+			if (reuser != null) {
+				return false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,15 +141,17 @@ public class UserController {
 	public @ResponseBody Boolean updateUserInfo(@RequestParam(required = true) String username,
 			@RequestParam(required = true) String telphone, @RequestParam(required = true) String wechat,
 			@RequestParam(required = true) String alipay, @RequestParam(required = true) String bankname,
-			@RequestParam(required = true) String bankusername, @RequestParam(required = true) String bankacct,HttpServletRequest request) {
+			@RequestParam(required = true) String bankusername, @RequestParam(required = true) String bankacct,
+			HttpServletRequest request) {
 		Boolean flag = false;
 		HttpSession session = request.getSession();
 		String cname = (String) session.getAttribute(USER_NAME);
 		if (cname == null) {
 			return false;
 		}
-		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
-		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		try {
 			WlpUser user = wlpUserService.getUserByEmail(cname);
 			if (user != null) {
@@ -145,7 +174,7 @@ public class UserController {
 
 	@RequestMapping(value = "/wlp/updateUserLoginPsd", method = RequestMethod.POST)
 	public @ResponseBody Boolean updateUserLoginPsd(@RequestParam(required = true) String oldpsd,
-			@RequestParam(required = true) String newpsd,HttpServletRequest request) {
+			@RequestParam(required = true) String newpsd, HttpServletRequest request) {
 		Boolean flag = false;
 		HttpSession session = request.getSession();
 		String cname = (String) session.getAttribute(USER_NAME);
@@ -166,7 +195,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/wlp/updateUserImage", method = RequestMethod.POST)
-	public @ResponseBody Boolean updateUserImage(@RequestParam(required = true) String imageId,HttpServletRequest request) {
+	public @ResponseBody Boolean updateUserImage(@RequestParam(required = true) String imageId,
+			HttpServletRequest request) {
 		Boolean flag = false;
 		HttpSession session = request.getSession();
 		String cname = (String) session.getAttribute(USER_NAME);
@@ -188,7 +218,7 @@ public class UserController {
 
 	@RequestMapping(value = "/wlp/updateUserPayPsd", method = RequestMethod.POST)
 	public @ResponseBody Boolean updateUserPayPsd(@RequestParam(required = true) String oldpsd,
-			@RequestParam(required = true) String newpsd,HttpServletRequest request) {
+			@RequestParam(required = true) String newpsd, HttpServletRequest request) {
 		Boolean flag = false;
 		HttpSession session = request.getSession();
 		String cname = (String) session.getAttribute(USER_NAME);
@@ -226,12 +256,13 @@ public class UserController {
 		if (username == null) {
 			return null;
 		}
-		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
-		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		WlpUser user = wlpUserService.getUserByEmail(username);
 		if (user != null) {
-			WlpUser user2= wlpUserService.getUserByEmail(user.getRecEmail());
-			if(user2!=null&&user2.getUserName()!=null){
+			WlpUser user2 = wlpUserService.getUserByEmail(user.getRecEmail());
+			if (user2 != null && user2.getUserName() != null) {
 				user.setRecEmail(user2.getUserName());
 			}
 			return user;
@@ -287,8 +318,9 @@ public class UserController {
 	@RequestMapping(value = "/wlp/getMyTeamUsers", method = RequestMethod.GET)
 	public @ResponseBody ArrayList<WlpUser> getMyTeamUsers(HttpServletRequest request) {
 
-		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
-		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute(USER_NAME);
 		if (userName == null) {
@@ -304,15 +336,17 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getMyTeamUsersBySearch", method = RequestMethod.POST)
-	public @ResponseBody ArrayList<WlpUser> getMyTeamUsersBySearch(@RequestParam(required = true) String keyword,HttpServletRequest request) {
+	public @ResponseBody ArrayList<WlpUser> getMyTeamUsersBySearch(@RequestParam(required = true) String keyword,
+			HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute(USER_NAME);
 		if (userName == null) {
 			return null;
 		}
-		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
-		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		ArrayList<WlpUser> results = new ArrayList<WlpUser>();
 		ArrayList<WlpUser> codes = (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);
 
@@ -343,130 +377,129 @@ public class UserController {
 		}
 		return results;
 	}
-	@RequestMapping(value = "/servlet/AuthImageServlet", method = RequestMethod.GET)
-	public @ResponseBody void getUserValidateCode(HttpServletRequest request,  HttpServletResponse response) throws IOException {
-	    // 宽度
-        String strWidth = "114";
-        // 高度
-        String strHeight = "35";
-        // 字符个数
-        String strCodeCount ="4";
- 
-        // 将配置的信息转换成数值
-        try {
-            if (strWidth != null && strWidth.length() != 0) {
-                imgWidth = Integer.parseInt(strWidth);
-            }
-            if (strHeight != null && strHeight.length() != 0) {
-                imgHeight = Integer.parseInt(strHeight);
-            }
-            if (strCodeCount != null && strCodeCount.length() != 0) {
-                codeCount = Integer.parseInt(strCodeCount);
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
- 
-        x = imgWidth / (codeCount + 1);
-        codeY = imgHeight - 11;
-        response.setContentType("image/jpeg");
-        response.setHeader("Pragma", "No-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
-        HttpSession session = request.getSession();
- 
-        // 在内存中创建图象
-        BufferedImage image = new BufferedImage(imgWidth, imgHeight,
-                BufferedImage.TYPE_INT_RGB);
- 
-        // 获取图形上下文
-        Graphics2D g = image.createGraphics();
- 
-        // 生成随机类
-        Random random = new Random();
- 
-        // 设定背景色
-        g.setColor(getRandColor(200,250));     
-        g.fillRect(1, 1, imgWidth-1, imgHeight-1); 
-        g.setColor(new Color(102,102,102));     
-        g.drawRect(0, 0, imgWidth-1, imgHeight-1);       
-        g.setFont(mFont);     
-    
-        g.setColor(getRandColor(160,200)); 
-        // 随机产生155条干扰线，使图象中的认证码不易被其它程序探测到
-        g.setColor(getRandColor(160, 200));
-        for (int i = 0; i < 160; i++) {
-            int x = random.nextInt(imgWidth);
-            int y = random.nextInt(imgHeight);
-            int xl = random.nextInt(12);
-            int yl = random.nextInt(12);
-            g.drawLine(x, y, x + xl, y + yl);
-        }
- 
-        // 取随机产生的认证码(4位数字)
-        String sRand = "";
-        for (int i = 0; i < codeCount; i++) {
-            int wordType = random.nextInt(3);
-            char retWord = 0;
-            switch (wordType) {
-            case 0:
-                retWord = this.getSingleNumberChar();
-                break;
-            case 1:
-                retWord = this.getLowerOrUpperChar(0);
-                break;
-            case 2:
-                retWord = this.getLowerOrUpperChar(1);
-                break;
-            }
-            sRand += String.valueOf(retWord);
-            g.setColor(new Color(20+random.nextInt(110),20+random.nextInt(110),20+random.nextInt(110)));   
-            g.drawString(String.valueOf(retWord), (i) * x, codeY);
- 
-        }
-        // 将认证码存入SESSION
-        session.setAttribute("validateCode", sRand);
-        // 图象生效
-        g.dispose();
-        ServletOutputStream responseOutputStream = response.getOutputStream();
-        // 输出图象到页面
-        ImageIO.write(image, "JPEG", responseOutputStream);
- 
-        // 以下关闭输入流！
-        responseOutputStream.flush();
-        responseOutputStream.close();
-    }
- 
 
-    Color getRandColor(int fc, int bc) {// 给定范围获得随机颜色
-        Random random = new Random();
-        if (fc > 255)
-            fc = 255;
-        if (bc > 255)
-            bc = 255;
-        int r = fc + random.nextInt(bc - fc);
-        int g = fc + random.nextInt(bc - fc);
-        int b = fc + random.nextInt(bc - fc);
-        return new Color(r, g, b);
-    }
- 
- 
-    private char getSingleNumberChar() {
-        Random random = new Random();
-        int numberResult = random.nextInt(10);
-        int ret = numberResult + 48;
-        return (char) ret;
-    }
- 
-    private char getLowerOrUpperChar(int upper) {
-        Random random = new Random();
-        int numberResult = random.nextInt(26);
-        int ret = 0;
-        if (upper == 0) {// 小写
-            ret = numberResult + 97;
-        } else if (upper == 1) {// 大写
-            ret = numberResult + 65;
-        }
-        return (char) ret;
-    }
+	@RequestMapping(value = "/servlet/AuthImageServlet", method = RequestMethod.GET)
+	public @ResponseBody void getUserValidateCode(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		// 宽度
+		String strWidth = "114";
+		// 高度
+		String strHeight = "35";
+		// 字符个数
+		String strCodeCount = "4";
+
+		// 将配置的信息转换成数值
+		try {
+			if (strWidth != null && strWidth.length() != 0) {
+				imgWidth = Integer.parseInt(strWidth);
+			}
+			if (strHeight != null && strHeight.length() != 0) {
+				imgHeight = Integer.parseInt(strHeight);
+			}
+			if (strCodeCount != null && strCodeCount.length() != 0) {
+				codeCount = Integer.parseInt(strCodeCount);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+
+		x = imgWidth / (codeCount + 1);
+		codeY = imgHeight - 11;
+		response.setContentType("image/jpeg");
+		response.setHeader("Pragma", "No-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+		HttpSession session = request.getSession();
+
+		// 在内存中创建图象
+		BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
+
+		// 获取图形上下文
+		Graphics2D g = image.createGraphics();
+
+		// 生成随机类
+		Random random = new Random();
+
+		// 设定背景色
+		g.setColor(getRandColor(200, 250));
+		g.fillRect(1, 1, imgWidth - 1, imgHeight - 1);
+		g.setColor(new Color(102, 102, 102));
+		g.drawRect(0, 0, imgWidth - 1, imgHeight - 1);
+		g.setFont(mFont);
+
+		g.setColor(getRandColor(160, 200));
+		// 随机产生155条干扰线，使图象中的认证码不易被其它程序探测到
+		g.setColor(getRandColor(160, 200));
+		for (int i = 0; i < 160; i++) {
+			int x = random.nextInt(imgWidth);
+			int y = random.nextInt(imgHeight);
+			int xl = random.nextInt(12);
+			int yl = random.nextInt(12);
+			g.drawLine(x, y, x + xl, y + yl);
+		}
+
+		// 取随机产生的认证码(4位数字)
+		String sRand = "";
+		for (int i = 0; i < codeCount; i++) {
+			int wordType = random.nextInt(3);
+			char retWord = 0;
+			switch (wordType) {
+			case 0:
+				retWord = this.getSingleNumberChar();
+				break;
+			case 1:
+				retWord = this.getLowerOrUpperChar(0);
+				break;
+			case 2:
+				retWord = this.getLowerOrUpperChar(1);
+				break;
+			}
+			sRand += String.valueOf(retWord);
+			g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
+			g.drawString(String.valueOf(retWord), (i) * x, codeY);
+
+		}
+		// 将认证码存入SESSION
+		session.setAttribute("validateCode", sRand);
+		// 图象生效
+		g.dispose();
+		ServletOutputStream responseOutputStream = response.getOutputStream();
+		// 输出图象到页面
+		ImageIO.write(image, "JPEG", responseOutputStream);
+
+		// 以下关闭输入流！
+		responseOutputStream.flush();
+		responseOutputStream.close();
+	}
+
+	Color getRandColor(int fc, int bc) {// 给定范围获得随机颜色
+		Random random = new Random();
+		if (fc > 255)
+			fc = 255;
+		if (bc > 255)
+			bc = 255;
+		int r = fc + random.nextInt(bc - fc);
+		int g = fc + random.nextInt(bc - fc);
+		int b = fc + random.nextInt(bc - fc);
+		return new Color(r, g, b);
+	}
+
+	private char getSingleNumberChar() {
+		Random random = new Random();
+		int numberResult = random.nextInt(10);
+		int ret = numberResult + 48;
+		return (char) ret;
+	}
+
+	private char getLowerOrUpperChar(int upper) {
+		Random random = new Random();
+		int numberResult = random.nextInt(26);
+		int ret = 0;
+		if (upper == 0) {// 小写
+			ret = numberResult + 97;
+		} else if (upper == 1) {// 大写
+			ret = numberResult + 65;
+		}
+		return (char) ret;
+	}
 }
