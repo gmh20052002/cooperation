@@ -11,17 +11,7 @@ $(document).ready(function() {
         $('#loginButton').buttonMarkup({ theme: "e" });
 		return false;
 	}
-	  //对电子邮件的验证
-	             var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-	              if(!myreg.test(uname))
-	              {
-	          		$("#showMes").show();
-	                $("#showMes").html("<font color=red>登录失败，邮箱或密码错误!</font>");
-	                 $("#email").focus();
-	                 $('#logintext').html('登陆');
-	                 $('#loginButton').buttonMarkup({ theme: "e" });
-	                 return false;
-	            }
+
 	var psd = $("#password").val(); 
 	if(!psd){
 		$("#showMes").show();
@@ -108,22 +98,12 @@ $(document).ready(function() {
 			 var email2 =$("#email2").val(); 
 			 if(!email2){
 					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，登陆邮箱不能为空!</font>");
+			        $("#showRegMes").html("<font color=red>注册失败，登陆账号不能为空!</font>");
 			        $("#email2").focus();
 			        $('#regtext').html('注册');
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
 				}
-			   var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-	              if(!myreg.test(email2))
-	              {
-	          		$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，登陆邮箱格式不正确!</font>");
-	                 $("#email2").focus();
-	                 $('#regtext').html('注册');
-				      $('#regButton').buttonMarkup({ theme: "e" });
-	                 return false;
-	            }
 			 var password3 =$("#password3").val(); 
 			 if(!password3){
 					$("#showRegMes").show();
@@ -201,7 +181,7 @@ $(document).ready(function() {
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
 				}
-			 var email4 =$("#email4").val(); 
+		/*	 var email4 =$("#email4").val(); 
 			   var myreg2 = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 			 if(email4){
 			         if(!myreg2.test(email4))
@@ -213,7 +193,7 @@ $(document).ready(function() {
 			        $('#regButton').buttonMarkup({ theme: "e" });
                  return false;
             }
-			  }
+			  }*/
 			  var pathName=window.document.location.pathname;
 			  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		$.ajax({
@@ -226,7 +206,9 @@ $(document).ready(function() {
 			dataType : 'json',
 			success : function(data, type, request) {
 				if(data){
-	                location.href=projectName+"/memCenter.html";   	           
+					var imgNode = document.getElementById("vimg");
+					imgNode.src = "servlet/AuthImageServlet?t=" + Math.random();
+	                location.href=projectName+"/index.html";   	           
 	            }else {
 	          //   	$("#showRegMes").show(); 
 			  //      $("#showRegMes").html("<font color=red>注册失败，介绍人不存在!</font>");
