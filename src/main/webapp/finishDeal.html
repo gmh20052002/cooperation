@@ -138,7 +138,7 @@
        <a href="memCenter.html"   rel="external" data-role="button" data-icon="home"   data-iconpos="notext">主页</a>
 	</div>
   <div data-role="content" class="ui-content" role="main">		
-      <form action="#" method="post" id="regForm">
+  
     	
 					<label for="email">接收者账号 </label><input type="text" placeholder="" name="email" value=""  id="email"  disabled="disabled">   
 					          
@@ -152,17 +152,34 @@
              
      	              <label for="money">交易金额</label><input type="text" placeholder="" name="money" value=""  id="money" disabled="disabled" >                
      	
-					<label for="textarea">备注信息 </label><textarea cols="60" rows="22" name="textarea" id="textarea"></textarea>            
+     	
+     	   </div>
+		        <br />
+              <div data-role="content" class="ui-content" role="main">	
+                   <form action="wlp/phonegapUp" method="post"  id="form1" enctype="multipart/form-data" data-ajax="false">
+
+
+
+
+                <input type="file"   accept="image/jpeg"   name="uploadFile"  id="uploadFile" />
+
+
+                <input type="submit" name="submit" class="btn" value="上传"  />
+            </form>
+                  <br />
+            			<label for="textarea">备注信息 </label><textarea cols="60" rows="22" name="textarea" id="textarea"></textarea>    
+            			
+          
              
-              
-                  <div data-role="main"  style=" text-align: center;">
+	</div>
+	        <div data-role="main"  style=" text-align: center;">
                 <a  href="#"    rel="external"  data-role="button" data-theme="e" id="saveinfo">完成</a> 
                  <a href="unFinishPairLog.html"  id="xxx" rel="external"   data-role="button" data-theme="c">取消</a>
                   <!--      <input type="reset"  value="重置"> -->
                             <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
                 </div>
-              </form>  
-	</div>
+                
+                
 <div data-role="footer"  data-theme="f" data-position="fixed">
     <h1>平安互助-合作共赢</h1>
   </div>

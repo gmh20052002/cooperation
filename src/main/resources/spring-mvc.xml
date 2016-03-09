@@ -16,7 +16,8 @@
 	<mvc:resources location="/img/" mapping="/images/**" />
 	<mvc:resources location="/jquery/" mapping="/jquery/**" />
 	<mvc:resources location="/" mapping="*.js" />
-
+ <mvc:resources location="/upload/" mapping="/upload/**"/>
+ 
 	<mvc:annotation-driven>  
     <!-- 处理responseBody 里面日期类型 -->  
         <mvc:message-converters>  
