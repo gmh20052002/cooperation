@@ -32,7 +32,6 @@ public class PairLogController {
 	@Autowired
 	WlpPairLogService wlpPairLogService;
 
-	
 	private static final String USER_NAME = "USER_NAME";
 
 	/**
@@ -59,12 +58,37 @@ public class PairLogController {
 				if ((log.getFromUser() != null && log.getFromUser().equals(username))) {
 					long money = log.getPairMoney();
 					money = 0 - money;
-					log.setPairMoney(money);				
+					log.setPairMoney(money);
 				}
 			}
 		}
 		return logs;
 	}
+
+	/**
+	 * 根据ID和用户名查询我的指定交易记录
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/getMyWlpPairLogById", method = RequestMethod.POST)
+	public @ResponseBody WlpPairLog getMyWlpPairLogs(HttpServletRequest request,
+			@RequestParam(required = true) String pairLogId) {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute(USER_NAME);
+		if (username == null || pairLogId == null || pairLogId.isEmpty()) {
+			return null;
+		}
+		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
+		if (logs != null && logs.size() > 0) {
+			for (WlpPairLog log : logs) {
+				if (pairLogId.equals(log.getId()) && log.getToUser().equals(username)) {
+					return log;
+				}
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * 我的未完成交易--查询我的所有交易记录
 	 * 
@@ -79,47 +103,90 @@ public class PairLogController {
 		}
 		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
 		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
-		 ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext()) ;
-		 WlpUserService wlpUserService=(WlpUserService) ac1.getBean("wlpUserService"); 
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		if (logs != null && logs.size() > 0) {
 			for (WlpPairLog log : logs) {
 				log.setEmail(username);
-				String recEmail=log.getToUser();
-				if ("1".equals(log.getStatus())||username.equals(log.getToUser())||recEmail==null) {
+				String recEmail = log.getToUser();
+				if ("1".equals(log.getStatus()) || username.equals(log.getToUser()) || recEmail == null) {
 					continue;
 				}
-				WlpUser rec_user =null;
-				try{
-				 rec_user =wlpUserService.getUserByEmail(recEmail);
-				 recEmail=rec_user.getUserName();
-				 log.setOrderPic(rec_user.getRemark());
-				}catch(Exception e){
+				WlpUser rec_user = null;
+				try {
+					rec_user = wlpUserService.getUserByEmail(recEmail);
+					recEmail = rec_user.getUserName();
+					log.setOrderPic(rec_user.getRemark());
+				} catch (Exception e) {
 					e.printStackTrace();
-				}			
+				}
 				log.setStatus(recEmail);
 				if ((log.getFromUser() != null && log.getFromUser().equals(username))) {
 					long money = log.getPairMoney();
 					money = 0 - money;
-					log.setPairMoney(money);				
+					log.setPairMoney(money);
 				}
 				results.add(log);
 			}
 		}
 		return results;
 	}
+
+	/**
+	 * 我的待确认交易
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/getMySureWlpPairLogs", method = RequestMethod.GET)
+	public @ResponseBody List<WlpPairLog> getMySureWlpPairLogs(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute(USER_NAME);
+		if (username == null) {
+			return null;
+		}
+		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
+		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
+		if (logs != null && logs.size() > 0) {
+			for (WlpPairLog log : logs) {
+				log.setEmail(username);
+				String recEmail = log.getFromUser();
+				if ("1".equals(log.getStatus()) || username.equals(log.getFromUser()) || recEmail == null
+						|| recEmail.isEmpty()) {
+					continue;
+				}
+				WlpUser rec_user = null;
+				try {
+					rec_user = wlpUserService.getUserByEmail(recEmail);
+					recEmail = rec_user.getUserName();
+					log.setToUser(rec_user.getRemark());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				log.setStatus(recEmail);
+				results.add(log);
+			}
+		}
+		return results;
+	}
+
 	/**
 	 * 请求帮助
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getHelp", method = RequestMethod.POST)
-	public @ResponseBody List<WlpPairLog> getHelp(HttpServletRequest request,@RequestParam(required = true) String money,@RequestParam(required = true) String payway) {
+	public @ResponseBody List<WlpPairLog> getHelp(HttpServletRequest request,
+			@RequestParam(required = true) String money, @RequestParam(required = true) String payway) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null) {
 			return null;
 		}
-		WlpPairLog wlpPairLog=new WlpPairLog();
+		WlpPairLog wlpPairLog = new WlpPairLog();
 		wlpPairLog.setEmail(username);
 		wlpPairLog.setToUser(username);
 		wlpPairLog.setPayType(payway);
@@ -128,32 +195,49 @@ public class PairLogController {
 		wlpPairLog.setOrderTime(new Date());
 		wlpPairLog.setExtrakType("dynamic");
 		wlpPairLogService.addWlpPairLog(wlpPairLog);
-	
+
 		return null;
 	}
-	
+
 	/**
 	 * 完成交易
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/completeWlpPairLog", method = RequestMethod.POST)
-	public @ResponseBody WlpPairLog completeWlpPairLog(HttpServletRequest request,@RequestParam(required = true) String pairLogId,@RequestParam(required = true) String pairPic) {
+	public @ResponseBody WlpPairLog completeWlpPairLog(HttpServletRequest request,
+			@RequestParam(required = true) String pairLogId, @RequestParam(required = true) String pairPic) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
-		if (username == null||pairLogId.isEmpty()) {
+		if (username == null || pairLogId.isEmpty()) {
 			return null;
 		}
-		return wlpPairLogService.completeWlpPairLog(pairLogId, pairPic);
+		return wlpPairLogService.completeWlpPairLog(pairLogId, pairPic, null);
 	}
-	
+
+	/**
+	 * 完成交易
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/wlp/sureWlpPairLog", method = RequestMethod.POST)
+	public @ResponseBody WlpPairLog sureWlpPairLog(HttpServletRequest request,
+			@RequestParam(required = true) String pairLogId) {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute(USER_NAME);
+		if (username == null || pairLogId.isEmpty()) {
+			return null;
+		}
+		return wlpPairLogService.sureWlpPairLog(pairLogId);
+	}
 	/**
 	 * 根据关键字查询我的历程--查询我的所有交易记录
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getMyWlpPairLogsBySearch", method = RequestMethod.POST)
-	public @ResponseBody List<WlpPairLog> getMyWlpPairLogsBySearch(@RequestParam(required = true) String keyword,HttpServletRequest request) {
+	public @ResponseBody List<WlpPairLog> getMyWlpPairLogsBySearch(@RequestParam(required = true) String keyword,
+			HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null) {
@@ -168,19 +252,19 @@ public class PairLogController {
 					state = "已确认";
 				}
 				log.setStatus(state);
-			
+
 				long money = log.getPairMoney();
-				if ((log.getFromUser() != null && log.getFromUser().equals(username))) {			
-					money = 0 - money;			
-					log.setPairMoney(money);				
+				if ((log.getFromUser() != null && log.getFromUser().equals(username))) {
+					money = 0 - money;
+					log.setPairMoney(money);
 				}
 				log.setOrderPic(String.valueOf(money));
 				if (keyword == null || keyword.isEmpty()) {
 					results.add(log);
 					continue;
 				}
-				String searchMoney=String.valueOf(money);
-				if (searchMoney.contains(keyword) || state.contains(keyword) ) {
+				String searchMoney = String.valueOf(money);
+				if (searchMoney.contains(keyword) || state.contains(keyword)) {
 					if (searchMoney.contains(keyword)) {
 						searchMoney = searchMoney.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
 						log.setOrderPic(searchMoney);
@@ -188,28 +272,30 @@ public class PairLogController {
 					if (state.contains(keyword)) {
 						log.setStatus(state.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
 					}
-				
+
 					results.add(log);
 				}
 			}
 		}
 		return results;
 	}
+
 	/**
 	 * 根据关键字查询我的交易记录--查询我的所有交易记录
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getMyAllWlpPairLogsBySearch", method = RequestMethod.POST)
-	public @ResponseBody List<WlpPairLog> getMyAllWlpPairLogsBySearch(@RequestParam(required = true) String keyword,HttpServletRequest request) {
+	public @ResponseBody List<WlpPairLog> getMyAllWlpPairLogsBySearch(@RequestParam(required = true) String keyword,
+			HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null) {
 			return null;
 		}
 		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
-		String newMoney=null;
-		String oldMoney=null;
+		String newMoney = null;
+		String oldMoney = null;
 		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		if (logs != null && logs.size() > 0) {
 			for (WlpPairLog log : logs) {
@@ -219,22 +305,21 @@ public class PairLogController {
 					state = "已确认";
 				}
 				log.setStatus(state);
-			
+
 				long money = log.getPairMoney();
-				if ((log.getFromUser() != null && log.getFromUser().equals(username))) {			
-					money = 0 - money;			
-					log.setPairMoney(money);				
+				if ((log.getFromUser() != null && log.getFromUser().equals(username))) {
+					money = 0 - money;
+					log.setPairMoney(money);
 				}
 				log.setOrderPic(String.valueOf(money));
-				String searchMoney=String.valueOf(money);
-			
-				if(username.equals(log.getFromUser())){
-				newMoney=String.valueOf(log.getFromBalance());
-			       oldMoney=String.valueOf(log.getFromOldBalance());
-				}
-				else if(username.equals(log.getToUser())){
-					newMoney=String.valueOf(log.getToBalance());
-					oldMoney=String.valueOf(log.getToOldBalance());
+				String searchMoney = String.valueOf(money);
+
+				if (username.equals(log.getFromUser())) {
+					newMoney = String.valueOf(log.getFromBalance());
+					oldMoney = String.valueOf(log.getFromOldBalance());
+				} else if (username.equals(log.getToUser())) {
+					newMoney = String.valueOf(log.getToBalance());
+					oldMoney = String.valueOf(log.getToOldBalance());
 				}
 				log.setRemark(oldMoney);
 				log.setPayType(newMoney);
@@ -242,8 +327,9 @@ public class PairLogController {
 					results.add(log);
 					continue;
 				}
-			
-				if (searchMoney.contains(keyword) || state.contains(keyword)||oldMoney.contains(keyword) || newMoney.contains(keyword)  ) {
+
+				if (searchMoney.contains(keyword) || state.contains(keyword) || oldMoney.contains(keyword)
+						|| newMoney.contains(keyword)) {
 					if (searchMoney.contains(keyword)) {
 						searchMoney = searchMoney.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
 						log.setOrderPic(searchMoney);

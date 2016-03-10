@@ -1,0 +1,21 @@
+.msgbox_wrapper {
+	BORDER-BOTTOM: #222 1px solid; BORDER-LEFT: #222 1px solid; BACKGROUND-COLOR: #fff; OVERFLOW: hidden; BORDER-TOP: #222 1px solid; BORDER-RIGHT: #222 1px solid
+}
+.msgbox_title_wrapper {
+	BORDER-BOTTOM: #aaa 1px solid; BORDER-LEFT: #aaa 1px solid; BACKGROUND-COLOR: #222; HEIGHT: 30px; VERTICAL-ALIGN: middle; BORDER-TOP: #aaa 1px solid; BORDER-RIGHT: #aaa 1px solid
+}
+.msgbox_title_wrapper IMG {
+	MARGIN-RIGHT: 8px
+}
+.msgbox_title {
+	LINE-HEIGHT: 30px; PADDING-LEFT: 12px; COLOR: #fff; FONT-SIZE: 12px; FONT-WEIGHT: bold
+}
+.msgbox_main {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 12px; PADDING-LEFT: 12px; PADDING-RIGHT: 12px; COLOR: #f00; OVERFLOW: hidden; PADDING-TOP: 12px
+}
+.msgbox_bg {
+	BACKGROUND-COLOR: #999
+}
+.msgbox_button {
+	border: 1px solid #010; font-family:"Courier New", Courier, monospace;
+}

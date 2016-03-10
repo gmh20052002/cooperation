@@ -191,6 +191,14 @@ margin-right: 18px;
 	margin-right: 5px;
 	font-weight: bold
 }
+.timestylesure {
+
+
+	font-size: 12pt;
+	float: right;
+	margin-right: 2px;
+	font-weight: bold
+}
 .timestyle2 {
 	margin-top: 1px;
 	font-size: 10pt;
@@ -201,6 +209,7 @@ margin-right: 18px;
 	max-width: 60px;
 	max-height: 60px;
 }
+textarea.ui-input-text{min-height:100px;}
 
 .detailsContent{
 	font-size: 12pt;

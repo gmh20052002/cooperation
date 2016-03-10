@@ -4,14 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpUserService;
 
@@ -329,6 +335,24 @@ public class UserController {
 		return (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);
 	}
 
+	@RequestMapping(value = "/wlp/phonegapUp", headers=("content-type=multipart/*"),method = RequestMethod.POST)
+	public @ResponseBody void phonegapUp(@RequestParam("uploadFile") MultipartFile file,HttpServletRequest request, HttpServletResponse response)throws IOException {
+
+	       String user=request.getParameter("fileField");
+	       System.out.println("**********************"+user);
+	       if(!file.isEmpty()){
+	    	         ServletContext sc = request.getSession().getServletContext();
+	    	           String dir = sc.getRealPath("/upload");    //设定文件保存的目录
+	    	         
+	    	      String filename = file.getOriginalFilename();    //得到上传时的文件名
+	    	        FileUtils.writeByteArrayToFile(new File(dir,filename), file.getBytes());
+	    	        
+	    	  
+	    	        System.out.println("************** "+ filename);
+	    	       System.out.println("upload over. "+ filename);
+	    	    }    
+	}
+
 	/**
 	 * 查询用户的团队
 	 * 
@@ -456,7 +480,7 @@ public class UserController {
 			}
 			sRand += String.valueOf(retWord);
 			g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
-			g.drawString(String.valueOf(retWord), (i) * x, codeY);
+			g.drawString(String.valueOf(retWord), (i) * x+15, codeY);
 
 		}
 		// 将认证码存入SESSION

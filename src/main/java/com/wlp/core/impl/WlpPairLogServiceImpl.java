@@ -51,17 +51,17 @@ public class WlpPairLogServiceImpl implements WlpPairLogService {
 		Order order = new Order();
 		order.setOrderBy("ACTIVE_TIME", Sort.ASC);
 		List<WlpUser> users = wlpUserMapper.selectByCondition(condition, order, null);
-		if(users != null){
+		if (users != null) {
 			Set<String> pairsSet = new HashSet<String>();
-			if(pairs != null){
-				for(WlpPairPipeline pair : pairs){
+			if (pairs != null) {
+				for (WlpPairPipeline pair : pairs) {
 					pairsSet.add(pair.getEmail());
 				}
 			}
 			boolean hasNoLoopUser = false;
 			WlpUser result = null;
-			for(WlpUser user : users){
-				if(!pairsSet.contains(user.getEmail())){
+			for (WlpUser user : users) {
+				if (!pairsSet.contains(user.getEmail())) {
 					hasNoLoopUser = true;
 					result = user;
 					WlpPairPipeline record = new WlpPairPipeline();
@@ -71,11 +71,11 @@ public class WlpPairLogServiceImpl implements WlpPairLogService {
 					break;
 				}
 			}
-			if(hasNoLoopUser){
+			if (hasNoLoopUser) {
 				return result;
-			}else{//重新开始一轮匹配,取第一个用户匹配
-				if(pairs != null){
-					for(WlpPairPipeline pair : pairs){
+			} else {// 重新开始一轮匹配,取第一个用户匹配
+				if (pairs != null) {
+					for (WlpPairPipeline pair : pairs) {
 						wlpPairPipelineMapper.deleteByPrimaryKey(pair.getId());
 					}
 				}
@@ -90,44 +90,55 @@ public class WlpPairLogServiceImpl implements WlpPairLogService {
 		return null;
 	}
 
+	// 这里仅是待确认状态，等接收方确认才是完成
 	@Override
-	public WlpPairLog completeWlpPairLog(String pairLogId, String orderPic) {
+	public WlpPairLog completeWlpPairLog(String pairLogId, String orderPic, String desc) {
 		WlpPairLog wlpPairLog = wlpPairLogMapper.selectByPrimaryKey(pairLogId);
 		if (wlpPairLog != null) {
 			wlpPairLog.setOrderTime(new Date());
 			wlpPairLog.setOrderPic(orderPic);
+			wlpPairLog.setRemark(desc);
+		wlpPairLogMapper.updateByPrimaryKeySelective(wlpPairLog);
+		}
+		return null;
+	}
+
+	@Override
+	public WlpPairLog sureWlpPairLog(String pairLogId) {
+		WlpPairLog wlpPairLog = wlpPairLogMapper.selectByPrimaryKey(pairLogId);
+		if (wlpPairLog != null) {
+
 			wlpPairLog.setStatus(CommonCst.COMPLETE_ORDER);
 			long pairMoney = wlpPairLog.getPairMoney();
-			
 			WlpWallet condition = new WlpWallet();
 			condition.setEmail(wlpPairLog.getFromUser());
 			List<WlpWallet> from_wlpWallets = wlpWalletMapper.selectByCondition(condition, null, null);
 			condition = new WlpWallet();
 			condition.setEmail(wlpPairLog.getToUser());
 			List<WlpWallet> to_wlpWallets = wlpWalletMapper.selectByCondition(condition, null, null);
-			if(from_wlpWallets != null && !from_wlpWallets.isEmpty()){//提供方钱包余额增加
+			if (from_wlpWallets != null && !from_wlpWallets.isEmpty()) {// 提供方钱包余额增加
 				WlpWallet fromWlpWallet = from_wlpWallets.get(0);
 				long fromOldBalance = fromWlpWallet.getCapital() + fromWlpWallet.getBonus();
 				long fromBalance = fromOldBalance + pairMoney;
 				wlpPairLog.setFromOldBalance(fromOldBalance);
 				wlpPairLog.setFromBalance(fromBalance);
-				
-				//持久化提供方钱包
+
+				// 持久化提供方钱包
 				fromWlpWallet.setCapital(fromWlpWallet.getCapital() + pairMoney);
 				wlpWalletMapper.updateByPrimaryKeySelective(fromWlpWallet);
 			}
-			if(to_wlpWallets != null && !to_wlpWallets.isEmpty()){//接受方钱包余额减少
+			if (to_wlpWallets != null && !to_wlpWallets.isEmpty()) {// 接受方钱包余额减少
 				WlpWallet toWlpWallet = to_wlpWallets.get(0);
 				long toOldBalance = toWlpWallet.getCapital() + toWlpWallet.getBonus();
 				long toBalance = toOldBalance - pairMoney;
 				wlpPairLog.setToOldBalance(toOldBalance);
 				wlpPairLog.setToBalance(toBalance);
 
-				//持久化接受方钱包
+				// 持久化接受方钱包
 				toWlpWallet.setCapital(toWlpWallet.getCapital() - pairMoney);
 				wlpWalletMapper.updateByPrimaryKeySelective(toWlpWallet);
 			}
-			
+
 			wlpPairLogMapper.updateByPrimaryKeySelective(wlpPairLog);
 		}
 		return null;
