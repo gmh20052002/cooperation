@@ -115,7 +115,11 @@ public class UserController {
 			if (reuser != null) {
 				return false;
 			}
+			HttpSession session = request.getSession();
 			if (wlpUserService.regUser(user) != null) {
+				WlpUser logined_user = wlpUserService.commonLogin(email, password);
+				session.setAttribute("logined_user", logined_user);
+				session.setAttribute(USER_NAME, email);
 				flag = true;
 			}
 		} catch (Exception e) {

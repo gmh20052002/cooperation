@@ -209,7 +209,7 @@ margin-right: 18px;
 	max-width: 60px;
 	max-height: 60px;
 }
-textarea.ui-input-text{min-height:100px;}
+textarea.ui-input-text{min-height:150px;}
 
 .detailsContent{
 	font-size: 12pt;

@@ -75,7 +75,7 @@ $(document).ready(function() {
 						$("#showMes").show();
 						var imgNode = document.getElementById("vimg");
 						imgNode.src = "servlet/AuthImageServlet?t=" + Math.random();
-				        $("#showMes").html("<font color=red>登录失败，注册码输入错误!</font>");
+				        $("#showMes").html("<font color=red>登录失败，验证码输入错误!</font>");
 						}
 				   else if(data&&data.userName){
 			      location.href=projectName+'/memCenter.html';
@@ -238,9 +238,9 @@ $(document).ready(function() {
 			success : function(data, type, request) {
 				console.log(data)
 				if(data){
-					var imgNode = document.getElementById("vimg");
-					imgNode.src = "servlet/AuthImageServlet?t=" + Math.random();
-	                location.href=projectName+"/index.html";   	           
+				 	$("#showRegMes").show(); 
+				      $("#showRegMes").html("<font >恭喜您注册成功，系统将自动跳转到平安互助主页!</font>");
+	                location.href=projectName+"/memCenter.html";   	           
 	            }else {
 	         	$("#showRegMes").show(); 
 			      $("#showRegMes").html("<font color=red>注册失败，用户名已存在!</font>");
