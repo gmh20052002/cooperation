@@ -245,7 +245,7 @@ public class PairLogController {
 		wlpPairLog.setPairMoney(Long.parseLong(money));
 		wlpPairLog.setStatus("0");
 		wlpPairLog.setOrderTime(new Date());
-		wlpPairLog.setExtrakType("dynamic");
+		wlpPairLog.setExtrakType("help");
 		wlpPairLogService.addWlpPairLog(wlpPairLog);
 
 		return null;
