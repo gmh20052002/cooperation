@@ -1,10 +1,19 @@
 package com.wlp.web;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -13,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.wlp.api.entity.WlpPairLog;
 import com.wlp.api.entity.WlpUser;
@@ -113,6 +123,25 @@ public class PairLogController {
 				if ("1".equals(log.getStatus()) || username.equals(log.getToUser()) || recEmail == null) {
 					continue;
 				}
+				String pic=log.getOrderPic();
+		       if(pic!=null&&pic.contains(".jpg")){
+					continue;
+				}
+		       if(pic!=null&&pic.contains(".jpeg")){
+					continue;
+				}
+		       if(pic!=null&&pic.contains(".png")){
+					continue;
+				}
+		       if(pic!=null&&pic.contains(".gif")){
+					continue;
+				}
+		       if(pic!=null&&pic.contains(".bmp")){
+					continue;
+				}
+		       if(pic!=null&&pic.contains(".psd")){
+					continue;
+				}
 				WlpUser rec_user = null;
 				try {
 					rec_user = wlpUserService.getUserByEmail(recEmail);
@@ -158,6 +187,7 @@ public class PairLogController {
 						|| recEmail.isEmpty()) {
 					continue;
 				}
+			
 				WlpUser rec_user = null;
 				try {
 					rec_user = wlpUserService.getUserByEmail(recEmail);
@@ -167,7 +197,29 @@ public class PairLogController {
 					e.printStackTrace();
 				}
 				log.setStatus(recEmail);
+				Boolean flag=false;
+				String pic=log.getOrderPic();
+				   if(pic!=null&&pic.contains(".jpg")){
+					   flag=true;
+					}
+				   else if(pic!=null&&pic.contains(".jpeg")){
+			    	   flag=true;
+					}
+				   else   if(pic!=null&&pic.contains(".png")){
+			    	   flag=true;
+					}
+				   else   if(pic!=null&&pic.contains(".gif")){
+			    	   flag=true;
+					}
+				   else   if(pic!=null&&pic.contains(".bmp")){
+			    	   flag=true;
+					}
+				   else if(pic!=null&&pic.contains(".psd")){
+			    	   flag=true;
+					}
+				   if(flag){
 				results.add(log);
+				}
 			}
 		}
 		return results;
@@ -200,21 +252,41 @@ public class PairLogController {
 	}
 
 	/**
-	 * 完成交易
+	 * 修改后完成交易
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/wlp/completeWlpPairLog", method = RequestMethod.POST)
-	public @ResponseBody WlpPairLog completeWlpPairLog(HttpServletRequest request,
-			@RequestParam(required = true) String pairLogId, @RequestParam(required = true) String pairPic) {
-		HttpSession session = request.getSession();
-		String username = (String) session.getAttribute(USER_NAME);
-		if (username == null || pairLogId.isEmpty()) {
-			return null;
+	@RequestMapping(value = "/wlp/phonegapUp", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
+	public @ResponseBody void phonegapUp(@RequestParam("uploadFile") MultipartFile file, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		// request.setCharacterEncoding("utf-8");
+		String pairid = request.getParameter("pairid");
+		if (pairid == null || pairid.isEmpty()) {
 		}
-		return wlpPairLogService.completeWlpPairLog(pairLogId, pairPic, null);
+		String desc = request.getParameter("textarea");
+		String filename = null;
+		if (!file.isEmpty()) {
+			ServletContext sc = request.getSession().getServletContext();
+			String dir = sc.getRealPath("/upload"); // 设定文件保存的目录
+			filename = file.getOriginalFilename(); // 得到上传时的文件名
+			filename=getRandomString(8)+filename;
+			FileUtils.writeByteArrayToFile(new File(dir, filename), file.getBytes());
+
+		}
+		response.sendRedirect("/cloud/unFinishPairLog.html");
+		wlpPairLogService.completeWlpPairLog(pairid, filename, desc);
 	}
 
+	private static String getRandomString(int length) { //length表示生成字符串的长度
+	    String base = "abcdefghijklmnopqrstuvwxyz0123456789";   
+	    Random random = new Random();   
+	    StringBuffer sb = new StringBuffer();   
+	    for (int i = 0; i < length; i++) {   
+	        int number = random.nextInt(base.length());   
+	        sb.append(base.charAt(number));   
+	    }   
+	    return sb.toString();   
+	 }  
 	/**
 	 * 完成交易
 	 * 
@@ -230,6 +302,7 @@ public class PairLogController {
 		}
 		return wlpPairLogService.sureWlpPairLog(pairLogId);
 	}
+
 	/**
 	 * 根据关键字查询我的历程--查询我的所有交易记录
 	 * 

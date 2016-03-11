@@ -6,10 +6,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,6 +63,9 @@ public class UserController {
 	public @ResponseBody WlpUser login(@RequestParam(required = true) String userName,
 			@RequestParam(required = true) String password, @RequestParam(required = true) String validateCode,
 			HttpServletRequest request) {
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		try {
 			HttpSession session = request.getSession();
 			WlpUser user = new WlpUser();
@@ -186,6 +191,9 @@ public class UserController {
 	public @ResponseBody Boolean updateUserLoginPsd(@RequestParam(required = true) String oldpsd,
 			@RequestParam(required = true) String newpsd, HttpServletRequest request) {
 		Boolean flag = false;
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		HttpSession session = request.getSession();
 		String cname = (String) session.getAttribute(USER_NAME);
 		if (cname == null) {
@@ -208,6 +216,9 @@ public class UserController {
 	public @ResponseBody Boolean updateUserImage(@RequestParam(required = true) String imageId,
 			HttpServletRequest request) {
 		Boolean flag = false;
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		HttpSession session = request.getSession();
 		String cname = (String) session.getAttribute(USER_NAME);
 		if (cname == null) {
@@ -230,6 +241,9 @@ public class UserController {
 	public @ResponseBody Boolean updateUserPayPsd(@RequestParam(required = true) String oldpsd,
 			@RequestParam(required = true) String newpsd, HttpServletRequest request) {
 		Boolean flag = false;
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		HttpSession session = request.getSession();
 		String cname = (String) session.getAttribute(USER_NAME);
 		if (cname == null) {
@@ -249,7 +263,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/wlp/updateUser", method = RequestMethod.PUT)
-	public @ResponseBody WlpUser updateUser(WlpUser user) {
+	public @ResponseBody WlpUser updateUser(WlpUser user,HttpServletRequest request) {
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		try {
 			return wlpUserService.regUser(user);
 
@@ -281,7 +298,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/wlp/deleteUser", method = RequestMethod.DELETE)
-	public @ResponseBody WlpUser deleteUser(String email) {
+	public @ResponseBody WlpUser deleteUser(String email,HttpServletRequest request) {
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		try {
 			return wlpUserService.deleteUser(email);
 		} catch (Exception e) {
@@ -300,6 +320,9 @@ public class UserController {
 	@RequestMapping(value = "/wlp/transLogin", method = RequestMethod.POST)
 	public @ResponseBody Boolean transLogin(@RequestParam(required = true) String transPassword,
 			HttpServletRequest request, HttpServletResponse reponse) {
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		try {
 			if (transPassword == null) {
 				return false;
@@ -339,24 +362,7 @@ public class UserController {
 		return (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);
 	}
 
-	@RequestMapping(value = "/wlp/phonegapUp", headers=("content-type=multipart/*"),method = RequestMethod.POST)
-	public @ResponseBody void phonegapUp(@RequestParam("uploadFile") MultipartFile file,HttpServletRequest request, HttpServletResponse response)throws IOException {
-
-	       String user=request.getParameter("fileField");
-	       System.out.println("**********************"+user);
-	       if(!file.isEmpty()){
-	    	         ServletContext sc = request.getSession().getServletContext();
-	    	           String dir = sc.getRealPath("/upload");    //设定文件保存的目录
-	    	         
-	    	      String filename = file.getOriginalFilename();    //得到上传时的文件名
-	    	        FileUtils.writeByteArrayToFile(new File(dir,filename), file.getBytes());
-	    	        
-	    	  
-	    	        System.out.println("************** "+ filename);
-	    	       System.out.println("upload over. "+ filename);
-	    	    }    
-	}
-
+	
 	/**
 	 * 查询用户的团队
 	 * 

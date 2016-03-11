@@ -28,19 +28,24 @@
 <meta name="viewport"
 	content="user-scalable=no, width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="./css/frame/jquery.mobile-1.3.2.css">
-<link rel="stylesheet" href="./css/frame/jquery.msgbox.css">
 <link rel="stylesheet" href="./css/global.css">
 <script type="text/javascript" charset="utf-8"
 	src="./js/frame/jquery-1.8.2.min.js"></script>
-<script type="text/javascript" charset="utf-8"
-	src="./js/frame/jquery.msgbox.min.js"></script>
-	<script type="text/javascript" charset="utf-8"
-	src="./js/frame/jquery.msgbox.js"></script>
+
 
 <script type="text/javascript">
 	  var pathName=window.document.location.pathname;
 	  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 
+		function toVaild(){
+		    var imgPath = $("#uploadFile").val();
+	        if (imgPath == "") {
+	            alert("请选择上传图片！");
+	      
+	            return false;
+	        }
+	            }
+		
 		function GetQueryString(name)
 		{
 		     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -51,7 +56,21 @@
 	function _cleantip(){
 		   $("#showRegMes").hide();	
 	}
-	
+	function getRequest() {   
+	       var url = window.location.search; //获取url中"?"符后的字串   
+	       var theRequest = new Object();   
+	       if (url.indexOf("?") != -1) {   
+	          var str = url.substr(1);   
+	          strs = str.split("&");   
+	          for(var i = 0; i < strs.length; i ++) {   
+	              //就是这句的问题
+	             theRequest[strs[i].split("=")[0]]=decodeURI(strs[i].split("=")[1]); 
+	             //之前用了unescape()
+	             //才会出现乱码  
+	          }   
+	       }   
+	       return theRequest;   
+	    }
 	function buiness(){
 		  var pathName=window.document.location.pathname;
 		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
@@ -87,13 +106,27 @@
 			}
 		}); 
 	}
-	
+
 
 	
 	$(document).ready(function() {
 		  var pathName=window.document.location.pathname;
 		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		    $('#email').val(GetQueryString("username"));
+		    $('#pairid').val(GetQueryString("_n"));
+		      var url = window.location.search; //获取url中"?"符后的字串   
+	       var theRequest = new Object();   
+	       if (url.indexOf("?") != -1) {   
+	          var str = url.substr(1);   
+	          strs = str.split("&");   
+	          for(var i = 0; i < strs.length; i ++) {   
+	              //就是这句的问题
+	             theRequest[strs[i].split("=")[0]]=decodeURI(strs[i].split("=")[1]); 
+	             //之前用了unescape()
+	             //才会出现乱码  
+	          }   
+	       }   
+		  console.log(theRequest._pic)
 		$.ajax({
 			type : "GET",
 			url : projectName+"/wlp/getUserInfo",
@@ -112,20 +145,20 @@
 					  payt=payt+"    微信支付";
 				  }
 				  console.log(payt)
-				   $('#alipay').val(payt);
+				   $('#alipay').html(payt);
 				  if(money.indexOf("-1")>0){
 					  money=money.substring(7,money.length)
 				  }else{
 				      money=money.substring(6,money.length)
 				  }
-				    $('#money').val(money);
+				    $('#money').html(money);
 				if(data){				     
-					   $('#phone').val(data.mobilePhone);
+					   $('#phone').html(data.mobilePhone);
 				       $('#email').html(data.email);
-				       $('#wechat').val(data.wechat);
-				       $('#username').val(data.userName);
+				       $('#wechat').html(data.wechat);
+				       $('#username').html(data.userName);
 				    
-				       $('#bankname').val(data.bankName);
+				       $('#bankname').html(data.bankName);
 				       $("#select-native-1 option[value='"+data.bankName+"']").prop("selected",true);
 				     
 				       $('#bankusername').val(data.bankUsername);
@@ -157,44 +190,46 @@
 		<h1  style="font-size: 14px;">完成交易</h1>
        <a href="memCenter.html"   rel="external" data-role="button" data-icon="home"   data-iconpos="notext">主页</a>
 	</div>
-  <div data-role="content" class="ui-content" role="main">		
-  
-    	
-					<label for="email">接收者账号 </label><input type="text" placeholder="" name="email" value=""  id="email"  disabled="disabled">   
-					          
-								<label for="username">昵称</label><input type="text" placeholder="" name="username" value=""  id="username" disabled="disabled" >     
-              
-					<label for="phone">手机号码:</label><input type="tel" placeholder="" name="phone" value="" class="required" pattern="[0-9]*" id="phone"  disabled="disabled">                  
-                  
-					<label for="wechat">微信号 </label><input type="text" placeholder="" name="wechat" value=""  id="wechat" disabled="disabled">                  
-           
-					<label for="alipay">接收方式</label><input type="text" placeholder="" name="alipay" value=""  id="alipay" disabled="disabled">                  
-             
-     	              <label for="money">交易金额</label><input type="text" placeholder="" name="money" value=""  id="money" disabled="disabled" >                
+	
+			
+			
+  <div data-role="content" class="ui-content" role="main" style="border-bottom: 1px solid #ddd;">		
+ 
+ 
+    		<label for="email" style="line-height:34px;font-size: 12pt;">账号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>  <span id="email" class="timestylesure3"></span>
+					          <br />
+								<label for="username" style="line-height:34px;font-size: 12pt;">昵称:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span  id="username"  class="timestylesure3"> </span>
+                   <br />
+					<label for="phone" style="line-height:34px;font-size: 12pt;">手机号:&nbsp;&nbsp;</label><span  id="phone"  class="timestylesure3"> </span>
+                    <br />
+					<label for="wechat" style="line-height:34px;font-size: 12pt;">微信号: &nbsp;&nbsp;</label><span  id="wechat"  class="timestylesure3"> </span>                
+             <br />
+					<label for="alipay" style="line-height:34px;font-size: 12pt;">接收方式:</label><span  id="alipay"  class="timestylesure3"> </span>                 
+               <br />
+     	              <label for="money" style="line-height:34px;font-size: 12pt;">交易金额:</label><span  id="money"  class="timestylesure3"> </span>                
+     	  </div>
      	
-     	
-     	   </div>
-		        <br />
+     
+		     
               <div data-role="content" class="ui-content" role="main">	
-                   <form action="wlp/phonegapUp" method="post"  id="form1" enctype="multipart/form-data" data-ajax="false">
+                   <form action="wlp/phonegapUp" method="post"  id="form1" onsubmit="return toVaild()" enctype="multipart/form-data" data-ajax="false">
 
+     <input type="hidden" name="pairid"  id="pairid" class="required" data-clear-btn="true" /> 
 
-
-  <label for="uploadFile">交易凭证图片</label>
+  <label for="uploadFile">交易凭证图片:</label>
                 <input type="file"   accept="image/jpeg"   name="uploadFile"  id="uploadFile" />
 
 
-                <input type="submit" name="submit" class="btn" value="上传"  />
-            </form>
-                  <br />
             			<label for="textarea">备注信息 </label><textarea cols="60" rows="22" name="textarea" id="textarea"></textarea>    
             			
-          
+             <input type="submit" name="submit" class="btn" value="完成"  data-theme="e"/>
+
+                 <a href="unFinishPairLog.html"  id="xxx" rel="external"   data-role="button" data-theme="c">取消</a>
+            </form>
              
 	</div>
 	        <div data-role="main"  style=" text-align: center;">
-                <a  href="#"    rel="external"  data-role="button" data-theme="e" id="saveinfo">完成</a> 
-                 <a href="unFinishPairLog.html"  id="xxx" rel="external"   data-role="button" data-theme="c">取消</a>
+	           
                   <!--      <input type="reset"  value="重置"> -->
                             <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
                 </div>

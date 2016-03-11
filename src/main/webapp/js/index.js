@@ -82,6 +82,8 @@ $(document).ready(function() {
 				}
 				else{
 					$("#showMes").show();
+					var imgNode = document.getElementById("vimg");
+					imgNode.src = "servlet/AuthImageServlet?t=" + Math.random();
 				    $("#showMes").html("<font color=red>登录失败，用户名或密码输入错误!</font>");
 				}
 			},
@@ -89,6 +91,8 @@ $(document).ready(function() {
 			error : function(xmlhttprequest, errorinfo) {
 				   $('#loginButton').buttonMarkup({ theme: "e" });
 				   $('#logintext').html('登陆');
+					var imgNode = document.getElementById("vimg");
+					imgNode.src = "servlet/AuthImageServlet?t=" + Math.random();
 			    $("#showMes").html("<font color=red>登录失败，用户名或密码错误!</font>");
 
 				}
