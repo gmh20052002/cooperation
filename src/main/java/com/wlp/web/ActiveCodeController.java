@@ -359,7 +359,7 @@ public class ActiveCodeController {
 				return false;
 			}
 			for (WlpActivecode coder : codes) {
-				if (coder.getCode().equals(code)) {
+				if (coder.getCode().equals(code)&&"0".equals(coder.getStatus())) {
 					user.setStatus("1");
 					wlpUserService.updateUser(user);
 					wlpActivecodeService.activeUser(username, code);

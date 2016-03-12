@@ -40,73 +40,17 @@
 		<script type="text/javascript">
 		  var pathName=window.document.location.pathname;
 		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
-		function continueDeal(){
-			
-			console.log($("#dealpsd").val())
-			var psd=$("#dealpsd").val()
-			if(!psd){
-				   $("#showDealMes").show();
-			       $("#showDealMes").html("<font color='red'>交易密码不能未空</font>");
-			       $("#dealpsd").focus();
-					return false;
-			}
-			  var pathName=window.document.location.pathname;
-			  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
-			$.ajax({				
-				type : 'POST',
-				url :projectName+ '/wlp/transLogin',		
-				data:{  'transPassword':psd},
-				dataType : 'json',
-				success : function(data, type, request) {
-					console.log(data)
-					if(data){
-						$('.ui-dialog').dialog('close');
-						 $.ajax({				
-								type : 'POST',
-								url : projectName+'/wlp/activeUser',
-								data : {
-									code : $("#email").val()
-									},				
-								dataType : 'json',
-								success : function(data, type, request) {
-									if(data){
-									//    $("#showRegMes").show();
-								       //  $("#showRegMes").html("<font >激活成功</font>");
-								        $("#tip").html("已成功激活");
-								        $("#showRegMes").hide();
-								    	$("#shareActivecodes").prop('disabled',"true").addClass("ui-disabled").data('disabled',true);
-									 }else{
-										     $("#showRegMes").show();
-									        $("#showRegMes").html("<font color=red>激活失败，激活码错误!</font>");
-									        $("#email").focus();
-									 }
-								},
-								error : function(xmlhttprequest, errorinfo) {
-									$("#showRegMes").show();
-							        $("#showRegMes").html("<font color=red>激活失败，激活码错误!</font>");
-								}
-							}); 
-	
-					 }else{
-					       $("#showDealMes").show();
-					       $("#showDealMes").html("<font color='red'>交易密码错误</font>");
-					 }
-				}
-			});
-		
-		}
-
 
 	$(document).ready(function() {
 		  var pathName=window.document.location.pathname;
 		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		$.ajax({				
 			type : 'GET',
-			url : projectName+'/wlp/getMyUsedActivecodes',			
+			url : projectName+'/wlp/getUserInfo',			
 			dataType : 'json',
 			success : function(data, type, request) {
 				console.log(data)
-				if(data){
+				if(data&&data.status=='1'){
 					$("#email").val(data.code)
 				//    $("#showRegMes").show();
 			       //  $("#showRegMes").html("<font >激活成功</font>");
@@ -127,7 +71,31 @@
 			        $("#email").focus();
 					return false;
 				}
-		
+			 $.ajax({				
+					type : 'POST',
+					url : projectName+'/wlp/activeUser',
+					data : {
+						code : $("#email").val()
+						},				
+					dataType : 'json',
+					success : function(data, type, request) {
+						if(data){
+						//    $("#showRegMes").show();
+					       //  $("#showRegMes").html("<font >激活成功</font>");
+					        $("#tip").html("已成功激活");
+					        $("#showRegMes").hide();
+					    	$("#shareActivecodes").prop('disabled',"true").addClass("ui-disabled").data('disabled',true);
+						 }else{
+							     $("#showRegMes").show();
+						        $("#showRegMes").html("<font color=red>激活失败，激活码错误!</font>");
+						        $("#email").focus();
+						 }
+					},
+					error : function(xmlhttprequest, errorinfo) {
+						$("#showRegMes").show();
+				        $("#showRegMes").html("<font color=red>激活失败，激活码错误!</font>");
+					}
+				}); 
 		});
 	});
 		
@@ -148,7 +116,7 @@
                      <input type="text" name="email" id="email" placeholder="请输入激活码"  data-clear-btn="true"/> 
            
          <div data-role="main"  style=" text-align: center;">
-                <a href="dealPsd.html" data-rel="dialog"  data-role="button" data-theme="e"  id="shareActivecodes"><span id="tip">激活</span></a> 
+                <a href="#"  data-role="button" data-theme="e"  id="shareActivecodes"><span id="tip">激活</span></a> 
                           <a href="acodeManage.html"  id="xxx" rel="external"   data-role="button" data-theme="c">返回</a>
                             <h2 class="text-primary"><span id="showRegMes"></span> </h2> 
                 </div>
