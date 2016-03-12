@@ -33,8 +33,8 @@ public class WlpPairLog {
 	private Long fromOldBalance;
 
 	private Long fromBalance;
-	
-	private String email;
+
+	private Long type;
 
 	public String getId() {
 		return id;
@@ -155,6 +155,16 @@ public class WlpPairLog {
 	public void setFromBalance(Long fromBalance) {
 		this.fromBalance = fromBalance;
 	}
+
+	public Long getType() {
+		return type;
+	}
+
+	public void setType(Long type) {
+		this.type = type;
+	}
+	
+	private String email;
 
 	public String getEmail() {
 		return email;

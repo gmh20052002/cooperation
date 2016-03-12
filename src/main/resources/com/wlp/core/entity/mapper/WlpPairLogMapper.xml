@@ -17,11 +17,13 @@
 		<result column="TO_BALANCE" jdbcType="DECIMAL" property="toBalance" />
 		<result column="FROM_OLD_BALANCE" jdbcType="DECIMAL" property="fromOldBalance" />
 		<result column="FROM_BALANCE" jdbcType="DECIMAL" property="fromBalance" />
+		<result column="TYPE" jdbcType="DECIMAL" property="type" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		ID, PAIR_MONEY, FROM_USER, TO_USER, ORDER_TIME, PAIR_TIME, STATUS,
 		PAY_TYPE, EXTRAK_TYPE,
-		ORDER_PIC, REMARK, TO_OLD_BALANCE, TO_BALANCE, FROM_OLD_BALANCE, FROM_BALANCE
+		ORDER_PIC, REMARK, TO_OLD_BALANCE, TO_BALANCE, FROM_OLD_BALANCE, FROM_BALANCE,
+		TYPE
 	</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
@@ -39,8 +41,8 @@
 		TO_USER, ORDER_TIME, PAIR_TIME,
 		STATUS, PAY_TYPE, EXTRAK_TYPE,
 		ORDER_PIC, REMARK, TO_OLD_BALANCE,
-		TO_BALANCE, FROM_OLD_BALANCE, FROM_BALANCE
-		)
+		TO_BALANCE, FROM_OLD_BALANCE, FROM_BALANCE,
+		TYPE)
 		values (#{id,jdbcType=VARCHAR}, #{pairMoney,jdbcType=DECIMAL},
 		#{fromUser,jdbcType=VARCHAR},
 		#{toUser,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{pairTime,jdbcType=TIMESTAMP},
@@ -48,8 +50,8 @@
 		#{extrakType,jdbcType=VARCHAR},
 		#{orderPic,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{toOldBalance,jdbcType=DECIMAL},
 		#{toBalance,jdbcType=DECIMAL}, #{fromOldBalance,jdbcType=DECIMAL},
-		#{fromBalance,jdbcType=DECIMAL}
-		)
+		#{fromBalance,jdbcType=DECIMAL},
+		#{type,jdbcType=DECIMAL})
 	</insert>
 	<insert id="insertSelective" parameterType="com.wlp.api.entity.WlpPairLog">
 		insert into wlp_pair_log
@@ -99,6 +101,9 @@
 			<if test="fromBalance != null">
 				FROM_BALANCE,
 			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -145,6 +150,9 @@
 			</if>
 			<if test="fromBalance != null">
 				#{fromBalance,jdbcType=DECIMAL},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=DECIMAL},
 			</if>
 		</trim>
 	</insert>
@@ -193,6 +201,9 @@
 			<if test="fromBalance != null">
 				FROM_BALANCE = #{fromBalance,jdbcType=DECIMAL},
 			</if>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=DECIMAL},
+			</if>
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
@@ -211,7 +222,8 @@
 		TO_OLD_BALANCE = #{toOldBalance,jdbcType=DECIMAL},
 		TO_BALANCE = #{toBalance,jdbcType=DECIMAL},
 		FROM_OLD_BALANCE = #{fromOldBalance,jdbcType=DECIMAL},
-		FROM_BALANCE = #{fromBalance,jdbcType=DECIMAL}
+		FROM_BALANCE = #{fromBalance,jdbcType=DECIMAL},
+		TYPE = #{type,jdbcType=DECIMAL}
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 
@@ -244,7 +256,12 @@
 					AND PAY_TYPE = #{condition.payType,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.extrakType != null">
-					AND EXTRAK_TYPE = #{condition.extrakType,jdbcType=VARCHAR}
+					AND EXTRAK_TYPE =
+					#{condition.extrakType,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.type != null">
+					AND TYPE =
+					#{condition.type,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.email != null">
 					AND (FROM_USER = #{condition.email,jdbcType=VARCHAR} OR

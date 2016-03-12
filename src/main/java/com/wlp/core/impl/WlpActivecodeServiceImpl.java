@@ -53,7 +53,10 @@ public class WlpActivecodeServiceImpl implements WlpActivecodeService {
 			code.setEmail(toEmail);
 			code.setShareEmail(fromEmail);
 			code.setShareTime(new Date());
-			wlpActivecodeMapper.updateByPrimaryKeySelective(code);
+			int ret = wlpActivecodeMapper.updateByPrimaryKeySelective(code);
+			if(ret == 0){
+				return null;
+			}
 			return code;
 		}
 		return null;
