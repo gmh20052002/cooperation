@@ -36,7 +36,7 @@ $(document).ready(function() {
     var uname =$("#email").val(); 
 	if(!uname){
 		$("#showMes").show();
-        $("#showMes").html("<font color=red>登录失败，邮箱不能为空!</font>");
+        $("#showMes").html("<font color=red>登录失败，用户名不能为空!</font>");
         $("#email").focus();
         $('#logintext').html('登陆');
         $('#loginButton').buttonMarkup({ theme: "e" });
@@ -112,6 +112,14 @@ $(document).ready(function() {
 		        $('#regButton').buttonMarkup({ theme: "e" });
 				return false;
 			}
+			if(uname.length>16){
+				$("#showRegMes").show();
+		        $("#showRegMes").html("<font color=red>注册失败，用户昵称长度不能超过16!</font>");
+		        $("#username5").focus();
+		        $('#regtext').html('注册');
+		        $('#regButton').buttonMarkup({ theme: "e" });
+				return false;
+			}
 			 var telphone =$("#telphone").val(); 
 			 if(!telphone){
 					$("#showRegMes").show();
@@ -134,6 +142,14 @@ $(document).ready(function() {
 			 if(!email2){
 					$("#showRegMes").show();
 			        $("#showRegMes").html("<font color=red>注册失败，登陆账号不能为空!</font>");
+			        $("#email2").focus();
+			        $('#regtext').html('注册');
+			        $('#regButton').buttonMarkup({ theme: "e" });
+					return false;
+				}
+			 if(email2.length>20){
+					$("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>登陆账号长度不能超过20!</font>");
 			        $("#email2").focus();
 			        $('#regtext').html('注册');
 			        $('#regButton').buttonMarkup({ theme: "e" });

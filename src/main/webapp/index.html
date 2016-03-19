@@ -72,13 +72,13 @@
 		<div data-role="content" data-theme="d">
 			<form method="post" id="loginForm">
 					
-                     <input type="text" name="email" id="email" placeholder="请输入用户名"  class="required email"  data-clear-btn="true"/> 
+                     <input type="text" name="email" id="email" placeholder="请输入用户名"  class="required email"  maxlength="32" data-clear-btn="true"/> 
              
                    
-                     <input type="password" name="password" id="password" placeholder="请输入密码" class="required" data-clear-btn="true"/>
+                     <input type="password" name="password" id="password" placeholder="请输入密码" class="required" maxlength="32"  data-clear-btn="true"/>
 			
 	
-        <input type="text"  placeholder="输入验证码"  name="randomCode" id="randomCode"/>
+        <input type="text"  placeholder="输入验证码"  name="randomCode" maxlength="4"  id="randomCode"/>
         
         <div style="float: left;"><img id="vimg"  title="点击更换" onclick="changeCode();" src="servlet/AuthImageServlet"></div><div style="padding-top: 7px;"><span style="
     font-size: 15px;">&nbsp;点击图片刷新验证码</span></div>
@@ -86,7 +86,7 @@
               
 				<a href="#" id="loginButton" data-role="button" data-theme="e"><span id='logintext'>登陆</span></a> <br /> 
                   <div data-role="main"  style=" text-align: center;">
-                       <a href="#" onclick="goTo('#regPage')" >注册账号</a>
+                        未建立帐号？ <a href="#" onclick="goTo('#regPage')" >注册账号</a>
                        <br /> 
                          <br /> 
               
@@ -128,40 +128,40 @@
 			}); */
 		</script>
 		<div data-role="header" data-theme="b">
-	   <a href="index.html" data-role="button" data-icon="arrow-l" data-iconpos="notext">返回</a>
+	   <a href="index.html" data-role="button" >返回</a>
 		<h1>会员注册</h1>
 		
            
 		</div>
 		<div data-role="content" data-theme="d">
 			<form action="#" method="post" id="regForm">
+			
+			    	 <label for="email2">账号:</label><input type="text" name="email2" id="email2" placeholder="登录账号"  maxlength="20" class="required" data-clear-btn="true" onfocus="myFunction2(this);"  onblur="myFunction(this);" /> 
             	
-					<label for="username5">昵称: </label><input type="text" placeholder="昵称" name="username5" class="required" id="username5"  data-clear-btn="true">                  
+					<label for="username5">昵称: </label><input type="text" placeholder="用户昵称" name="username5" class="required" id="username5" maxlength="16"  data-clear-btn="true">                  
             
-					<label for="telphone">手机号码: </label><input type="tel" name="telphone" placeholder="手机号码" class="required" id="telphone" pattern="[0-9]*" data-clear-btn="true">                  
-          
-					 <label for="email2">账号:</label>
-                     <input type="text" name="email2" id="email2" placeholder="登录账号" class="required" data-clear-btn="true" onfocus="myFunction2(this);"  onblur="myFunction(this);" /> 
+					<label for="telphone">手机号码: </label><input type="tel" name="telphone" placeholder="手机号码" class="required" id="telphone" pattern="[0-9]*" maxlength="11"  data-clear-btn="true">                  
+          		
                      
 				<!-- 	 <label for="email3">确认邮箱: </label>
                      <input type="text" name="email3" id="email3" placeholder="确认邮箱" data-clear-btn="true" data-clear-btn="true"/>  -->
                      
 							
 					 <label for="password3">登陆密码: </label>
-                     <input type="password" name="password3" id="password3" placeholder="6-20位字母数字组合" class="required" data-clear-btn="true"/> 
+                     <input type="password" name="password3" id="password3" placeholder="6-20位字母数字组合" class="required"  maxlength="20" data-clear-btn="true"/> 
                 
                   
                      <label for="password4">确认登陆密码:</label>
-                      <input type="password" name="password4" id="password4" placeholder=" 确认登陆密码" class="required" data-clear-btn="true" /> 
+                      <input type="password" name="password4" id="password4" placeholder=" 确认登陆密码" class="required" maxlength="20" data-clear-btn="true" /> 
                  		
 					 <label for="password5">交易密码:</label>
-                     <input type="password" name="password5" id="password5" value="" placeholder="6-20位字母数字组合"  class="required" data-clear-btn="true"/> 
+                     <input type="password" name="password5" id="password5" value="" placeholder="6-20位字母数字组合"  maxlength="20"  class="required" data-clear-btn="true"/> 
                 
                      <label for="password6">确认交易密码:</label> 
-                     <input type="password" name="password6" id="password6" value="" placeholder=" 确认交易密码" class="required"  data-clear-btn="true" /> 
+                     <input type="password" name="password6" id="password6" value="" placeholder=" 确认交易密码" class="required" maxlength="20"  data-clear-btn="true" /> 
                
 					 <label for="email4">介绍人账号:</label>
-                     <input type="text" name="email4" id="email4" placeholder="介绍人账号"  data-clear-btn="true"/> 
+                     <input type="text" name="email4" id="email4" placeholder="介绍人账号"  maxlength="20" data-clear-btn="true"/> 
                      
                         		
                     <!--     <a href="#" data-role="button" onclick="goTo('#imgPage')">选择头像</a> 
