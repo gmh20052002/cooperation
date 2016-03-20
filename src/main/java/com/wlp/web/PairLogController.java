@@ -2,19 +2,15 @@ package com.wlp.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.wlp.api.entity.WlpPairLog;
 import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpPairLogService;
@@ -39,8 +34,7 @@ import com.wlp.api.service.WlpUserService;
 @Controller()
 public class PairLogController {
 
-	@Autowired
-	WlpPairLogService wlpPairLogService;
+	
 
 	private static final String USER_NAME = "USER_NAME";
 
@@ -56,6 +50,9 @@ public class PairLogController {
 		if (username == null) {
 			return null;
 		}
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpPairLogService wlpPairLogService= (WlpPairLogService) ac1.getBean("wlpPairLogService");
 		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		if (logs != null && logs.size() > 0) {
 			for (WlpPairLog log : logs) {
@@ -88,6 +85,9 @@ public class PairLogController {
 		if (username == null || pairLogId == null || pairLogId.isEmpty()) {
 			return null;
 		}
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpPairLogService wlpPairLogService= (WlpPairLogService) ac1.getBean("wlpPairLogService");
 		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		if (logs != null && logs.size() > 0) {
 			for (WlpPairLog log : logs) {
@@ -111,10 +111,11 @@ public class PairLogController {
 		if (username == null) {
 			return null;
 		}
-		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
-		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		ApplicationContext ac1 = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpPairLogService wlpPairLogService= (WlpPairLogService) ac1.getBean("wlpPairLogService");
+		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
+		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		if (logs != null && logs.size() > 0) {
 			for (WlpPairLog log : logs) {
@@ -175,9 +176,10 @@ public class PairLogController {
 			return null;
 		}
 		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
-		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		ApplicationContext ac1 = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpPairLogService wlpPairLogService= (WlpPairLogService) ac1.getBean("wlpPairLogService");
+		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		if (logs != null && logs.size() > 0) {
 			for (WlpPairLog log : logs) {
@@ -238,6 +240,9 @@ public class PairLogController {
 		if (username == null) {
 			return null;
 		}
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpPairLogService wlpPairLogService= (WlpPairLogService) ac1.getBean("wlpPairLogService");
 		WlpPairLog wlpPairLog = new WlpPairLog();
 		wlpPairLog.setEmail(username);
 		wlpPairLog.setToUser(username);
@@ -265,6 +270,9 @@ public class PairLogController {
 		}
 		String desc = request.getParameter("textarea");
 		String filename = null;
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpPairLogService wlpPairLogService= (WlpPairLogService) ac1.getBean("wlpPairLogService");
 		if (!file.isEmpty()) {
 			ServletContext sc = request.getSession().getServletContext();
 			String dir = sc.getRealPath("/upload"); // 设定文件保存的目录
@@ -296,6 +304,9 @@ public class PairLogController {
 	public @ResponseBody WlpPairLog sureWlpPairLog(HttpServletRequest request,
 			@RequestParam(required = true) String pairLogId) {
 		HttpSession session = request.getSession();
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpPairLogService wlpPairLogService= (WlpPairLogService) ac1.getBean("wlpPairLogService");
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null || pairLogId.isEmpty()) {
 			return null;
@@ -316,6 +327,9 @@ public class PairLogController {
 		if (username == null) {
 			return null;
 		}
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpPairLogService wlpPairLogService= (WlpPairLogService) ac1.getBean("wlpPairLogService");
 		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
 		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		if (logs != null && logs.size() > 0) {
@@ -369,6 +383,9 @@ public class PairLogController {
 		ArrayList<WlpPairLog> results = new ArrayList<WlpPairLog>();
 		String newMoney = null;
 		String oldMoney = null;
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpPairLogService wlpPairLogService= (WlpPairLogService) ac1.getBean("wlpPairLogService");
 		List<WlpPairLog> logs = wlpPairLogService.getWlpPairLogs(username, null);
 		if (logs != null && logs.size() > 0) {
 			for (WlpPairLog log : logs) {

@@ -4,21 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,16 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.wlp.api.entity.WlpUser;
 import com.wlp.api.service.WlpUserService;
 
 @Controller()
 public class UserController {
-
-	@Autowired
-	WlpUserService wlpUserService;
 
 	private int imgWidth = 0;
 
@@ -50,14 +38,6 @@ public class UserController {
 	private Font mFont = new Font("Times New Roman", Font.PLAIN + Font.ITALIC, 19);
 
 	private static final String USER_NAME = "USER_NAME";
-
-	public WlpUserService getWlpUserService() {
-		return wlpUserService;
-	}
-
-	public void setWlpUserService(WlpUserService wlpUserService) {
-		this.wlpUserService = wlpUserService;
-	}
 
 	@RequestMapping(value = "/wlp/login", method = RequestMethod.GET)
 	public @ResponseBody WlpUser login(@RequestParam(required = true) String userName,
@@ -85,8 +65,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/wlp/addUser", method = RequestMethod.POST)
-	public @ResponseBody WlpUser addUser(WlpUser user) {
+	public @ResponseBody WlpUser addUser(WlpUser user,HttpServletRequest request) {
 		try {
+			ApplicationContext ac1 = WebApplicationContextUtils
+					.getRequiredWebApplicationContext(request.getSession().getServletContext());
+			WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 			return wlpUserService.regUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
