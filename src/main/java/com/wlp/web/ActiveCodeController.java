@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.wlp.api.entity.CommonCst;
 import com.wlp.api.entity.WlpActivecode;
@@ -28,9 +30,6 @@ public class ActiveCodeController {
 	@Autowired
 	WlpActivecodeService wlpActivecodeService;
 
-	@Autowired
-	WlpUserService wlpUserService;
-
 	private static final String USER_NAME = "USER_NAME";
 
 	/**
@@ -43,6 +42,9 @@ public class ActiveCodeController {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		String cname = username;
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		if (username == null) {
 			return null;
 		} else {
@@ -70,6 +72,9 @@ public class ActiveCodeController {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		String cname = username;
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		if (username == null) {
 			return null;
 		} else {
@@ -124,6 +129,9 @@ public class ActiveCodeController {
 		if (username == null) {
 			return null;
 		}
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getSharedActivecodes(username);
 		if (codes != null && codes.size() > 0) {
 			for (WlpActivecode code : codes) {
@@ -159,7 +167,9 @@ public class ActiveCodeController {
 		}
 		ArrayList<WlpActivecode> results = new ArrayList<WlpActivecode>();
 		ArrayList<WlpActivecode> codes = (ArrayList<WlpActivecode>) wlpActivecodeService.getSharedActivecodes(username);
-
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		if (codes != null && codes.size() > 0) {
 			for (WlpActivecode code : codes) {
 				String fromusername = code.getEmail();
@@ -211,6 +221,9 @@ public class ActiveCodeController {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		String cname = username;
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		if (username == null) {
 			return null;
 		} else {
@@ -263,6 +276,9 @@ public class ActiveCodeController {
 			@RequestParam(required = true) String keyword,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		String cname = username;
 		if (username == null) {
 			return null;
@@ -318,7 +334,9 @@ public class ActiveCodeController {
 		if (username == null || othername == null) {
 			return false;
 		}
-
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		try {
 			WlpUser user = wlpUserService.getUserByEmail(othername);
 			if (user == null) {
@@ -348,6 +366,9 @@ public class ActiveCodeController {
 		if (username == null || code == null) {
 			return false;
 		}
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
 		try {
 			WlpUser user = wlpUserService.getUserByEmail(username);
 			if (user == null) {

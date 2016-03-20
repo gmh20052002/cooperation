@@ -58,14 +58,18 @@
 						if(email.length>21){
 							email=email.substring(0,21)
 						}
+						var imgno=data[i].remark;
+						if(!imgno){
+							imgno=3;
+						}
 						content = content + "<li>";
-						content = content + "<img src=\"./img/headpic/"+data[i].remark+".jpg\" onerror=\"errpic(this)\" >";
+						content = content + "<img src=\"./img/headpic/"+imgno+".jpg\" onerror=\"errpic(this)\" >";
 						content = content + "<h3 class=\"listtitle\">"+userName+"<span class=\"timestyle\">"+""+"</span></h3>";
 						content = content + "<p>";
 						content = content + "<span class='timestyle'></span><br />";
 						content = content + "</p>";
 						content = content + "<p style='padding-top: .3em'>";
-						content = content + "<span >账号："+email+"</span>";
+						content = content + "账号："+email+"";
 						content = content + "<span class='timestyle2'>状态："+state+"</span><br />";
 						content = content + "</p>";
 						content = content + "</li>";
@@ -120,8 +124,12 @@
 								if(email.length>21){
 									email=email.substring(0,21)
 								}
+								var imgno=data[i].remark;
+								if(!imgno){
+									imgno=3;
+								}
 								content = content + "<li>";
-								content = content + "<img src=\"./img/headpic/"+data[i].remark+".jpg\" onerror=\"errpic(this)\" >";
+								content = content + "<img src=\"./img/headpic/"+imgno+".jpg\" onerror=\"errpic(this)\" >";
 								content = content + "<h3 class=\"listtitle\">"+userName+"<span class=\"timestyle\">"+""+"</span></h3>";
 								content = content + "<p>";
 								content = content + "<span class='timestyle'></span><br />";

@@ -403,14 +403,14 @@ public class UserController {
 				}
 				if (email.contains(keyword) || username.contains(keyword)) {
 
-					if (email.contains(keyword)) {
+				/*	if (email.contains(keyword)) {
 						email = email.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>");
 						code.setEmail(email);
 					}
 					if (username.contains(keyword)) {
 						code.setUserName(
 								username.replaceAll(keyword, "<span style='color:red'>" + keyword + "</span>"));
-					}
+					}*/
 
 					results.add(code);
 				}

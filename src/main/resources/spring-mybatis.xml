@@ -70,5 +70,7 @@
 	
 	<bean name="wlpUserService" class="com.wlp.core.impl.WlpUserServiceImpl" />
 	
+	<bean name="wlpWalletService" class="com.wlp.core.impl.WlpWalletServiceImpl" />
+	
 	<bean  class="com.wlp.web.ScheduleTask" />
 </beans>

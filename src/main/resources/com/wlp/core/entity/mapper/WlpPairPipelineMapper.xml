@@ -7,7 +7,7 @@
     <result column="EMAIL" property="email" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, LOOP, EMAIL
+    ID, `LOOP`, EMAIL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -20,7 +20,7 @@
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.wlp.api.entity.WlpPairPipeline" >
-    insert into wlp_pair_pipeline (ID, LOOP, EMAIL
+    insert into wlp_pair_pipeline (ID, `LOOP`, EMAIL
       )
     values (#{id,jdbcType=VARCHAR}, #{loop,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}
       )
@@ -32,7 +32,7 @@
         ID,
       </if>
       <if test="loop != null" >
-        LOOP,
+     `LOOP`,
       </if>
       <if test="email != null" >
         EMAIL,
@@ -54,7 +54,7 @@
     update wlp_pair_pipeline
     <set >
       <if test="loop != null" >
-        LOOP = #{loop,jdbcType=INTEGER},
+       `LOOP`= #{loop,jdbcType=INTEGER},
       </if>
       <if test="email != null" >
         EMAIL = #{email,jdbcType=VARCHAR},
@@ -64,7 +64,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wlp.api.entity.WlpPairPipeline" >
     update wlp_pair_pipeline
-    set LOOP = #{loop,jdbcType=INTEGER},
+    set `LOOP` = #{loop,jdbcType=INTEGER},
       EMAIL = #{email,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -80,7 +80,7 @@
 					AND ID = #{condition.id,jdbcType=VARCHAR}
 				</if>
 		      	<if test="condition.code != null" >
-		        	AND LOOP = #{condition.LOOP,jdbcType=INTEGER}
+		        	AND `LOOP` = #{condition.LOOP,jdbcType=INTEGER}
 		      	</if>
 		      	<if test="condition.email != null" >
 		        	AND EMAIL = #{condition.email,jdbcType=VARCHAR}

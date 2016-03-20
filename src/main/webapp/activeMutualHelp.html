@@ -86,13 +86,13 @@
 					    	$("#shareActivecodes").prop('disabled',"true").addClass("ui-disabled").data('disabled',true);
 						 }else{
 							     $("#showRegMes").show();
-						        $("#showRegMes").html("<font color=red>激活失败，激活码错误!</font>");
+						        $("#showRegMes").html("<font color=red>激活失败，激活码不存在!</font>");
 						        $("#email").focus();
 						 }
 					},
 					error : function(xmlhttprequest, errorinfo) {
 						$("#showRegMes").show();
-				        $("#showRegMes").html("<font color=red>激活失败，激活码错误!</font>");
+				        $("#showRegMes").html("<font color=red>激活失败，激活码不存在!</font>");
 					}
 				}); 
 		});
