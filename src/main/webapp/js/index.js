@@ -142,7 +142,7 @@ $(document).ready(function() {
 			 if (!treg2.test(email2)) {
 					$("#showRegMes").show();
 			        $("#showRegMes").html("<font color=red>注册失败，登陆账号只能是字母数字下划线或邮箱格式!</font>");
-			        $("#telphone").focus();
+			        $("#email2").focus();
 			        $('#regtext').html('注册');
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;

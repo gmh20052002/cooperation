@@ -49,6 +49,14 @@ iscroll style
 	padding: 15px 0 50px 0;
 }
 
+.wrapperimg {
+	position:absolute; z-index:1;
+	top:74px;
+	 bottom:1px; left:0;
+	width:100%;
+	overflow:visiable;
+	padding: 0 0 50px 0;
+}
 .scroller {
 	position:absolute; z-index:1;
 	-webkit-touch-callout:none;
