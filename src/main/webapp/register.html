@@ -43,39 +43,40 @@
 
 <div data-role="page" id="regPage" data-title="平安互助">
 	<div data-role="header" data-theme="f" >
-         <a href="memCenter.html" data-role="button" data-icon="arrow-l"   rel="external" data-iconpos="notext">返回</a>
-		<h1  style="font-size: 13px;">会员注册</h1>
-        <a href="memCenter.html" data-role="button" data-icon="home"   rel="external" data-iconpos="notext">主页</a>
+         <a href="memCenter.html"  style="margin-top: 4px;"  data-role="button" data-icon="arrow-l"   rel="external" data-iconpos="notext">返回</a>
+		<h1  >会员注册</h1>
+        <a href="memCenter.html" style="margin-top: 4px;"  data-role="button" data-icon="home"   rel="external" data-iconpos="notext">主页</a>
 	</div>
   <div data-role="content" class="ui-content" role="main">		
 		
             	
-					<label for="username5">昵称: </label><input type="text" placeholder="昵称" name="username5" class="required" id="username5"  data-clear-btn="true">                  
+				<!-- 	<label for="username5">昵称: </label> --><input type="hidden"  value="平安互助会员" placeholder="昵称" name="username5" class="required" id="username5"  data-clear-btn="true">                  
             
-					<label for="telphone">手机号码: </label><input type="tel" name="telphone" placeholder="手机号码" class="required" id="telphone" pattern="[0-9]*" data-clear-btn="true">                  
+            	 <label for="email2">账号:</label><input type="text" name="email2" id="email2" placeholder="登陆账号" class="required" maxlength="20"  data-clear-btn="true" onfocus="myFunction2(this);"  onblur="myFunction(this);"/> 
+            	 
+					<label for="telphone">手机号码: </label><input type="tel" name="telphone" placeholder="手机号码" class="required"  id="telphone"  maxlength="11"  pattern="[0-9]*" data-clear-btn="true">                  
           
-					 <label for="email2">账号:</label>
-                     <input type="text" name="email2" id="email2" placeholder="登陆账号" class="required" data-clear-btn="true" onfocus="myFunction2(this);"  onblur="myFunction(this);"/> 
+				
                      
 				<!-- 	 <label for="email3">确认邮箱: </label>
                      <input type="text" name="email3" id="email3" placeholder="确认邮箱" data-clear-btn="true" data-clear-btn="true"/>  -->
                      
 							
 					 <label for="password3">登陆密码: </label>
-                     <input type="password" name="password3" id="password3" placeholder="6-20位字母数字组合" class="required" data-clear-btn="true"/> 
+                     <input type="password" name="password3" id="password3" placeholder="6-20位字母数字组合"  maxlength="20"  class="required" data-clear-btn="true"/> 
                 
                   
                      <label for="password4">确认登陆密码:</label>
-                      <input type="password" name="password4" id="password4" placeholder=" 确认登陆密码" class="required" data-clear-btn="true" /> 
+                      <input type="password" name="password4" id="password4" placeholder=" 确认登陆密码" maxlength="20"  class="required" data-clear-btn="true" /> 
                  		
 					 <label for="password5">交易密码:</label>
-                     <input type="password" name="password5" id="password5" value="" placeholder="6-20位字母数字组合"  class="required" data-clear-btn="true"/> 
+                     <input type="password" name="password5" id="password5" value="" placeholder="6-20位字母数字组合" maxlength="20"  class="required" data-clear-btn="true"/> 
                 
                      <label for="password6">确认交易密码:</label> 
-                     <input type="password" name="password6" id="password6" value="" placeholder=" 确认交易密码" class="required"  data-clear-btn="true" /> 
+                     <input type="password" name="password6" id="password6" value="" placeholder=" 确认交易密码"  maxlength="20"  class="required"  data-clear-btn="true" /> 
                
 					 <label for="email4">介绍人账号:</label>
-                     <input type="text" name="email4" id="email4" placeholder="介绍人账号" class="required" data-clear-btn="true"/> 
+                     <input type="text" name="email4" id="email4" placeholder="介绍人账号" class="required" maxlength="20"  data-clear-btn="true"/> 
                                             	
 
 				 <a  id="regButton" data-role="button" data-theme="e"><span id='regtext'>注册</span></a>

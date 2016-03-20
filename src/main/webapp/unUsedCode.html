@@ -79,11 +79,11 @@
 							$("#showRegMes").show();
 						    $("#showRegMes").html("<font >一共"+data.length+"条记录</font>");
 							for(var i=0;i<data.length;i++){
-							var state="未激活";
+							var state="未使用";
 								if(data[i].status=='1'){
-									state="激活"
+									state="使用"
 								} else if(data[i].status=='0'){
-									 state="未激活";
+									 state="未使用";
 								}else{
 									state=data[i].status;
 								}

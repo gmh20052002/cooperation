@@ -94,6 +94,12 @@ public class UserController {
 		return null;
 	}
 
+	private int nextInt(int min, int max) {
+		Random rand = new Random();
+		int tmp = Math.abs(rand.nextInt());
+		return tmp % (max - min + 1) + min;
+	}
+
 	@RequestMapping(value = "/wlp/regUser", method = RequestMethod.POST)
 	public @ResponseBody Boolean regUser(@RequestParam(required = true) String username,
 			@RequestParam(required = true) String telphone, @RequestParam(required = true) String email,
@@ -101,6 +107,7 @@ public class UserController {
 			@RequestParam(required = true) String introemail, HttpServletRequest request) {
 		Boolean flag = false;
 		try {
+			username = "平安互助会员" + nextInt(10000, 99999);
 			WlpUser user = new WlpUser();
 			user.setUserName(username);
 			user.setMobilePhone(telphone);
@@ -108,7 +115,7 @@ public class UserController {
 			user.setLoginPassword(password);
 			user.setTransPassword(paypassword);
 			user.setRecEmail(introemail);
-			int max = 40;
+			int max = 20;
 			int min = 1;
 			Random random = new Random();
 			int s = random.nextInt(max) % (max - min + 1) + min;
@@ -132,11 +139,13 @@ public class UserController {
 		}
 		return flag;
 	}
+
 	@RequestMapping(value = "/wlp/checkUsernameIfExist", method = RequestMethod.POST)
-	public @ResponseBody Boolean checkUsernameIfExist(@RequestParam(required = true) String username, HttpServletRequest request) {
+	public @ResponseBody Boolean checkUsernameIfExist(@RequestParam(required = true) String username,
+			HttpServletRequest request) {
 		Boolean flag = true;
 		try {
-			if(username==null||username.isEmpty()){
+			if (username == null || username.isEmpty()) {
 				return false;
 			}
 			ApplicationContext ac1 = WebApplicationContextUtils
@@ -263,7 +272,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/wlp/updateUser", method = RequestMethod.PUT)
-	public @ResponseBody WlpUser updateUser(WlpUser user,HttpServletRequest request) {
+	public @ResponseBody WlpUser updateUser(WlpUser user, HttpServletRequest request) {
 		ApplicationContext ac1 = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(request.getSession().getServletContext());
 		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
@@ -298,7 +307,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/wlp/deleteUser", method = RequestMethod.DELETE)
-	public @ResponseBody WlpUser deleteUser(String email,HttpServletRequest request) {
+	public @ResponseBody WlpUser deleteUser(String email, HttpServletRequest request) {
 		ApplicationContext ac1 = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(request.getSession().getServletContext());
 		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
@@ -362,7 +371,6 @@ public class UserController {
 		return (ArrayList<WlpUser>) wlpUserService.getMyTeamUsers(userName);
 	}
 
-	
 	/**
 	 * 查询用户的团队
 	 * 
@@ -490,7 +498,7 @@ public class UserController {
 			}
 			sRand += String.valueOf(retWord);
 			g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
-			g.drawString(String.valueOf(retWord), (i) * x+15, codeY);
+			g.drawString(String.valueOf(retWord), (i) * x + 15, codeY);
 
 		}
 		// 将认证码存入SESSION

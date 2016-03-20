@@ -103,7 +103,7 @@ $(document).ready(function() {
 		 $('#regtext').html('注册中');
 		 $('#regButton').buttonMarkup({ theme: "e" });
 		 
-		    var uname =$("#username5").val(); 
+		 /*   var uname =$("#username5").val(); 
 			if(!uname){
 				$("#showRegMes").show();
 		        $("#showRegMes").html("<font color=red>注册失败，昵称不能为空!</font>");
@@ -119,7 +119,34 @@ $(document).ready(function() {
 		        $('#regtext').html('注册');
 		        $('#regButton').buttonMarkup({ theme: "e" });
 				return false;
-			}
+			}*/
+			
+			 var email2 =$("#email2").val(); 
+			 if(!email2){
+					$("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，登陆账号不能为空!</font>");
+			        $("#email2").focus();
+			        $('#regtext').html('注册');
+			        $('#regButton').buttonMarkup({ theme: "e" });
+					return false;
+				}
+			 if(email2.length>20){
+					$("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>登陆账号长度不能超过20!</font>");
+			        $("#email2").focus();
+			        $('#regtext').html('注册');
+			        $('#regButton').buttonMarkup({ theme: "e" });
+					return false;
+				}
+			 var treg2 =  /^[a-zA-Z0-9_@.]{1,20}$/;
+			 if (!treg2.test(email2)) {
+					$("#showRegMes").show();
+			        $("#showRegMes").html("<font color=red>注册失败，登陆账号只能是字母数字下划线或邮箱格式!</font>");
+			        $("#telphone").focus();
+			        $('#regtext').html('注册');
+			        $('#regButton').buttonMarkup({ theme: "e" });
+					return false;
+				}
 			 var telphone =$("#telphone").val(); 
 			 if(!telphone){
 					$("#showRegMes").show();
@@ -134,23 +161,6 @@ $(document).ready(function() {
 					$("#showRegMes").show();
 			        $("#showRegMes").html("<font color=red>注册失败，手机号码格式错误!</font>");
 			        $("#telphone").focus();
-			        $('#regtext').html('注册');
-			        $('#regButton').buttonMarkup({ theme: "e" });
-					return false;
-				}
-			 var email2 =$("#email2").val(); 
-			 if(!email2){
-					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，登陆账号不能为空!</font>");
-			        $("#email2").focus();
-			        $('#regtext').html('注册');
-			        $('#regButton').buttonMarkup({ theme: "e" });
-					return false;
-				}
-			 if(email2.length>20){
-					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>登陆账号长度不能超过20!</font>");
-			        $("#email2").focus();
 			        $('#regtext').html('注册');
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
@@ -184,7 +194,7 @@ $(document).ready(function() {
 				}
 			 if(password4.length<6||password4.length>20){				 
 				    $("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>注册失败，登陆密码6-20位字母数字组合!</font>");
+			        $("#showRegMes").html("<font color=red>注册失败， 确认登陆密码和登陆密码不一致!</font>");
 			        $("#password4").focus();
 			        $('#regtext').html('注册');
 			        $('#regButton').buttonMarkup({ theme: "e" });
@@ -232,19 +242,19 @@ $(document).ready(function() {
 			        $('#regButton').buttonMarkup({ theme: "e" });
 					return false;
 				}
-		/*	 var email4 =$("#email4").val(); 
-			   var myreg2 = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+		 var email4 =$("#email4").val(); 
+			   var myreg24 =   /^[a-zA-Z0-9_@.]{1,20}$/;
 			 if(email4){
-			         if(!myreg2.test(email4))
-                  {
+			         if(!myreg24.test(email4))
+                   {
           		     $("#showRegMes").show();
-		             $("#showRegMes").html("<font color=red>注册失败，介绍人邮箱格式不正确!</font>");
+		             $("#showRegMes").html("<font color=red>注册失败，介绍人账号只能是字母数字下划线或邮箱格式!</font>");
                      $("#email4").focus();
                     $('#regtext').html('注册');
 			        $('#regButton').buttonMarkup({ theme: "e" });
-                 return false;
-            }
-			  }*/
+                      return false;
+                  }
+			  }
 			  var pathName=window.document.location.pathname;
 			  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
 		$.ajax({

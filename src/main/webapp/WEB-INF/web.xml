@@ -67,7 +67,7 @@
 		</init-param>
 		<init-param>
 			<param-name>orderUrlStr</param-name>
-			<param-value>/**/personinfo.html;/**/updateLoginPsd.html;/**/updatePayPsd.html;/**/mutualHelpCash.html;/**/withdrawCash.html;/**/wlp/updateUserLoginPsd;/**/wlp/updateUserPayPsd;/**/wlp/updateUserInfo;</param-value>
+			<param-value>/**/personinfo.html;/**/updateLoginPsd.html;/**/updatePayPsd.html;/**/mutualHelpCash.html;/**/withdrawCash.html;/**/wlp/updateUserLoginPsd;/**/wlp/updateUserPayPsd;/**/wlp/updateUserInfo;/**/wlp/finishDeal;/**/wlp/sureDeal;</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

@@ -63,13 +63,13 @@
 				        $("#showRegMes").html("<font >激活码共享成功</font>");
 					 }else{
 						     $("#showRegMes").show();
-					        $("#showRegMes").html("<font color=red>共享失败，用户名不存在或无可用的激活码!</font>");
+					        $("#showRegMes").html("<font color=red>共享失败，用户不存在或无可用的激活码!</font>");
 					        $("#email").focus();
 					 }
 				},
 				error : function(xmlhttprequest, errorinfo) {
 					$("#showRegMes").show();
-			        $("#showRegMes").html("<font color=red>共享失败，用户名不存在或无可用的激活码!</font>");
+			        $("#showRegMes").html("<font color=red>共享失败，用户不存在或无可用的激活码!</font>");
 				}
 			});
 		});
@@ -89,7 +89,7 @@
    
  
 				
-                     <input type="text" name="email" id="email" placeholder="输入其它用户邮箱"  data-clear-btn="true"/> 
+                     <input type="text" name="email" id="email" placeholder="输入他(她)人用户账号"  data-clear-btn="true"/> 
            
          <div data-role="main"  style=" text-align: center;">
                 <a href="#" data-role="button" data-theme="e" id="shareActivecodes">共享</a> 
