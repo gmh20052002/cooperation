@@ -133,7 +133,11 @@ $.fn.ImgZoomIn = function () {
 			success : function(data) {
 				  console.log(data)
 					$("#textarea").val(data.remark)
-					   var psrc=projectName+"/upload/"+data.orderPic;
+					var pathsrc=data.orderPic;
+				  if(!pathsrc){
+					  pathsrc="88.jpg"
+				  }
+					   var psrc=projectName+"/upload/"+pathsrc;
 			       $("#imgTest").attr('src',psrc); 	
 			}
 		});

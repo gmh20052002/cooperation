@@ -40,7 +40,19 @@ public class WlpPairLogServiceImpl implements WlpPairLogService {
 		wlpPairLog.setPairTime(new Date());
 		WlpUser fromUser = pairUser();
 		wlpPairLog.setFromUser(fromUser.getEmail());
-		wlpPairLogMapper.insertSelective(wlpPairLog);
+		wlpPairLog.setStatus(CommonCst.NOT_COMPLETE_ORDER);
+		long pairMoney = wlpPairLog.getPairMoney();
+		WlpWallet condition = new WlpWallet();
+		condition.setEmail(wlpPairLog.getToUser());
+		List<WlpWallet> from_wlpWallets = wlpWalletMapper.selectByCondition(condition, null, null);
+		if (from_wlpWallets != null && !from_wlpWallets.isEmpty()) {// 提供方钱包余额增加
+			WlpWallet fromWlpWallet = from_wlpWallets.get(0);
+			long fromOldBalance = fromWlpWallet.getCapital() + fromWlpWallet.getBonus();
+			long fromBalance = fromOldBalance + pairMoney;
+			wlpPairLog.setToOldBalance(fromOldBalance);
+			wlpPairLog.setToBalance(fromBalance);
+			wlpPairLogMapper.insertSelective(wlpPairLog);
+		}
 		return wlpPairLog;
 	}
 
@@ -98,7 +110,7 @@ public class WlpPairLogServiceImpl implements WlpPairLogService {
 			wlpPairLog.setOrderTime(new Date());
 			wlpPairLog.setOrderPic(orderPic);
 			wlpPairLog.setRemark(desc);
-		wlpPairLogMapper.updateByPrimaryKeySelective(wlpPairLog);
+			wlpPairLogMapper.updateByPrimaryKeySelective(wlpPairLog);
 		}
 		return null;
 	}

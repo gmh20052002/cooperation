@@ -89,7 +89,7 @@
 			data:{  'money':$('#slider-fill').val(),'payway':payway},
 			dataType : 'json',
 			success : function(data, type, request) {
-
+                       console.log(data)
 				   $("#showDealMes").show();
 			       $("#showDealMes").html("<font >已经成功发送帮助请求</font>");
 			       window.setTimeout(function(){_cleantip()},3200);
@@ -143,9 +143,12 @@
             <input type="checkbox" name="favcolor" class="xxx"id="blue" value="blue">  
         </fieldset>
       </div>
+           <div data-role="main"  style=" text-align: center;">
                 <a href="#" id="mutulhelp" data-role="button"
 					data-theme="e">请求帮助</a> 
                        <a href="myWallet.html" id="regButton" data-role="button" rel="external" >返回我的钱包</a> 
+                                 <h2 class="text-primary"><span id="showDealMes"></span> </h2> 
+                                      </div>
               </form>  
 	</div>
 <div data-role="footer"  data-theme="f"   data-position="fixed">

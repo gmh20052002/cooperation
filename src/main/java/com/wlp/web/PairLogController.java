@@ -200,30 +200,8 @@ public class PairLogController {
 					log.setToUser("404");
 					e.printStackTrace();
 				}
-				log.setStatus(recEmail);
-				Boolean flag=false;
-				String pic=log.getOrderPic();
-				   if(pic!=null&&pic.contains(".jpg")){
-					   flag=true;
-					}
-				   else if(pic!=null&&pic.contains(".jpeg")){
-			    	   flag=true;
-					}
-				   else   if(pic!=null&&pic.contains(".png")){
-			    	   flag=true;
-					}
-				   else   if(pic!=null&&pic.contains(".gif")){
-			    	   flag=true;
-					}
-				   else   if(pic!=null&&pic.contains(".bmp")){
-			    	   flag=true;
-					}
-				   else if(pic!=null&&pic.contains(".psd")){
-			    	   flag=true;
-					}
-				   if(flag){
+				log.setStatus(recEmail);			 
 				results.add(log);
-				}
 			}
 		}
 		return results;
