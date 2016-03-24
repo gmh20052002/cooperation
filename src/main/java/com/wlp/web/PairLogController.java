@@ -149,6 +149,7 @@ public class PairLogController {
 					recEmail = rec_user.getUserName();
 					log.setOrderPic(rec_user.getRemark());
 				} catch (Exception e) {
+					log.setOrderPic("404");
 					e.printStackTrace();
 				}
 				log.setStatus(recEmail);
@@ -196,6 +197,7 @@ public class PairLogController {
 					recEmail = rec_user.getUserName();
 					log.setToUser(rec_user.getRemark());
 				} catch (Exception e) {
+					log.setToUser("404");
 					e.printStackTrace();
 				}
 				log.setStatus(recEmail);
