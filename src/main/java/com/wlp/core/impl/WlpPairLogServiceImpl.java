@@ -1,5 +1,6 @@
 package com.wlp.core.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +39,7 @@ public class WlpPairLogServiceImpl implements WlpPairLogService {
 	public WlpPairLog addWlpPairLog(WlpPairLog wlpPairLog) {
 		wlpPairLog.setId(UUID.randomUUID().toString());
 		wlpPairLog.setPairTime(new Date());
-		WlpUser fromUser = pairUser();
+		WlpUser fromUser = pairUser(wlpPairLog.getToUser());
 		long total=0l;
 		Long money=wlpPairLog.getPairMoney();
 		wlpPairLog.setFromUser(fromUser.getEmail());
@@ -77,13 +78,22 @@ public class WlpPairLogServiceImpl implements WlpPairLogService {
 		return null;
 	}
 
-	public WlpUser pairUser() {
+	public WlpUser pairUser(String toUserName) {
 		List<WlpPairPipeline> pairs = wlpPairPipelineMapper.selectByCondition(null, null, null);
 		WlpUser condition = new WlpUser();
 		condition.setStatus(CommonCst.ACTIVE);
 		Order order = new Order();
 		order.setOrderBy("ACTIVE_TIME", Sort.ASC);
-		List<WlpUser> users = wlpUserMapper.selectByCondition(condition, order, null);
+		List<WlpUser> initialusers = wlpUserMapper.selectByCondition(condition, order, null);
+		List<WlpUser> users=new ArrayList<WlpUser>();
+		if (initialusers != null&&initialusers.size()>0) {
+			for(WlpUser u:initialusers){
+				if(u.getEmail().equals(toUserName)){
+					continue;
+				}
+				users.add(u);
+			}
+		}
 		if (users != null) {
 			Set<String> pairsSet = new HashSet<String>();
 			if (pairs != null) {
