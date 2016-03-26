@@ -288,7 +288,17 @@ public class UserController {
 		}
 		return null;
 	}
-
+	@RequestMapping(value = "/wlp/getUserInfobyemail", method = RequestMethod.POST)
+	public @ResponseBody WlpUser getUserInfoByEmail(String username,HttpServletRequest request) {
+		ApplicationContext ac1 = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		WlpUserService wlpUserService = (WlpUserService) ac1.getBean("wlpUserService");
+		WlpUser user = wlpUserService.getUserByEmail(username);
+		if (user != null) {
+			return user;
+		}
+		return null;
+	}
 	@RequestMapping(value = "/wlp/deleteUser", method = RequestMethod.DELETE)
 	public @ResponseBody WlpUser deleteUser(String email, HttpServletRequest request) {
 		ApplicationContext ac1 = WebApplicationContextUtils

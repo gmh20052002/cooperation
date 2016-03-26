@@ -39,21 +39,42 @@ public class WlpPairLogServiceImpl implements WlpPairLogService {
 		wlpPairLog.setId(UUID.randomUUID().toString());
 		wlpPairLog.setPairTime(new Date());
 		WlpUser fromUser = pairUser();
+		long total=0l;
+		Long money=wlpPairLog.getPairMoney();
 		wlpPairLog.setFromUser(fromUser.getEmail());
 		wlpPairLog.setStatus(CommonCst.NOT_COMPLETE_ORDER);
 		long pairMoney = wlpPairLog.getPairMoney();
 		WlpWallet condition = new WlpWallet();
 		condition.setEmail(wlpPairLog.getToUser());
 		List<WlpWallet> from_wlpWallets = wlpWalletMapper.selectByCondition(condition, null, null);
-		if (from_wlpWallets != null && !from_wlpWallets.isEmpty()) {// 提供方钱包余额增加
+		if (from_wlpWallets != null && !from_wlpWallets.isEmpty()) {// 提供方钱包余额减少
 			WlpWallet fromWlpWallet = from_wlpWallets.get(0);
+			WlpPairLog condition2=new WlpPairLog();
+			condition2.setToUser(wlpPairLog.getToUser());
+			condition2.setStatus(CommonCst.NOT_COMPLETE_ORDER);
+			condition2.setType(wlpPairLog.getType());
+			List<WlpPairLog> wlpPairLog2= wlpPairLogMapper.selectByCondition(condition2, null, null);
+			if(wlpPairLog2!=null&&wlpPairLog2.size()>0){
+				for(WlpPairLog pairlog:wlpPairLog2){
+					money+=pairlog.getPairMoney();
+				}			
+			}
+			if(wlpPairLog.getType()==1){
+				total= fromWlpWallet.getBonus();
+			}else{
+				total=fromWlpWallet.getCapital();
+			}
 			long fromOldBalance = fromWlpWallet.getCapital() + fromWlpWallet.getBonus();
-			long fromBalance = fromOldBalance + pairMoney;
+			if(money>total){
+				return null;
+			}
+			long fromBalance = fromOldBalance- pairMoney;
 			wlpPairLog.setToOldBalance(fromOldBalance);
 			wlpPairLog.setToBalance(fromBalance);
 			wlpPairLogMapper.insertSelective(wlpPairLog);
+			return wlpPairLog;
 		}
-		return wlpPairLog;
+		return null;
 	}
 
 	public WlpUser pairUser() {

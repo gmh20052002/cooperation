@@ -43,20 +43,21 @@
 			function _cleantip(){
 				   $("#showDealMes").hide();	
 			} 
-			
+		var total=0;
+		var totalcapital=0;
 		$.ajax({
 			type : "GET",
 			url : projectName+ "/wlp/getMyWallet",
 			success : function(data) {
-				  console.log(data)
 				if(data){		
-					var total=data.capital+data.bonus;
+				     total=data.bonus;
+				     totalcapital=data.capital
 				    $("#bonus").val(data.bonus);
 				    $("#balance").val(data.capital);
 				    if(total>=5000){			    	
 					      $('#slider-fill')[0].attributes[6].value=5000
 					}else if(total>=200){
-			
+			              total=parseInt(total/200)*200;
 						  $('#slider-fill')[0].attributes[6].value=total
 					}
 				    else{
@@ -68,7 +69,36 @@
 				}
 			}
 		});
+		function showCont(){
+			  var type= $('input[name="gender"]:checked ').val();
+			  $('#slider-fill')[0].value=200
+			  $('#slider-fill')[0].attributes[4].value=200
+			  if('bonus'==type){
+			
+				  $('#slider-fill')[0].attributes[6].value=total
+				  $("#slider-fill").slider("refresh");
+				  if(total<200){
+					   $('#mutulhelp').css('display','none');
+				  }else{
+					  $('#mutulhelp').css('display','');
+				  }
+				  
+			  }else{
+			
+				  $('#slider-fill')[0].attributes[6].value=totalcapital
+				  $("#slider-fill").slider("refresh");
+				  if(totalcapital<200){
+					   $('#mutulhelp').css('display','none');
+				  }else{
+					  $('#mutulhelp').css('display','');
+				  }
+			  }
+			
+        }
 	$(document).ready(function() {
+		 $("input[name=gender]").click(function(){
+			  showCont();
+			 });
 		$("#mutulhelp").click(function() {
 			var a=[];
 			var payway=""
@@ -82,18 +112,23 @@
 		    alert("必须选择一种提现方式");
 			return false;
 		   }
-	  
+	  var type= $('input[name="gender"]:checked ').val();
+	  console.log(type)
 	   $.ajax({				
 			type : 'POST',
 			url :projectName+ '/wlp/getHelp',		
-			data:{  'money':$('#slider-fill').val(),'payway':payway},
+			data:{  'money':$('#slider-fill').val(),'payway':payway,'type':type},
 			dataType : 'json',
 			success : function(data, type, request) {
                        console.log(data)
+                       if(data){
 				   $("#showDealMes").show();
 			       $("#showDealMes").html("<font >已经成功发送帮助请求</font>");
 			       window.setTimeout(function(){_cleantip()},3200);
-			
+                       }else{
+                    	   $("#showDealMes").show();
+        			       $("#showDealMes").html("<font  color=red>请求失败，可能是请求次数过多导致余额不足</font>");
+                       }
 			}
 		});
 		});
@@ -121,9 +156,9 @@
                  <fieldset data-role="controlgroup" data-type="horizontal">
       <legend>提现类别：</legend>
         <label for="male">分红</label>
-        <input type="radio" name="gender" id="male" value="male" checked>
+        <input type="radio" name="gender" id="male" value="bonus" checked>
         <label for="female">本金</label>
-        <input type="radio" name="gender" id="female" value="female"> 
+        <input type="radio" name="gender" id="female" value="captital"> 
       </fieldset>
       </div> 
                 	<div data-role="fieldcontain">
@@ -135,12 +170,12 @@
        <div data-role="fieldcontain">
         <fieldset data-role="controlgroup">
           <legend>提现方式：</legend>
-            <label for="red">银行支付</label>
-            <input type="checkbox" name="favcolor" class="xxx" id="red" value="red">
-            <label for="green">支付宝支付</label>
-            <input type="checkbox" name="favcolor" class="xxx" id="green" value="green">
-            <label for="blue">微信支付</label>
-            <input type="checkbox" name="favcolor" class="xxx"id="blue" value="blue">  
+     <label for="1">银行支付</label>
+            <input type="checkbox"  class="xxx" name="favcolor" id="1" value="1" >
+            <label for="2">支付宝支付</label>
+            <input type="checkbox" class="xxx" name="favcolor" id="2" value="2"  checked="checked">
+            <label for="3">微信支付</label>
+            <input type="checkbox" class="xxx" name="favcolor" id="3" value="3">  
         </fieldset>
       </div>
            <div data-role="main"  style=" text-align: center;">

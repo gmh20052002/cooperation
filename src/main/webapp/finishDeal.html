@@ -110,16 +110,16 @@
 
 	
 	$(document).ready(function() {
-		  var pathName=window.document.location.pathname;
-		  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
-		    $('#email').val(GetQueryString("username"));
+		    var pathName=window.document.location.pathname;
+		    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
+		    $('#email').html(GetQueryString("username"));
 		    $('#pairid').val(GetQueryString("_n"));
-		      var url = window.location.search; //获取url中"?"符后的字串   
-	       var theRequest = new Object();   
-	       if (url.indexOf("?") != -1) {   
-	          var str = url.substr(1);   
-	          strs = str.split("&");   
-	          for(var i = 0; i < strs.length; i ++) {   
+		     var url = window.location.search; //获取url中"?"符后的字串   
+	         var theRequest = new Object();   
+	         if (url.indexOf("?") != -1) {   
+	             var str = url.substr(1);   
+	              strs = str.split("&");   
+	              for(var i = 0; i < strs.length; i ++) {   
 	              //就是这句的问题
 	             theRequest[strs[i].split("=")[0]]=decodeURI(strs[i].split("=")[1]); 
 	             //之前用了unescape()
@@ -128,11 +128,15 @@
 	       }   
 		  console.log(theRequest._pic)
 		$.ajax({
-			type : "GET",
-			url : projectName+"/wlp/getUserInfo",
+			type : "POST",	
+			url : projectName+"/wlp/getUserInfobyemail",
+			data : {
+				username : GetQueryString("username")
+				},
+			dataType : 'json',
 			success : function(data) {
 				  console.log(data)
-				      $('#email').val(GetQueryString("username"));
+				
 				  var money=GetQueryString("_m");
 				  var paytype=GetQueryString("_p");
 				  var payt="";
@@ -154,7 +158,7 @@
 				    $('#money').html(money);
 				if(data){				     
 					   $('#phone').html(data.mobilePhone);
-				       $('#email').html(data.email);
+		
 				       $('#wechat').html(data.wechat);
 				       $('#username').html(data.userName);
 				    

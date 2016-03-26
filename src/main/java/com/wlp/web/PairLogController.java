@@ -213,12 +213,16 @@ public class PairLogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/wlp/getHelp", method = RequestMethod.POST)
-	public @ResponseBody List<WlpPairLog> getHelp(HttpServletRequest request,
-			@RequestParam(required = true) String money, @RequestParam(required = true) String payway) {
+	public @ResponseBody WlpPairLog getHelp(HttpServletRequest request,
+			@RequestParam(required = true) String money, @RequestParam(required = true) String payway,@RequestParam(required = true) String type) {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute(USER_NAME);
 		if (username == null) {
 			return null;
+		}
+		long ttype=0l;
+		if("bonus".equals(type)){			
+			 ttype=1l;
 		}
 		ApplicationContext ac1 = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(request.getSession().getServletContext());
@@ -228,12 +232,11 @@ public class PairLogController {
 		wlpPairLog.setToUser(username);
 		wlpPairLog.setPayType(payway);
 		wlpPairLog.setPairMoney(Long.parseLong(money));
+		wlpPairLog.setType(ttype);
 		wlpPairLog.setStatus("0");
 		wlpPairLog.setOrderTime(new Date());
 		wlpPairLog.setExtrakType("help");
-		wlpPairLogService.addWlpPairLog(wlpPairLog);
-
-		return null;
+		return wlpPairLogService.addWlpPairLog(wlpPairLog);
 	}
 
 	/**
